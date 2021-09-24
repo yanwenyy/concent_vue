@@ -65,6 +65,28 @@
           prop="moduleName"
           show-overflow-tooltip
         >
+          <template slot="header" slot-scope="scope">
+            <span>合同板块</span>
+            <div>
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
+                v-model="searchFrom.flowStatus"
+              >
+                <el-option label="工程承包" value="7f4fcba4255b43a8babf15afd6c04a53"></el-option>
+                <el-option label="勘察设计" value="f6823a41e9354b81a1512155a5565aeb"></el-option>
+                <el-option label="物资贸易" value="510ba0d79593418493eb1a11ea4e7af4"></el-option>
+                <el-option label="工业制造" value="510ba0d79593418493eb1a11ed3e7df4"></el-option>
+                <el-option label="金融保险" value="510ba0d79593418493eb1a11ea4e7df4"></el-option>
+                <el-option label="其他合同" value="510ba0d79593419493eb1a11ed3e7df4"></el-option>
+                <el-option label="房地产" value="510ba0d79593418493eb1a11ea4e7af6"></el-option>
+                <el-option label="运营维护" value="510ba0d79593418493eb1a11ed4e7df4"></el-option>
+              </el-select>
+            </div>
+          </template>
           <template slot-scope="scope">
             <span class="blue pointer" @click="rowshow(scope.row)">{{scope.row.moduleName}}</span>
           </template>
@@ -201,28 +223,6 @@
       ChangeSearch
     },
     methods: {
-      //根据id跳页面
-      getUrl(id){
-        var url='';
-        if(id=='7f4fcba4255b43a8babf15afd6c04a53'){
-          url= '../project/detail/';
-        }else if(id=='f6823a41e9354b81a1512155a5565aeb'){
-          url= '../design/detail/';
-        }else if(id=='510ba0d79593418493eb1a11ea4e7af6'){
-          url=  '../house/detail/';
-        }else if(id=='510ba0d79593418493eb1a11ea4e7af4'){
-          url=  '../trade/detail/';
-        }else if(id=='510ba0d79593418493eb1a11ed3e7df4'){
-          url=  '../industrial/detail/';
-        }else if(id=='510ba0d79593418493eb1a11ea4e7df4'){
-          url=  '../finance/detail/';
-        }else if(id=='510ba0d79593418493eb1a11ed4e7df4'){
-          url=  '../operate/detail/';
-        }else if(id=='510ba0d79593419493eb1a11ed3e7df4'){
-          url=  '../other/detail/';
-        }
-        return url;
-      },
       // 增加
       add() {
         this.infoCSVisible = true;
@@ -304,6 +304,28 @@
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
+        //根据id跳页面
+        getUrl(id){
+            var url='';
+            if(id=='7f4fcba4255b43a8babf15afd6c04a53'){
+                url= '../project/detail/';
+            }else if(id=='f6823a41e9354b81a1512155a5565aeb'){
+                url= '../design/detail/';
+            }else if(id=='510ba0d79593418493eb1a11ea4e7af6'){
+                url=  '../house/detail/';
+            }else if(id=='510ba0d79593418493eb1a11ea4e7af4'){
+                url=  '../trade/detail/';
+            }else if(id=='510ba0d79593418493eb1a11ed3e7df4'){
+                url=  '../industrial/detail/';
+            }else if(id=='510ba0d79593418493eb1a11ea4e7df4'){
+                url=  '../finance/detail/';
+            }else if(id=='510ba0d79593418493eb1a11ed4e7df4'){
+                url=  '../operate/detail/';
+            }else if(id=='510ba0d79593419493eb1a11ed3e7df4'){
+                url=  '../other/detail/';
+            }
+            return url;
+        },
       handleSizeChange(val) {
         this.searchFrom.size = val;
         this.getData();
