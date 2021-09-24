@@ -770,6 +770,7 @@
     }"
               >
                 <el-switch
+                  @change="ndhtChange"
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'||(detailform.contractInfo.isInSystemUnion=='0'||detailform.contractInfo.isInSystemSub=='0'||detailform.contractInfo.isOutSystemUnion=='0'||detailform.contractInfo.isOutSystemSub=='0'||detailform.contractInfo.isInGroupSub=='0')"
                   class="inline-formitem-switch"
                   v-model="detailform.contractInfo.isYearContract"
@@ -2494,6 +2495,7 @@
         }
       }
       return {
+        yqList:[],
         Authorization:sessionStorage.getItem("token"),
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
@@ -2630,6 +2632,17 @@
       },
     },
     methods: {
+      //年度合同按钮变动
+      ndhtChange(){
+        this.detailform.contractInfo.contractAmount=0;
+        this.detailform.contractInfo.crccCash=0;
+        this.detailform.contractInfo.outSystemAmount=0;
+        this.detailform.contractInfo.ourAmountSupply=0;
+        this.detailform.contractInfo.ourAmount=0;
+        this.$forceUpdate();
+        this.getOurAmount();
+        this.getOurAmount('','','nfb');
+      },
     // 建设单位删除
     constructionDel(index,item,list,type) {
       list.splice(index, 1);
@@ -3593,6 +3606,16 @@
         if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
           this.$message.error("请至少添加一条年度合同收益");
           return false;
+        }
+        if(this.detailform.contractInfo.isYearContract=='1'){
+          var ddMoney=0;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            ddMoney+=Number(item.contractAmount)
+          });
+          if(ddMoney!=0&&ddMoney!=this.detailform.contractInfo.ourAmount){
+            this.$message.error("项目地点金额之和应等于初始我方份额");
+            return false;
+          }
         }
         if(this.detailform.contractInfo.isYearContract=='0'){
           var ddMoney=0,syMoney=0;

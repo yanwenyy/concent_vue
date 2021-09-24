@@ -6934,9 +6934,11 @@
                 label="统计项名称"
                 prop="vname"
                 width="300"
-                align="center"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.vname}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 class="listTabel"
@@ -6999,6 +7001,9 @@
                 align="center"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.vname}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 class="listTabel"
@@ -7073,6 +7078,9 @@
                 width="300"
                 show-overflow-tooltip
               >
+                <template slot-scope="scope">
+                  <div :class="vnameMarginLeft(scope.row.tjxCode,scope.row.veditable)">{{scope.row.vname}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 class="listTabel"
@@ -7266,6 +7274,26 @@ export default {
     companyMul
   },
   computed: {
+    vnameMarginLeft() {
+      return (vcode, veditable) => {
+        var vnameClass = ''
+        if (vcode && veditable) {
+          if (veditable === '1') {
+            vnameClass += 'editable'
+          }
+          if (vcode.length === 6) {
+            vnameClass += ' margin-left-25'
+          } else if (vcode.length === 9) {
+            vnameClass += ' margin-left-50'
+          } else if (vcode.length === 12) {
+            vnameClass += ' margin-left-75'
+          } else if (vcode.length === 15) {
+            vnameClass += ' margin-left-100'
+          }
+        }
+        return vnameClass
+      }
+    },
     railwayBureau(){//所属铁路局
       return this.$store.state.railwayBureau;
     },
@@ -9179,5 +9207,20 @@ export default {
   }
   .form-item-six{
     width: 16.25%!important;
+  }
+  .margin-left-25{
+    margin-left: 25px;
+  }
+  .margin-left-50{
+    margin-left: 50px;
+  }
+  .margin-left-75{
+    margin-left: 75px;
+  }
+  .margin-left-100{
+    margin-left: 100px;
+  }
+  .editable{
+    color: #0e45a1;
   }
 </style>

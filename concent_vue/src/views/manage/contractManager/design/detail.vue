@@ -4384,6 +4384,16 @@
           this.$message.error("请选择一个主地点");
           return false;
         }
+        if(this.detailform.contractInfo.isYearContract=='1'){
+          var ddMoney=0;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            ddMoney+=Number(item.contractAmount)
+          });
+          if(ddMoney!=0&&ddMoney!=this.detailform.contractInfo.ourAmount){
+            this.$message.error("项目地点金额之和应等于初始我方份额");
+            return false;
+          }
+        }
         if(this.detailform.contractInfo.isYearContract=='0'){
           var ddMoney=0,syMoney=0;
           this.detailform.topInfoSiteList.forEach((item)=>{

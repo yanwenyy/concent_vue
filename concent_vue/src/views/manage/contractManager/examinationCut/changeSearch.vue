@@ -239,7 +239,7 @@
 </script>
 <style scoped>
   .dialog-footer {
-    margin-top: 50px;
+    margin-top:10px;
     text-align: center;
   }
 
