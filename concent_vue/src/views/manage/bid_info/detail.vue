@@ -1595,6 +1595,13 @@ export default {
         tableList.push(item.bidInfoSection.sectionId)
       });
       bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionId)==-1);
+      bdList.forEach((element, index) => {
+        this.detailform.bidInfoSectionList.forEach((item) => {
+          if (element.uuid == item.bidInfoSection.sectionId) {
+            bdList.splice(index,1)
+          }
+        })
+      })
       this.$nextTick(() => {
         this.$refs.infoBD.init(
           bdList,
