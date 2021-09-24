@@ -137,12 +137,12 @@
             </el-select>
           </template>
         </el-form-item>
-        <el-form-item v-if="ifkb=='kbxq'" label="开标金额(万元):" class="list-item" prop="bidInfoSection.openBidAmount"
-                      :rules="ifkb=='kbxq'?{
-                required: true,
-                message: '此项不能为空',
-                trigger: ['change','blur'],
-              }:type=='eidtnew'?rules.contractAmount:''"
+        <el-form-item 
+          v-if="ifkb=='kbxq'" 
+          label="开标金额(万元):" 
+          class="list-item" 
+          prop="bidInfoSection.openBidAmount"
+          :rules="ifkb=='kbxq'?rules.isMustMoney:type=='eidtnew'?rules.contractAmount:''"
         >
           <el-input
             v-model="detailForm.bidInfoSection.openBidAmount"
@@ -350,7 +350,7 @@
           v-model="detailForm.bidInfoSection.otherUnitsNotListed"
           placeholder="其他未列出单位(单位与单位之间用英文逗号隔开)"
           clearable
-          :disabled="type === 'look'||type=='eidtnew'"
+          :disabled="type === 'look'"
           :autosize="{ minRows: 2, maxRows: 4}"
           type="textarea"></el-input>
         </el-form-item>
@@ -583,6 +583,15 @@ import { isMoney } from '@/utils/validate'
     CompanyTree,
     },
     data() {
+        const validateMustMoney = (rule, value, callback) => {
+          if (value === '') {
+            callback(new Error('此项不能为空'))
+          } else if (!isMoney(value)) {
+            callback(new Error('请输入正确的金额格式'))
+          } else {
+            callback()
+          }
+        }
         var validateMoney = (rule, value, callback) => {
         // console.log(this.type)
         if((this.type=='add'||this.type=='eidtnew')&&value===''){
@@ -645,7 +654,8 @@ import { isMoney } from '@/utils/validate'
           ],
            contractAmount2: [
              { required: true,validator: validateMoney2, trigger: 'change' }
-           ]
+           ],
+           isMustMoney: [{ required: true, validator: validateMustMoney, trigger: ['blur', 'change'] }],
         },//表单验证规则
       }
     },
