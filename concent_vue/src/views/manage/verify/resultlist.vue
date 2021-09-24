@@ -217,16 +217,25 @@
         >
         <p class="detail-title"><span class="uploadSpan">附件: </span>
           <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-         <el-upload
+         <!-- <el-upload
            :headers="{'Authorization':Authorization}"
            class="upload-demo detailUpload"
            :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
+           :on-change="( file, fileList)=>{uploadPorgress( file, fileList,resultform.commonFilesList)}"
            :on-success="handleChange"
            :on-error="handleChange"
            :on-remove="handleRemove"
            multiple
-
-         >
+         > -->
+          <el-upload
+            :headers="{'Authorization':Authorization}"
+            class="upload-demo detailUpload detatil-flie-btn"
+           :action="'/api/contract/topInfo/CommonFiles/verify/02/uploadFile'"
+           :on-change="( file, fileList)=>{uploadPorgress( file, fileList,resultform.commonFilesList)}"
+            :show-file-list="false"
+            :before-upload="beforeAvatarUpload"
+            multiple
+          >
               <el-button size="small" type="primary" v-if="type!='look'">点击上传</el-button>
             </el-upload>
         </p>
@@ -275,19 +284,23 @@
                                  show-overflow-tooltip>
 
                 </el-table-column>
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
 
                 <el-table-column align="center"
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip
                   :width="80"
-                  v-if="type!='look'"
                 >
                   <template slot-scope="scope">
-                    <el-link :underline="false"
-
-                             @click="handleRemove(scope.row,scope.$index)"
-                             type="warning">删除</el-link>
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" >下载</el-link>
+                    <el-link v-if="type!='look'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -460,6 +473,91 @@ export default {
     //     });
     //   console.log(this.detailform.fileList1)
     // },
+
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
+    },
+      
+    //判断附件大小
+    beforeAvatarUpload(file) {
+      var fileLimit=Number(this.fileLimit);
+      const isJPG = file.type === 'image/jpeg';
+      const isLt100M = file.size / 1024 / 1024 < fileLimit;
+
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      if (!isLt100M) {
+        this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
+      }
+      // return isJPG && isLt2M;
+      return isLt100M;
+    },
+    //上传附件显示进度条
+    uploadPorgress(file, fileList,tableList){
+      const len=tableList.length;
+      if (file.status === 'ready') {
+        file.fileName=file.name;
+        file.fileSize=file.size;
+        // file.fileType=file.type;
+        file.progressFlag = 'start'; // 显示进度条
+
+        file.loadProgress=0;
+
+        tableList.push(file);
+        var that=this;
+        tableList.forEach((item,index)=>{
+
+          const interval = setInterval(() => {
+            if (item&&item.loadProgress >= 90) {
+              item.loadProgress = 90;
+              if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
+                tableList[index]=file.response.data;
+                that.$set(tableList,index,tableList[index])
+              }
+
+              clearInterval(interval);
+              return
+            }
+            if(item.progressFlag == 'start'){
+              item.loadProgress += 20;//进度条进度
+              that.$set(tableList,index,tableList[index])
+
+            }
+            if(file.response&&file.response.data.progressFlag=='fail'){
+              tableList[index].progressFlag='fail';
+              this.$set(tableList,tableList)
+            }
+          }, 600);
+        });
+
+      }
+      if (file.response && file.response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1000,
+          onClose: () => {
+            file.response.data.progressFlag='stop';
+            tableList.forEach((item,index)=>{
+              if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+                tableList[index]=file.response.data;
+                this.$set(tableList,index,tableList[index])
+              }
+            })
+
+          }
+        })
+      }else if(file.response && file.response.code !== 200){
+        // tableList[len-1].progressFlag = 'fail';
+        file.response.data.progressFlag='fail';
+        this.$set(tableList,tableList)
+        this.$message.error(file.response.msg);
+      }
+
+      this.$forceUpdate();
+    },
     handleRemove(file,index) {
       this.$http
         .post(
@@ -472,7 +570,6 @@ export default {
           }
 
         });
-      // console.log(this.resultform.commonFilesList)
     },
     //上传附件
     handleChange(response, file, fileList){
