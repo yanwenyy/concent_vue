@@ -1229,7 +1229,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
                   @click="add('dd'),checkTopInfoSiteList()"
                   type="primary"
@@ -1303,7 +1303,7 @@
                 >
                   <template slot-scope="scope">
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       class="inline-formitem-switch"
                       v-model="scope.row.isMain"
                       active-color="#409EFF"
@@ -1326,7 +1326,7 @@
                   align="center"
                   width="80"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 >
                   <template slot-scope="scope">
                     <el-link

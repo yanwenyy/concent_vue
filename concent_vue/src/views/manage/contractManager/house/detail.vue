@@ -756,7 +756,7 @@
               <p>
                 <span >项目地点: </span>
                 <el-button
-                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                   class="detatil-flie-btn"
                   @click="add('dd'),checkTopInfoSiteList()"
                   type="primary"
@@ -838,7 +838,7 @@
                 >
                   <template slot-scope="scope">
                     <el-switch
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                       class="inline-formitem-switch"
                       v-model="scope.row.isMain"
                       active-color="#409EFF"
@@ -861,7 +861,7 @@
                   align="center"
                   width="80"
                   show-overflow-tooltip
-                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                  v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 >
                   <template slot-scope="scope">
                     <el-link
@@ -1130,7 +1130,7 @@
                       <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthSales'" :rules='rules.contractAmount'>
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input
-                          @blur="setYearSale(scope.row.salesPerforMonth,scope.row.salesPerforYear)"
+                          @blur="setYearSale(scope.row.salesPerforMonth,scope.row.salesPerforYear,scope.$index)"
                           v-model="scope.row.monthSales"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1154,7 +1154,7 @@
                       <el-form-item class="tabelForm" :prop="'contractInfoHouseSalesList.' + scope.$index + '.monthIncome'" :rules='rules.contractAmount'>
                         <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                         <el-input
-                          @blur="setYearTurnover(scope.row.salesPerforMonth,scope.row.salesPerforYear)"
+                          @blur="setYearTurnover(scope.row.salesPerforMonth,scope.row.salesPerforYear,scope.$index)"
                           v-model="scope.row.monthIncome"
                           clearable
                           :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -3013,20 +3013,21 @@ export default {
 
     },
     //年销售额
-    setYearSale(month,year){
-      var yearSale=0,currentYearSum=0;
-      this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-        if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+    setYearSale(month,year,index){
+      var yearSale=0,yearSaleNext=0,currentYearSum=0;
+      this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+        if(item.salesPerforYear==year&&(i<index||i==index)){
           yearSale+=Number(item.monthSales);
+        }else if(i>index){
+          yearSaleNext+=Number(item.monthSales);
         }
-        // if(item.salesPerforYear==this.currentYear){
-        //   currentYearSum+=Number(item.monthSales);
-        // }
         currentYearSum+=Number(item.monthSales);
       });
-      this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-        if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+      this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+        if(item.salesPerforYear==year&&index==i){
           item.yearSales=yearSale;
+        }else if(i>index){
+          item.yearSales=yearSale+yearSaleNext;
         }
       });
       if(this.detailform.contractInfo.isYearContract=='0'||(this.detailform.contractInfo.isInSystemUnion=='1'&&this.detailform.contractInfo.isInSystemSub=='1'&&this.detailform.contractInfo.isOutSystemUnion=='1'&&this.detailform.contractInfo.isOutSystemSub=='1'&&this.detailform.contractInfo.isInGroupSub=='1')){
@@ -3043,16 +3044,31 @@ export default {
       }
     },
     //年营业收入
-    setYearTurnover(month,year){
-      var yearTurnover=0;
-      this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-        if(item.salesPerforMonth==month&&item.salesPerforYear==year){
-        yearTurnover+=Number(item.monthIncome);
+    setYearTurnover(month,year,index){
+      // var yearTurnover=0;
+      // this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+      //   if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+      //   yearTurnover+=Number(item.monthIncome);
+      //   }
+      // });
+      // this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+      //   if(item.salesPerforMonth==month&&item.salesPerforYear==year){
+      //   item.yearIncome=yearTurnover;
+      //   }
+      // });
+      var yearSale=0,yearSaleNext=0;
+      this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+        if(item.salesPerforYear==year&&(i<index||i==index)){
+          yearSale+=Number(item.monthIncome);
+        }else if(i>index){
+          yearSaleNext+=Number(item.monthIncome);
         }
       });
-      this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-        if(item.salesPerforMonth==month&&item.salesPerforYear==year){
-        item.yearIncome=yearTurnover;
+      this.detailform.contractInfoHouseSalesList.forEach((item,i)=>{
+        if(item.salesPerforYear==year&&index==i){
+          item.yearIncome=yearSale;
+        }else if(i>index){
+          item.yearIncome=yearSale+yearSaleNext;
         }
       });
     },
