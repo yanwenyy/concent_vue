@@ -1131,7 +1131,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'">
-        <Audit-Process :task="(p.task||p.from=='kblist')&&p.instid.indexOf('-kb')!=-1?{businessId:p.instid+'-kb',businessType:' contract_bid_register'}:{businessId:p.instid,businessType:' contract_bid_register'}"></Audit-Process>
+        <Audit-Process :task="(p.task||p.from=='kblist')&&p.instid.indexOf('-kb')==-1?{businessId:p.instid+'-kb',businessType:' contract_bid_register'}:{businessId:p.instid,businessType:' contract_bid_register'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <add-bd  v-if="BDCSVisible" ref="infoBD" @refreshBD="getBdInfo"></add-bd>
