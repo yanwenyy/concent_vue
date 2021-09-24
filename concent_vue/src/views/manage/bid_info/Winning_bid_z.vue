@@ -1129,10 +1129,10 @@ export default {
     },
     // 保存
     saveInfo(formName) {
-      if (this.zbForm.bidInfoSection.inBidOrgName == '') {
+      if (this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '') {
         this.$message({
           showClose: true,
-          message: '中标单位不能为空！',
+          message: '请填写必填项！',
           type: 'warning'
         });
         return false
