@@ -681,13 +681,25 @@
 
             <p class="detail-title"><span  class="uploadSpan">附件: </span>
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
-              <el-button
+              <!-- <el-button
                 v-show="p.actpoint !== 'look'&&p.actpoint!='task'"
                 size="small"
                 type="primary"
                 @click="openFileUp('/api/contract/topInfo/CommonFiles/verify/01/uploadFile','commonFilesList')">
                 点击上传
-              </el-button>
+              </el-button> -->
+              <el-upload
+                :headers="{'Authorization':Authorization}"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
+                class="upload-demo detailUpload detatil-flie-btn"
+                :action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"
+                :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailform.commonFilesList)}"
+                :show-file-list="false"
+                :before-upload="beforeAvatarUpload"
+                multiple
+              >
+                <el-button size="small" type="primary">点击上传</el-button>
+              </el-upload>
               <!--<el-upload v-show="p.actpoint != 'look'"-->
                 <!--class="upload-demo detailUpload"-->
                 <!--:action="'/api/contract/topInfo/CommonFiles/verify/01/uploadFile'"-->
@@ -730,16 +742,24 @@
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" width="80" show-overflow-tooltip>
 
                 </el-table-column>
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
 
                 <el-table-column align="center"
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
+                  
                   width="80"
                 >
                   <template slot-scope="scope">
-                    <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
+                    <el-link v-if="p.actpoint!=='look'&&p.actpoint!=='task'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -800,7 +820,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint != 'task'">
-            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
+            <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType01" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -814,7 +834,7 @@
           width="500">
 
           <template slot-scope="scope" v-show="p.actpoint != 'look'">
-            <el-input  readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
+            <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" readonly placeholder="请输入内容" v-model="scope.row.verifySectionOrgNameType02" class="input-with-select"/>
           </template>
         </el-table-column>
         <el-table-column
@@ -1012,6 +1032,7 @@ export default {
       }
     }
     return {
+      Authorization:sessionStorage.getItem("token"),
       companyMulStatus:false,//设计单位等多选列表状态
       DwVisible:false,//选择单位弹框状态
       uploadVisible:false,//上传附件组件状态
@@ -1178,6 +1199,86 @@ export default {
         }
       }
     },
+      
+      //判断附件大小
+      beforeAvatarUpload(file) {
+        var fileLimit=Number(this.fileLimit);
+        const isJPG = file.type === 'image/jpeg';
+        const isLt100M = file.size / 1024 / 1024 < fileLimit;
+
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        if (!isLt100M) {
+          this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
+        }
+        // return isJPG && isLt2M;
+        return isLt100M;
+      },
+      //上传附件显示进度条
+      uploadPorgress(file, fileList,tableList){
+        const len=tableList.length;
+        if (file.status === 'ready') {
+          file.fileName=file.name;
+          file.fileSize=file.size;
+          // file.fileType=file.type;
+          file.progressFlag = 'start'; // 显示进度条
+
+          file.loadProgress=0;
+
+          tableList.push(file);
+          var that=this;
+          tableList.forEach((item,index)=>{
+
+            const interval = setInterval(() => {
+              if (item&&item.loadProgress >= 90) {
+                item.loadProgress = 90;
+                if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
+                  tableList[index]=file.response.data;
+                  that.$set(tableList,index,tableList[index])
+                }
+
+                clearInterval(interval);
+                return
+              }
+              if(item.progressFlag == 'start'){
+                item.loadProgress += 20;//进度条进度
+                that.$set(tableList,index,tableList[index])
+
+              }
+              if(file.response&&file.response.data.progressFlag=='fail'){
+                tableList[index].progressFlag='fail';
+                this.$set(tableList,tableList)
+              }
+            }, 600);
+          });
+
+        }
+        if (file.response && file.response.code === 200) {
+          this.$message({
+            message: '上传成功',
+            type: 'success',
+            duration: 1000,
+            onClose: () => {
+              file.response.data.progressFlag='stop';
+              tableList.forEach((item,index)=>{
+                if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+                  tableList[index]=file.response.data;
+                  this.$set(tableList,index,tableList[index])
+                }
+              })
+
+            }
+          })
+        }else if(file.response && file.response.code !== 200){
+          // tableList[len-1].progressFlag = 'fail';
+          file.response.data.progressFlag='fail';
+          this.$set(tableList,tableList)
+          this.$message.error(file.response.msg);
+        }
+
+        this.$forceUpdate();
+      },
       //打开附件上传的组件
       openFileUp(url,list){
         this.uploadVisible = true;
@@ -1581,6 +1682,10 @@ export default {
         }
       });
     },
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
+    },
     handleRemove(file,index) {
       this.$http
         .post(
@@ -1706,16 +1811,6 @@ export default {
       .post("/api/contract/topInfo/TopInfor/detail/entityInfo", {topOrgId:this.p.task?this.p.instid.split("-")[1]:this.p.topinfoid})
       .then((res1) => {
         var datas=res1.data.data;
-        // this.getTwo(datas.topInfor.enginTypeFirstId);
-        // this.getTwoSC(datas.topInfor.marketFirstNameId);
-        // datas.topInforCapitalList.forEach((item)=>{
-        //   this.value1.push(item.capitalId)
-        // });
-        datas.topInfoSectionList.forEach((item)=>{
-          if(item.isTrack == '1'){
-            this.detailform1.topInfoSectionList.push(item)
-          }
-        })
         this.detailform1={
           topInfor: datas.topInfor,
           topInfoOrg: datas.topInfoOrg,

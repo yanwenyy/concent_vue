@@ -780,16 +780,20 @@ import { isMoney } from '@/utils/validate'
           this.detailForm.index=this.index;
 
         }
-          this.$refs.detailForm.validate((valid) => {
-            console.log(this.detailForm)
+        this.$refs.detailForm.validate((valid) => {
+          console.log(this.detailForm)
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
             // 回传参与投标单位
             console.info(this.detailForm.bidInfoSection.participatingUnitsName)
+            this.$message({
+              showClose: true,
+              message: '保存成功！',
+              type: 'success'
+            });
           }
         });
-
       },
       // 初始化
       init(list,isBidRates,type,detail,index,ifkb) {

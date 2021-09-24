@@ -1784,7 +1784,9 @@
                 message:  `${type=='save'?'保存':'提交'}成功`,
                 type: "success",
               });
+              if(type!='save'){
                 this.$router.back();
+              }
             }
           });
           } else {

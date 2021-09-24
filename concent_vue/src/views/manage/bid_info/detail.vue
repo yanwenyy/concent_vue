@@ -675,16 +675,16 @@
               prop="bidInfo.innerOrgName"
               :rules="detailform.bidInfo.isCoalitionBid=='0'?rules.innerOrgName:{}"
             >
+              <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'" -->
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
+                disabled
                 placeholder="请输入内容"
                 v-model="detailform.bidInfo.innerOrgName"
                 class="input-with-select"
               >
-                                <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
-
+                <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''" -->
                 <el-button
-                  v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''||p.actpoint=='task'"
+                  v-if="p.actpoint != 'look' && p.actpoint != 'searchLook' && detailform.bidInfo.isCoalitionBid != '1' &&detailform.bidInfo.isCoalitionBid != ''&&p.actpoint=='task'"
                   slot="append"
                   icon="el-icon-circle-plus-outline"
                   :disabled="p.actpoint ==='look'"
@@ -705,8 +705,9 @@
                 trigger: 'change',
               }:{}"
             >
+              <!-- :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'" -->
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
+                disabled
                 clearable
                 placeholder="外部联合体单位"
                 v-model="detailform.bidInfo.outOrg"
