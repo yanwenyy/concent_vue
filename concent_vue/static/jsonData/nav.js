@@ -315,7 +315,7 @@ export default {
                   'defaultpage': false
                 },
                 {
-                  'name': '投标查询',
+                  'name': '投标信息查询',
                   'path': '/manage/bid_info/tender/list',
                   'component': '/manage/bid_info/tender/list',
                   'iconCls': 'el-icon-edit',
