@@ -1003,7 +1003,6 @@ export default {
         this.$message.info("请选择一条记录进行登记操作！");
         return false;
       }
-      console.log(this.multipleSelection)
       this.$http
         .post("/api/contract/topInfo/BidInfoSection/detail/entityInfo", {
           id: this.multipleSelection[0].uuid,
@@ -1016,6 +1015,7 @@ export default {
           this.bdName = list || [];
           this.isBidRates = isBidRates;
           this.dialogFormVisible = true;
+          this.zbForm.bidInfo_03=datas.bidInfo_03;
           this.zbForm.bidInfoSection = datas.bidInfoSection;
           this.zbForm.bidInfoSection.inBidOrgName=datas.bidInfoSection.inBidOrgName||'';
           this.zbForm.bidInfoSection.inBidOrgId=datas.bidInfoSection.inBidOrgId||'';
