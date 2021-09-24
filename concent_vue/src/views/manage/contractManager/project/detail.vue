@@ -1323,7 +1323,7 @@
           <p>
             <span >项目地点: </span>
             <el-button
-              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               class="detatil-flie-btn"
               @click="add('dd'),checkTopInfoSiteList()"
               type="primary"
@@ -1445,7 +1445,7 @@
           <p>
             <span >建设单位: </span>
             <el-button
-              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+              v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
               class="detatil-flie-btn"
               @click="constructioAdd()"
               type="primary"
@@ -1711,6 +1711,7 @@
                   width="80"
                 >
                   <template slot-scope="scope">
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
                     <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
@@ -1984,6 +1985,7 @@
               >新增</el-button >
             </p>
             <el-table
+              @row-dblclick="(row, column, event)=>{openBd('look',row)}"
               :data="detailform.contractInfoSectionList"
               :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
               @selection-change="handleSelectionChange"
@@ -8380,6 +8382,7 @@ export default {
     //项目名称查询回来的数据
     goAddDetail(data){
       if(data.type=='1'){//项目名称查找回来的信息
+
         this.$http
           .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid,sectionId:data.data.sectionIdList})
           .then((res) => {
@@ -8390,6 +8393,7 @@ export default {
         this.getTwo(datas.topInfor.enginTypeFirstId);
         this.getTwoSC(datas.topInfor.marketFirstNameId);
         this.getTwoXZ(datas.topInfor.projectNatureFirstId);
+
         for(var i in this.detailform.contractInfo){
           // i!='isImport'
           _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
@@ -8397,7 +8401,7 @@ export default {
         for(var i in datas.topInfor){
           // i!='isImport'
           if(datas.topInfor[i]&&i!='uuid'){
-            _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+            _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]))||'';
           }
         }
         this.detailform.contractInfo=_con;
@@ -8558,6 +8562,13 @@ export default {
           this.gclName='0';
          this.getGclList(id)
         }
+        if(id=='17ff5c08d36b41ea8f2dc2e9d3029cac'||
+          id=='0f16c387f17b402db45c4de58e1cf8b4'||
+          id=='f6f5188458ab4c5ba1e0bc12a9a4188b'||
+          id=='24ebba9f2f3447579d0086209aff6ecd'||
+          id=='193b4d4003d04899a1d09c8d5f7877fe'){
+          this.detailform.contractInfo.isImport='0';
+        }
         this.projectDomainType.find(
           (item) => {
           if (item.id == id) {
@@ -8694,7 +8705,7 @@ export default {
             this.$message.error("中标通知书和合同附件必须传一个");
             return false;
           }
-          if(this.detailform.fileList3.length<2){
+          if(this.detailform.fileList3.length<2&&this.detailform.contractInfo.isImport=='0'){
             this.$message.error("工程量清单和劳材机两个文件必须都要上传");
             return false;
           }

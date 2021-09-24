@@ -5256,7 +5256,7 @@
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
-      
+
       // eslint-disable-next-line no-unde
       //扩展字段列表
       this.$http
@@ -5443,7 +5443,7 @@
             element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrgName = outside.customerName
+            element.constructionOrgName = outside?outside.customerName:''
           }
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)

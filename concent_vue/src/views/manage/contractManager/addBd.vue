@@ -13,44 +13,44 @@
       <div style="height: calc(100% - 50px);overflow: auto;padding: 0 50px;">
         <el-form class="gcform" :inline="true"  :model="detailForm" :rules="rules" ref="detailForm" @keyup.enter.native="init()">
           <el-form-item label="标段名称:" class="list-item">
-            <el-input v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.sectionName" placeholder="标段名称" clearable></el-input>
           </el-form-item>
           <el-form-item prop="riskFee" :rules="rules.contractAmount"  label="风险费(万元):" class="list-item">
-            <el-input v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.riskFee" placeholder="风险费(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="safetyCost" :rules="rules.contractAmount" label="安全费(万元):" class="list-item">
-            <el-input v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.safetyCost" placeholder="安全费(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="biddingPriceLimit" :rules="rules.contractAmount" label="投标限价(万元):" class="list-item">
-            <el-input v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.biddingPriceLimit" placeholder="投标限价(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="tenderSecurity" :rules="rules.contractAmount" label="投标保证金(万元):" class="list-item">
-            <el-input v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.tenderSecurity" placeholder="投标保证金(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
           <el-form-item prop="bidPrice" :rules="rules.contractAmount" label="投标价(万元):" class="list-item">
-            <el-input v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.bidPrice" placeholder="投标价(万元)" clearable>
               <template slot="prepend">¥</template>
               <template slot="append">(万元)</template>
             </el-input>
           </el-form-item>
           <el-form-item label="投标费率(百分比):" class="list-item">
-            <el-input v-model="detailForm.tenderRate" placeholder="投标费率(百分比)" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.tenderRate" placeholder="投标费率(百分比)" clearable></el-input>
           </el-form-item>
           <el-form-item label="开标地点:" class="list-item">
-            <el-input v-model="detailForm.openBidPlaceName" placeholder="开标地点" clearable>
-              <el-button slot="append" icon="el-icon-search" @click="selectPosition"></el-button>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.openBidPlaceName" placeholder="开标地点" clearable>
+              <el-button v-if="type!='look'" slot="append" icon="el-icon-search" @click="selectPosition"></el-button>
             </el-input>
           </el-form-item>
           <el-form-item label="评标办法:" class="list-item">
@@ -65,7 +65,7 @@
             <el-select
               clearable
               placeholder="评标办法"
-
+              :disabled="type === 'look'"
               v-model="detailForm.bidEvaluationMethodName">
               <el-option
                 :key="index"
@@ -83,32 +83,46 @@
               clearable
               type="date"
               value-format="timestamp"
+              :disabled="type === 'look'"
               v-model="detailForm.dateOfBidOpeningName"
             >
             </el-date-picker>
           </el-form-item>
+          <el-form-item label="开标金额(万元):" class="list-item" prop="openBidAmount"
+                        :rules="rules.contractAmount">
+            <el-input
+              v-model="detailForm.openBidAmount"
+              clearable
+              placeholder="开标金额(万元)"
+              :disabled="type === 'look'"
+            >
+              <template slot="prepend">¥</template>
+              <template slot="append">(万元)</template>
+            </el-input>
+            <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
+          </el-form-item>
           <el-form-item label="参与投标单位:" class="list-item">
-            <el-input v-model="detailForm.participatingUnitsName" placeholder="参与投标单位" clearable>
-              <el-button slot="append" icon="el-icon-search" @click="addDw('参与投标单位',detailForm.participatingUnitsId)"></el-button>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.participatingUnitsName" placeholder="参与投标单位" clearable>
+              <el-button v-if="type!='look'" slot="append" icon="el-icon-search" @click="addDw('参与投标单位',detailForm.participatingUnitsId)"></el-button>
             </el-input>
           </el-form-item>
           <el-form-item label="项目经理:" class="list-item">
-            <el-input v-model="detailForm.projectManager" placeholder="项目经理" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.projectManager" placeholder="项目经理" clearable></el-input>
           </el-form-item>
           <el-form-item label="项目副经理:" class="list-item">
-            <el-input v-model="detailForm.deputyProjectManager	" placeholder="项目副经理" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.deputyProjectManager	" placeholder="项目副经理" clearable></el-input>
           </el-form-item>
           <el-form-item label="技术负责人:" class="list-item">
-            <el-input v-model="detailForm.technicalDirector" placeholder="技术负责人" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.technicalDirector" placeholder="技术负责人" clearable></el-input>
           </el-form-item>
           <el-form-item label="安全负责人:" class="list-item">
-            <el-input v-model="detailForm.personInChargeOfSafety" placeholder="安全负责人" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.personInChargeOfSafety" placeholder="安全负责人" clearable></el-input>
           </el-form-item>
           <el-form-item label="财务负责人:" class="list-item">
-            <el-input v-model="detailForm.personInChargeOfFinance" placeholder="财务负责人" clearable></el-input>
+            <el-input :disabled="type === 'look'"  v-model="detailForm.personInChargeOfFinance" placeholder="财务负责人" clearable></el-input>
           </el-form-item>
           <el-form-item label="成本负责人:" class="list-item">
-            <el-input v-model="detailForm.costOwner" placeholder="成本负责人" clearable></el-input>
+            <el-input :disabled="type === 'look'" v-model="detailForm.costOwner" placeholder="成本负责人" clearable></el-input>
           </el-form-item>
           <el-form-item label="其他未列出单位(单位与单位之间用英文逗号隔开):" >
             <el-input
@@ -123,6 +137,7 @@
           <div class="list-title">
             其他投标单位(系统内):
             <el-button
+              v-if="type!='look'"
               @click="add('inside',1)"
               class="detatil-flie-btn"
               size="mini"
@@ -154,7 +169,7 @@
               label="其他投标单位(系统内)">
               <template slot-scope="scope">
                 <el-input  placeholder="请输入内容" v-model="scope.row.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
-                  <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
+                  <el-button v-if="type!='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('其他投标单位(系统内)',scope.row.orgId,false,scope.$index,detailForm.dataList)" ></el-button>
                 </el-input>
                 <!--<el-select-->
                   <!--class="tabelForm-dete"-->
@@ -188,7 +203,7 @@
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                  <el-input type="text" v-model="scope.row.bidAmount">
+                  <el-input :disabled="type === 'look'" type="text" v-model="scope.row.bidAmount">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -202,6 +217,7 @@
               show-overflow-tooltip
               align="center"
               width="100"
+              v-if="type!='look'"
             >
               <template slot-scope="scope">
                 <el-link :underline="false" @click="del(scope.$index,'inside',scope.row)" type="warning">删除</el-link>
@@ -211,6 +227,7 @@
           <div class="list-title">
             其他投标单位(系统外):
             <el-button
+              v-if="type!='look'"
               @click="add('outside',2)"
               class="detatil-flie-btn"
               size="mini"
@@ -241,6 +258,7 @@
               label="其他投标单位(系统外)">
               <template slot-scope="scope">
                 <el-select
+                  :disabled="type === 'look'"
                   class="tabelForm-dete"
                   clearable
                   filterable
@@ -273,7 +291,7 @@
               <template slot-scope="scope">
                 <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                  <el-input type="text" v-model="scope.row.bidAmount">
+                  <el-input :disabled="type === 'look'" type="text" v-model="scope.row.bidAmount">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -288,6 +306,7 @@
               show-overflow-tooltip
               align="center"
               width="100"
+              v-if="type!='look'"
             >
               <template slot-scope="scope">
                 <el-link :underline="false" @click="del(scope.$index,'outside',scope.row)" type="warning">删除</el-link>
@@ -298,7 +317,7 @@
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="sub()">确定</el-button>
+        <el-button  v-if="type!='look'" type="primary" @click="sub()">确定</el-button>
       </div>
 
     </el-dialog>
