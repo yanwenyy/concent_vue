@@ -986,25 +986,20 @@
               </el-table-column>
 
 
-              <el-table-column
+              <!-- <el-table-column
                 :resizable="false"
                 label="其他投标单位(系统外)"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <!-- <template slot-scope="scope">
-                <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==2?item.orgName:''}}{{index < scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-              </template> -->
                 <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList" :key="index">
                     {{item.orgType==2?item.orgName:''}}
                     {{scope.row.bidInfoSectionOrgList[index+1]&& index>0&&scope.row.bidInfoSectionOrgList[index-1].orgType==2 && scope.row.bidInfoSectionOrgList[index+1].orgType==2? ',':''}}
                 </span>
-
                 </template>
               </el-table-column>
-
               <el-table-column
                 :resizable="false"
                 label="其他未列出单位"
@@ -1013,7 +1008,7 @@
                 align="center"
                 :width="180"
               >
-              </el-table-column>
+              </el-table-column> -->
 
               <el-table-column
                 :resizable="false"
