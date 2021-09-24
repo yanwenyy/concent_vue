@@ -584,7 +584,7 @@
               }"
             >
               <el-date-picker
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'||p.actpoint==='edit'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 filterable
                 clearable
                 value-format="timestamp"
@@ -603,7 +603,7 @@
                             label="招标文件发售截止日期">
               <el-date-picker
                 @change="ifYq"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'||p.actpoint==='edit'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 filterable
                 clearable
@@ -624,7 +624,7 @@
             >
               <el-date-picker
                 @change="ifYq"
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'||p.actpoint==='edit'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 value-format="timestamp"
                 clearable
                 filterable
@@ -676,7 +676,7 @@
               :rules="detailform.bidInfo.isCoalitionBid=='0'?rules.innerOrgName:{}"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint==='edit' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                 placeholder="请输入内容"
                 v-model="detailform.bidInfo.innerOrgName"
                 class="input-with-select"
@@ -706,7 +706,7 @@
               }:{}"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint==='edit' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook' || detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'"
                 clearable
                 placeholder="外部联合体单位"
                 v-model="detailform.bidInfo.outOrg"
@@ -751,7 +751,7 @@
               style="width: 100%"
             >
               <el-input
-                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'||p.actpoint==='edit'"
+                :disabled="p.actpoint === 'look' || p.actpoint === 'searchLook'||p.actpoint=='task'"
                 type="textarea"
                 clearable
                 placeholder="请输入"
@@ -773,7 +773,7 @@
             >
               <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
               <el-input
-                :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint==='edit'"
+                :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 clearable
                 placeholder="请输入"
                 type="textarea"
@@ -1763,12 +1763,9 @@ export default {
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.$router.back();
-                // this.$refs[formName].resetFields();
-
-                // this.$router.push({
-                //   path: "/manage/bid_info/list",
-                // });
+                if (type!='save') {
+                  this.$router.back();
+                }
               }
             });
         } else {
