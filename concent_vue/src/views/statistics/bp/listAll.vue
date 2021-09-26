@@ -527,7 +527,6 @@ export default {
       this.itemform.vprojecttype = str;
       // this.itemform.vParentid=this.itemform.sumTarget;
       // this.itemform.uuid = this.node.data.uuid;
-      this.itemform.qfType = "JH"
       if (this.itemform.vjldw == null || this.itemform.vjldw == "") {
         this.itemform.vjldw = ''
         this.itemform.vjldwName = ''
@@ -729,7 +728,6 @@ export default {
     },
     getTableData(val) {
       let req = {
-        qfType:"JH",
         current: val.current,
         size: val.size,
         uuid:val.uuid,
@@ -755,7 +753,6 @@ export default {
         this.$http
           .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
             parentid: node.data.uuid,
-            qfType:"JH"
           })
           .then((res) => {
             node.data.current=this.searchform.current;
