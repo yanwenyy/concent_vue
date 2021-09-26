@@ -19,7 +19,9 @@
                 message: '此项不能为空',
                 trigger: ['change','blur'],
               }">
+          <el-input v-show="type!='add'" v-model="detailForm.bidInfoSection.sectionName" disabled></el-input>
           <el-select
+            v-show="type=='add'"
             clearable
             placeholder=""
             v-model="detailForm.bidInfoSection.sectionId"
@@ -37,6 +39,7 @@
               v-for="(item, index) in bdName"
             ></el-option>
             </el-select>
+
         </el-form-item>
 
           <el-form-item label="参与投标单位:" class="list-item"
@@ -806,26 +809,20 @@ import { isMoney } from '@/utils/validate'
             dataList2: []
           };
         this.type=type;
-        console.info("type", type)
         this.index=index;
-        // console.log(list,type)
         this.visible = true;
         this.bdName=list||[];
-        // console.log(this.bdName)
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
         if(type=='edit'||type=='look'||type=="eidtnew"){
-
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {
-            // item.detailName = _data.detailName;
             this.detailForm.dataList.push(item)
           }else{
             this.detailForm.dataList2.push(item)
           }
          });
          this.detailForm.bidInfoSection=detail.bidInfoSection;
-          // console.log(this.detailForm)
         }else{
           this.detailForm={
             bidInfoSection:{participatingUnitsName:'',openBidPlaceName:''},
