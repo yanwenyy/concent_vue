@@ -1714,18 +1714,19 @@ export default {
       }
     },
     saveInfo(formName,type) {
-      // var bidInfoInnerOrgList = [];
-      // //内部联合体单位
-      // this.amountSource.forEach((item) => {
-      //   if (this.detailform.value1&&this.detailform.value1.indexOf(item.id) != -1) {
-      //     var v = {
-      //       innerOrgId: item.id,
-      //       innerOrgName: item.detailName,
-      //     };
-      //     bidInfoInnerOrgList.push(v);
-      //   }
-      // });
-      // this.detailform.bidInfoInnerOrgList=bidInfoInnerOrgList;
+      if (this.detailform.bidInfo.innerOrgId != ''&&this.detailform.bidInfoInnerOrgList == '') {
+        let id = this.detailform.bidInfo.innerOrgId.split(",")
+        let name = this.detailform.bidInfo.innerOrgName.split(",")
+        let list = [];
+        id.forEach((item, index) => {
+          var _v = {
+            innerOrgId: id[index],
+            innerOrgName: name[index],
+          };
+          list.push(_v);
+        });
+        this.detailform.bidInfoInnerOrgList = list;
+      }
       var url='';
         if(type=='save'){
           url="/api/contract/topInfo/BidInfo/detail/saveOrUpdate"
