@@ -660,7 +660,7 @@
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
-                  :disabled="p.actpoint=='task'"
+                  :disabled="p.actpoint=='task'|| p.actpoint=='look'"
                   clearable
                   placeholder="请输入"
                   type="textarea"
@@ -690,19 +690,6 @@
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
-                <!--<el-upload-->
-                <!--class="upload-demo detailUpload"-->
-                <!--:action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"-->
-                <!--:on-success="handleChange"-->
-                <!--:on-error="handleChange"-->
-                <!--:on-remove="handleRemove"-->
-                <!--:show-file-list="false"-->
-                <!--:file-list="detailform.bidInfo_02"-->
-                <!--:disabled="p.actpoint === 'look'"-->
-                <!--multiple-->
-                <!--&gt;-->
-                <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
               </p>
 
               <el-table
@@ -964,17 +951,13 @@
 
               </el-table-column>
 
-              <el-table-column
+              <!-- <el-table-column
                 :resizable="false"
                 label="其他投标单位(系统内)"
                 show-overflow-tooltip
                 align="center"
                 :width="180"
               >
-                <!-- <template slot-scope="scope">
-                  <span v-for="(item,index) in scope.row.bidInfoSectionOrgList">{{item.orgType==1?item.orgName:''}}{{index <scope.row.bidInfoSectionOrgList.length-1? ',':''}}</span>
-
-                </template> -->
                 <template slot-scope="scope">
                 <span v-for="(item,index ) in scope.row.bidInfoSectionOrgList" :key="index">
                     {{item.orgType==1?item.orgName:''}}
@@ -986,7 +969,7 @@
               </el-table-column>
 
 
-              <!-- <el-table-column
+              <el-table-column
                 :resizable="false"
                 label="其他投标单位(系统外)"
                 show-overflow-tooltip
