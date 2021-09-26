@@ -690,19 +690,6 @@
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
-                <!--<el-upload-->
-                <!--class="upload-demo detailUpload"-->
-                <!--:action="'/api/contract/topInfo/CommonFiles/bidInfo/02/uploadFile'"-->
-                <!--:on-success="handleChange"-->
-                <!--:on-error="handleChange"-->
-                <!--:on-remove="handleRemove"-->
-                <!--:show-file-list="false"-->
-                <!--:file-list="detailform.bidInfo_02"-->
-                <!--:disabled="p.actpoint === 'look'"-->
-                <!--multiple-->
-                <!--&gt;-->
-                <!--<el-button size="small" type="primary">点击上传</el-button>-->
-                <!--</el-upload>-->
               </p>
 
               <el-table
