@@ -160,10 +160,10 @@
           label="是否中标"
           prop="isWinBid"
           show-overflow-tooltip
-        >
+        > 
           <template slot-scope="scope">
-            <span v-if="scope.row.isWinBid == '0'" >中标</span>
-            <span v-if="scope.row.isWinBid == '1'" >未中标</span>
+            <span v-if="scope.row.isWinBid != '1'" >未中标</span>
+            <span v-if="scope.row.isWinBid == '1'" >中标</span>
           </template>
         </el-table-column>
         <el-table-column
