@@ -8006,7 +8006,7 @@ export default {
       }
     },
     importProjectUpload(){
-      if(this.p.actpoint=='add'&&this.id==''){
+      if(this.p.actpoint=='add'&&(this.id==''||this.id==null)){
         this.$message({
           message: '请先保存！',
           type: 'warning',
