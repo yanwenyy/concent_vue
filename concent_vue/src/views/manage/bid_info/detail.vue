@@ -1599,10 +1599,16 @@ export default {
       bdList.forEach((element, index) => {
         this.detailform.bidInfoSectionList.forEach((item) => {
           if (element.uuid == item.bidInfoSection.sectionId) {
-            bdList.splice(index,1)
+            bdList[index] = ""
           }
         })
       })
+      for(var i = 0 ;i<bdList.length;i++) {  
+        if(bdList[i] =="" || bdList[i] == null || typeof(bdList[i]) == "undefined") {  
+          bdList.splice(i,1);  
+          i= i-1;  
+        }  
+      }  
       this.$nextTick(() => {
         this.$refs.infoBD.init(
           bdList,
