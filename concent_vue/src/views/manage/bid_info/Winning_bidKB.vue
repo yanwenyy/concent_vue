@@ -660,7 +660,7 @@
               >
                 <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                 <el-input
-                  :disabled="p.actpoint=='task'"
+                  :disabled="p.actpoint=='task'|| p.actpoint=='look'"
                   clearable
                   placeholder="请输入"
                   type="textarea"
