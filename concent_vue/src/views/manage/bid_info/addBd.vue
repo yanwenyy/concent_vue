@@ -137,10 +137,10 @@
             </el-select>
           </template>
         </el-form-item>
-        <el-form-item 
-          v-if="ifkb=='kbxq'" 
-          label="开标金额(万元):" 
-          class="list-item" 
+        <el-form-item
+          v-if="ifkb=='kbxq'"
+          label="开标金额(万元):"
+          class="list-item"
           prop="bidInfoSection.openBidAmount"
           :rules="ifkb=='kbxq'?rules.isMustMoney:type=='eidtnew'?rules.contractAmount:''"
         >
@@ -421,8 +421,8 @@
             v-if="ifkb=='kbxq'"
             >
              <template slot-scope="scope">
-                <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
-                 <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
+                <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                 <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'&&ifkb!='kbxq'">
                     <template slot="prepend">¥</template>
                     <template slot="append">(万元)</template>
                   </el-input>
@@ -528,8 +528,9 @@
             v-if="ifkb=='kbxq'"
           >
             <template slot-scope="scope">
-              <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.riskFee'" :rules='rules.contractAmount'>
-                <el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">
+              <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <!--<el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">-->
+                <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'&&ifkb!='kbxq'">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>
                 </el-input>
