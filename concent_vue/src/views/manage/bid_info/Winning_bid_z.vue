@@ -672,8 +672,7 @@
             </el-form>
             <el-form v-show="zbForm.bidInfoSection.isWinBid==='1'">
               <p ><span >文件公示: </span>
-                <el-upload
-
+                <!-- <el-upload
                   v-show="zbType=='add'"
                   class="upload-demo detailUpload"
                   :action="'/api/contract/topInfo/CommonFiles/bidInfo/03/uploadFile'"
@@ -682,6 +681,18 @@
                   :on-error="handleChange"
                   :on-remove="handleRemove"
                   :show-file-list="false"
+                  multiple
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload> -->
+                <el-upload
+                  :headers="{'Authorization':Authorization}"
+                  v-show="zbType=='add'"
+                  class="upload-demo detailUpload detatil-flie-btn"
+                  :action="'/api/contract/topInfo/CommonFiles/bidInfo/03/uploadFile'"
+                  :on-change="( file, fileList)=>{uploadPorgress( file, fileList,zbForm.bidInfo_03)}"
+                  :show-file-list="false"
+                  :before-upload="beforeAvatarUpload"
                   multiple
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
@@ -714,9 +725,14 @@
                   </template>
                 </el-table-column>
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-
                 </el-table-column>
-
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   align="center"
                   :resizable="false"
@@ -787,6 +803,7 @@ export default {
       }
     }
     return {
+      Authorization:sessionStorage.getItem("token"),
       xqprojectType:[],//工程二级列表
       companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
@@ -879,6 +896,70 @@ export default {
     this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
   },
   methods: {
+    //判断附件大小
+    beforeAvatarUpload(file) {
+      var fileLimit=Number(this.fileLimit);
+      const isJPG = file.type === 'image/jpeg';
+      const isLt100M = file.size / 1024 / 1024 < fileLimit;
+      if (!isLt100M) {
+        this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
+      }
+      return isLt100M;
+    },
+    //上传附件显示进度条
+    uploadPorgress(file, fileList,tableList){
+      const len=tableList.length;
+      if (file.status === 'ready') {
+        file.fileName=file.name;
+        file.fileSize=file.size;
+        file.progressFlag = 'start'; // 显示进度条
+        file.loadProgress=0;
+        tableList.push(file);
+        var that=this;
+        tableList.forEach((item,index)=>{
+          const interval = setInterval(() => {
+            if (item&&item.loadProgress >= 90) {
+              item.loadProgress = 90;
+              if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
+                tableList[index]=file.response.data;
+                that.$set(tableList,index,tableList[index])
+              }
+              clearInterval(interval);
+              return
+            }
+            if(item.progressFlag == 'start'){
+              item.loadProgress += 20;//进度条进度
+              that.$set(tableList,index,tableList[index])
+            }
+            if(file.response&&file.response.data.progressFlag=='fail'){
+              tableList[index].progressFlag='fail';
+              this.$set(tableList,tableList)
+            }
+          }, 600);
+        });
+      }
+      if (file.response && file.response.code === 200) {
+        this.$message({
+          message: '上传成功',
+          type: 'success',
+          duration: 1000,
+          onClose: () => {
+            file.response.data.progressFlag='stop';
+            tableList.forEach((item,index)=>{
+              if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+                tableList[index]=file.response.data;
+                this.$set(tableList,index,tableList[index])
+              }
+            })
+          }
+        })
+      }else if(file.response && file.response.code !== 200){
+        file.response.data.progressFlag='fail';
+        this.$set(tableList,tableList)
+        this.$message.error(file.response.msg);
+      }
+      this.$forceUpdate();
+    },
     //获取项目地点的值
       getPositionTreeFind(data) {
         this.treeStatasFind = false;
