@@ -121,7 +121,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="veditable"
           label="是否填报"
           width="90"
@@ -138,7 +138,7 @@
           :formatter="vdisableFormatter"
           show-overflow-tooltip
         >
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       </div>
     </div>
