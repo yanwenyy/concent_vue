@@ -1221,13 +1221,13 @@ export default {
     beforeAvatarUpload(file) {
       var fileLimit=Number(this.fileLimit);
       const isJPG = file.type === 'image/jpeg';
-      const isLt100M = file.size / 1024 / 1024 < fileLimit;
+      const isLt100M = file.size / 1024 / 1024 < (fileLimit/10);
 
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!');
       // }
       if (!isLt100M) {
-        this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
+        this.$message.error('上传文件大小不能超过 '+(fileLimit/10)+'MB!');
       }
       // return isJPG && isLt2M;
       return isLt100M;
