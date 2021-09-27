@@ -127,8 +127,8 @@
     </el-form>
     <div style="margin-top: 10px;">
       <el-table
-        :max-height="$tableHeight-20"
-        :height="$tableHeight-20"
+        :max-height="$tableHeight-80"
+        :height="$tableHeight-80"
         :data="page.records"
         :header-cell-style="{
           'text-align': 'center',
