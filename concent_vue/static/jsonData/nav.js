@@ -332,6 +332,15 @@ export default {
                   'leaf': true,
                   'defaultpage': true
                 },
+                {
+                  'name': '开标查询详情',
+                  'path': '/manage/bid_info/tender/detailKB',
+                  'component': '/manage/bid_info/tender/detailKB',
+                  'iconCls': 'el-icon-edit',
+                  'menushow': true,
+                  'leaf': true,
+                  'defaultpage': true
+                },
               ]
             },
             {
