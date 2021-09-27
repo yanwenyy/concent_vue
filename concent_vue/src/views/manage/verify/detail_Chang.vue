@@ -646,6 +646,18 @@
 
                             </el-table-column>
 
+                            <el-table-column align="center"
+                              :resizable="false"
+                              label="操作"
+                              show-overflow-tooltip
+                              :width="150"
+                            >
+                              <template slot-scope="scope">
+                                <el-link :underline="false" @click="handleDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 33px;':'color: #409EFF;'">下载</el-link>
+                                <el-link  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                              </template>
+                            </el-table-column>
+
                           </el-table>
                 </div>
               <p  v-if="detailformBefore.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformBefore.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px">
