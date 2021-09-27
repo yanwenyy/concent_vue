@@ -1721,6 +1721,9 @@ export default {
       }
     },
     saveInfo(formName,type) {
+      if(this.detailform.bidInfo.innerOrgId == undefined){
+        this.detailform.bidInfo.innerOrgId = ''
+      }
       if (this.detailform.bidInfo.innerOrgId != ''&&this.detailform.bidInfoInnerOrgList == '') {
         let id = this.detailform.bidInfo.innerOrgId.split(",")
         let name = this.detailform.bidInfo.innerOrgName.split(",")
@@ -1772,8 +1775,10 @@ export default {
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                if (type!='save') {
-                  this.$router.back();
+                if (type=='save') {
+                  this.detailform.bidInfo.uuid = res.data.data.bidInfo.uuid;
+                } else {
+                  this.$router.back()
                 }
               }
             });
