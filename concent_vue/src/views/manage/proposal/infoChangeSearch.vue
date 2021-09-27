@@ -318,4 +318,9 @@
     font-size: 14px;
     padding-left: 130px;
   }
+  
+  >>>.el-cascader-node>.el-radio, .el-radio:last-child {
+    margin-right: 0;
+    margin-left: 3px;
+  }
 </style>
