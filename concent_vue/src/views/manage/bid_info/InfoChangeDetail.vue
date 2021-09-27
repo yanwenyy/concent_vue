@@ -1725,17 +1725,21 @@
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
 
                 </el-table-column>
-
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   align="center"
-
-
                   label="操作"
-                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
-                  width="60"
+                  width="120"
                 >
                   <template slot-scope="scope">
-                    <el-link @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="success">下载</el-link>
+                    <el-link v-if="p.actpoint!=='look'&&p.actpoint!=='task'" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -1782,13 +1786,6 @@
                   </template>
                 </el-table-column>
                 <el-table-column align="center" :resizable="false" label="类型" prop="fileType" show-overflow-tooltip>
-                </el-table-column>
-                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
-                  <template slot-scope="scope">
-                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
-                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
-                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
-                  </template>
                 </el-table-column>
                 <el-table-column
                   align="center"
