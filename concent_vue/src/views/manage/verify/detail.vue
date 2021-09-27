@@ -585,7 +585,7 @@
            v-model="detailform.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-           @change="detailform.verify.isCoalitionBid=='否'?(detailform.verify.orgName='',detailform.verify.outOrg=''):''"
+           @change="detailform.verify.isCoalitionBid=='否'?(detailform.verify.orgName='',detailform.verify.orgId='',detailform.verify.outOrg='',detailform.verify.outOrgId=''):''"
          />
         </el-form-item>
         <el-form-item  label="内部联合体单位:"

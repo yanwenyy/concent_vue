@@ -28,7 +28,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-click="rowshow"
+        @row-dblclick="rowshow"
         @selection-change="handleSelectionChange"
         @select="rowSelect"
         border
@@ -757,7 +757,6 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-      console.log(JSON.stringify(this.searchform));
       if (this.searchform.saleTime != "") {
         var date = new Date(this.searchform.saleTime);
         var time1 = Date.parse(date);
