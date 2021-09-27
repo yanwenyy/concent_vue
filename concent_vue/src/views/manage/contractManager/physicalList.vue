@@ -41,9 +41,9 @@
     >
       <div style="width: 100%; overflow: hidden;">
         <el-button-group style="float: left">
-          <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
+          <!-- <el-button @click="add" plain type="primary"><i class="el-icon-plus"></i>新增</el-button>
           <el-button @click="editItem" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
-          <el-button @click="remove" plain type="primary"><i class="el-icon-delete"></i>删除</el-button>
+          <el-button @click="remove" plain type="primary"><i class="el-icon-delete"></i>删除</el-button> -->
           <el-button @click="searchformReset" plain type="primary"
             ><i class="el-icon-refresh-right"></i>刷新</el-button
           >
@@ -106,11 +106,20 @@
         <el-table-column
           prop="vtype"
           label="使用设置"
-          width="90"
+          width="150"
           align="center"
           :formatter="vtypeFormatter"
-          show-overflow-tooltip
         >
+          <template slot-scope="scope">
+            <el-select v-model="scope.row.vtype" placeholder="请选择" @change="vtypeChange(scope.row)">
+              <el-option
+                v-for="item in vtypeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </template>
         </el-table-column>
         <el-table-column
           prop="veditable"
@@ -279,6 +288,21 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      vtypeOptions:[
+        {
+          value: "0",
+          label: '全部'
+        },{
+          value: "1",
+          label: '仅月报'
+        },{
+          value: "2",
+          label: '仅年报'
+        },{
+          value: "3",
+          label: '仅合同'
+        },
+      ],
       props: {
         label: "vname",
         isLeaf: "vleaf",
@@ -362,6 +386,37 @@ export default {
     },
   },
   methods: {
+      vtypeChange(row) {
+        console.info(row.vtype)
+        this.itemform = {
+          vtype: row.vtype,
+          uuid: row.uuid
+        }
+        this.$http
+        .post(
+          "/api/statistics/bp/BpTjx/detail/save",
+          JSON.stringify(this.itemform),
+          // this.itemform,
+          { useJson: true }
+        )
+        .then((res) => {
+          if (res.data.code === 200) {
+            this.$message({
+              message: "保存成功",
+              type: "success",
+            });
+            for (
+              let i = 0;
+              i < this.$refs.tree.store._getAllNodes().length;
+              i++
+            ) {
+              this.$refs.tree.store._getAllNodes()[i].expanded = false;
+            }
+            this.loadNode(this.node, this.resolve);
+          }
+          //this.getData();
+        });
+      },
       //打开统计项汇总指标
       openhzzb(){
         this.tjx = true;
@@ -723,7 +778,6 @@ export default {
     },
     getTableData(val) {
       let req = {
-        qfType:"XQ",
         current: val.current,
         size: val.size,
         uuid:val.uuid,
@@ -749,7 +803,6 @@ export default {
         this.$http
           .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
             parentid: node.data.uuid,
-            qfType:"XQ"
           })
           .then((res) => {
             node.data.current=this.searchform.current;

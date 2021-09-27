@@ -143,7 +143,7 @@
       layout="total, sizes, prev, pager, next, jumper">
     </el-pagination>
 <!-- 新增统计项的弹框 -->
-    <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="30%">
+    <el-dialog :title="dialogtitle" :visible.sync="dialogResult" width="32%">
       <el-form :model="itemform">
         <el-form-item label="统计名称" prop="vname" >
           <el-input placeholder="" class="bp_height"  v-model="itemform.vname" />
@@ -208,6 +208,7 @@
           <el-radio v-model="itemform.vtype" label="0">全部</el-radio>
           <el-radio v-model="itemform.vtype" label="2">仅年报</el-radio>
           <el-radio v-model="itemform.vtype" label="1">仅月报</el-radio>
+          <el-radio v-model="itemform.vtype" label="3">仅合同</el-radio>
         </el-form-item>
         <el-form-item label="是否填报" prop="veditable">
           <el-switch
@@ -729,7 +730,6 @@ export default {
     },
     getTableData(val) {
       let req = {
-        qfType:"JH",
         current: val.current,
         size: val.size,
         uuid:val.uuid,
@@ -755,7 +755,6 @@ export default {
         this.$http
           .post("/api/statistics/bp/BpTjx/list/getBpTjxListByParentId", {
             parentid: node.data.uuid,
-            qfType:"JH"
           })
           .then((res) => {
             node.data.current=this.searchform.current;
