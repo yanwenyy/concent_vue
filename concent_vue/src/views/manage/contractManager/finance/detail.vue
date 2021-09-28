@@ -3642,6 +3642,7 @@ export default {
                 });
                 if (type=='save') {
                   this.id=res.data.data.contractInfo.uuid;
+                  this.detailform.contractInfo.uuid.id=res.data.data.contractInfo.uuid;
                   this.getDetail();
                 } else {
                   this.$router.back()
