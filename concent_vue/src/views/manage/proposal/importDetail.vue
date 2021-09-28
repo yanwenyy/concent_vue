@@ -1701,8 +1701,11 @@
                           message: "保存成功",
                           type: "success",
                         });
-                        // this.$refs[formName].resetFields();
-                        this.back();
+                        if (type=='save') {
+                          this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                        } else {
+                          this.back();
+                        }
                       }
                     });
                 }else{
