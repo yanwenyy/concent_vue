@@ -1559,6 +1559,9 @@
                 <el-form-item
                   label="合同签定日期:"
                   prop="contractInfo.contractSignTime"
+                  :rules="{
+                    required: true, message: '此项不能为空', trigger:['change','blur']
+                  }"
                 >
                   <el-date-picker
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"

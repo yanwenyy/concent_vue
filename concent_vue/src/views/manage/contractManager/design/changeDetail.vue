@@ -2544,10 +2544,10 @@
                   label="新兴市场类别(二级):"
                   prop="contractInfo.marketSecondId"
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
-                required: true,
-                message: '此项不能为空',
-                trigger: 'blur',
-              }:{}"
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }:{}"
                 >
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
