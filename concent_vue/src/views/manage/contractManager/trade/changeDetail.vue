@@ -5350,6 +5350,8 @@
                 type: "success",
               });
               if (type=='save') {
+                // this.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                // this.detailform.contractInfo.uuid.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
                 this.getDetail();
               } else {
                 this.$router.back()
