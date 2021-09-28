@@ -844,25 +844,25 @@
               >
               </el-table-column>
 
-              <!-- <el-table-column
+              <el-table-column
                 align="center"
                 :resizable="false"
                 fixed="right"
                 label="操作"
                 show-overflow-tooltip
-
-                v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
-                width="60"
+                width="120"
               >
                 <template slot-scope="scope">
+                  <el-link :underline="false" @click="attachmentDownload(scope.row)" type="success">下载</el-link>
                   <el-link
+                    v-if="p.actpoint !== 'look' && p.actpoint !== 'searchLook'&& p.actpoint !== 'task'"
                     :underline="false"
                     @click="handleRemove1(scope.row, scope.$index)"
                     type="warning"
-                    >删除</el-link
-                  >
+                    >删除
+                  </el-link>
                 </template>
-              </el-table-column> -->
+              </el-table-column>
             </el-table>
           </el-row>
           <el-row v-if="p.from=='kblist'">
@@ -1530,7 +1530,10 @@ export default {
         });
 
       },
-
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
+    },
     //打开单位弹框
     addDw(type, list) {
       this.DwVisible = true;
