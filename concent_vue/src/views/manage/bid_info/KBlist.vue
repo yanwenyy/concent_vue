@@ -182,15 +182,26 @@
 
           show-overflow-tooltip>
           <template slot-scope="scope">
-              {{scope.row.bidFlowStatus==1?'草稿':scope.row.bidFlowStatus==2?'审核中':scope.row.bidFlowStatus==3?'审核通过':scope.row.bidFlowStatus==4?'审核退回':'待登记'}}
+              {{scope.row.bidFlowStatus=='edit'?'草稿':scope.row.bidFlowStatus=='check'?'审核中':scope.row.bidFlowStatus=='pass'?'审核通过':scope.row.bidFlowStatus=='reject'?'审核退回':'待登记'}}
           </template>
           <template slot="header" slot-scope="scope">
             <span>状态</span>
             <div>
-              <el-input
-                style=" width: 100%"
+              <el-select
+                class="list-search-picker"
+                clearable
+                filterable
+                placeholder="请选择"
+                size="mini"
                 v-model="searchform.bidFlowStatus"
-                size="mini"/>
+              >
+                <el-option
+                  :key="index"
+                  :label="item.detailName"
+                  :value="item.id"
+                  v-for="(item, index) in status"
+                ></el-option>
+              </el-select>
             </div>
           </template>
         </el-table-column>
@@ -308,7 +319,25 @@ export default {
       multipleSelection: [],
       orgTree: [],
       xqprojectType:[],//工程二级列表
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      status:[
+        {
+          detailName:"草稿",
+          id:'edit'
+        },
+        {
+          detailName:"审核中",
+          id:'check'
+        },
+        {
+          detailName:"审核通过",
+          id:'pass'
+        },
+        {
+          detailName:"审核退回",
+          id:'reject'
+        },
+      ]
     };
   },
    components: {
