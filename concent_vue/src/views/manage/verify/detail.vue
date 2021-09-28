@@ -1399,6 +1399,11 @@ export default {
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
+                    if (type=='save') {
+                      this.detailform.verify.uuid = res.data.data.verify.uuid
+                    } else {
+                      this.back();
+                    }
                   if(type!='save'){
                     this.$router.back();
                   }
