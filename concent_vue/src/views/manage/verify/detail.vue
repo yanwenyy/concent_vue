@@ -1794,8 +1794,10 @@ export default {
             verifyOrgLists:datas.verifyOrgLists,
             commonFilesList:datas.commonFilesList||[],
           };
-          this.detailform.verify.orgId=datas.verifyOrgList[0].orgId;
-          this.detailform.verify.orgName=datas.verifyOrgList[0].orgName;
+          if(datas.verifyOrgList.length>0){
+            this.detailform.verify.orgId=datas.verifyOrgList[0].orgId;
+            this.detailform.verify.orgName=datas.verifyOrgList[0].orgName;
+          }
           this.ifYq();
           // console.log( JSON.stringify(this.detailform.verifySectionList))
           // console.log( JSON.stringify(this.detailform.topInfor))
@@ -1828,6 +1830,12 @@ export default {
   },
 
     handleSelectionChange(val) {
+
+      val.forEach(function(item,index){
+        if(item.isTrack=='0'){
+          val.splice(index, 1);
+        }
+      })
       this.multipleSelection = val
     },
     handleSelectionChange1(val) {
