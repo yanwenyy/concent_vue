@@ -1973,6 +1973,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  v-show="detailform.contractInfo.marketFirstName!=='军民融合' && emergingMarketTwo !== undefined"
                   label="新兴市场类别(二级):"
                   prop="contractInfo.marketSecondId"
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
@@ -2561,7 +2562,8 @@
                   </el-table-column>
                 </el-table>
                 <div v-if="detailform.contractInfo.isYearContract!=='0'">
-                  <p><span>标的物信息: </span>
+                  <div>
+                    <span>标的物信息: </span>
                     <el-button
                       v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                       @click="addXs()"
@@ -2569,7 +2571,7 @@
                       class="detatil-flie-btn"
                       type="primary"
                     >新增</el-button>
-                  </p>
+                  </div>
 
                   <el-table
                     :row-class-name="tableRowClassName"
@@ -2756,11 +2758,12 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <div  v-if="detailform.contractInfo.isYearContract=='0'">
-                  <p>
+                <div v-if="detailform.contractInfo.isYearContract=='0'">
+                  <div>
                     <span >销售业绩: </span>
-                  </p>
+                  </div>
                   <el-table
+
                     :data="detailform.contractInfoHouseSalesList"
                     :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                     @selection-change="handleSelectionChange"
@@ -2833,118 +2836,121 @@
                     </el-table-column>
                   </el-table>
                 </div>
-                <p>
-                  <span >供货地点: </span>
-                  <el-button
-                    v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId"
-                    class="detatil-flie-btn"
-                    @click="add('dd')"
-                    type="primary"
-                  >新增</el-button >
-                </p>
-                <el-table
-                  :data="detailform.topInfoSiteList"
-                  :key="key"
-                  :header-cell-style="{
+                <div>
+                  <p>
+                    <span >供货地点: </span>
+                    <el-button
+                      v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                      class="detatil-flie-btn"
+                      @click="add('dd')"
+                      type="primary"
+                    >新增</el-button >
+                  </p>
+                  <el-table
+                    :data="detailform.topInfoSiteList"
+                    :key="key"
+                    :header-cell-style="{
               'text-align': 'center',
               'background-color': 'rgba(246,248,252,1)',
               color: 'rgba(0,0,0,1)',
             }"
-                  @selection-change="handleSelectionChange"
-                  align="center"
-                  border
-                  class="detailTable"
-                  ref="table"
-                  style="width: 100%;height: auto;"
-                >
-                  <el-table-column
-                    :width="80"
+                    @selection-change="handleSelectionChange"
                     align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
-                  <el-table-column
-                    :resizable="false"
-                    label="项目地点"
-                    align="center"
-                    prop="inforName"
+                    border
+                    class="detailTable"
+                    ref="table"
+                    style="width: 100%;height: auto;"
                   >
-                    <template slot-scope="scope">
-                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                      <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                    </template>
-                  </el-table-column>
+                    <el-table-column
+                      :width="80"
+                      align="center"
+                      label="序号"
+                      show-overflow-tooltip
+                      type="index"
+                    ></el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      label="项目地点"
+                      align="center"
+                      prop="inforName"
+                    >
+                      <template slot-scope="scope">
+                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'&&!p.pushId" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
+                      </template>
+                    </el-table-column>
 
-                  <el-table-column
-                    :resizable="false"
-                    label="份额(万元)"
-                    prop="contractAmount"
-                    show-overflow-tooltip
-                    align="center"
-                  >
-                    <template slot-scope="scope">
-                      <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
-                        <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
-                        <el-input
-                          class="group-no-padding"
-                          clearable
-                          :disabled="p.actpoint === 'look'||p.actpoint=='task'"
-                          v-model="scope.row.contractAmount"
+                    <el-table-column
+                      :resizable="false"
+                      label="份额(万元)"
+                      prop="contractAmount"
+                      show-overflow-tooltip
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <el-form-item class="tabelForm" :prop="'topInfoSiteList.' + scope.$index + '.contractAmount'" :rules='rules.contractAmount'>
+                          <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
+                          <el-input
+                            class="group-no-padding"
+                            clearable
+                            :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                            v-model="scope.row.contractAmount"
+                          >
+                            <template slot="prepend">¥</template>
+                            <template slot="append">(万元)</template>
+                          </el-input>
+                        </el-form-item>
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      :resizable="false"
+                      label="是否为主地点"
+                      prop="contractAmount"
+                      align="center"
+                      show-overflow-tooltip
+                    >
+                      <template slot-scope="scope">
+                        <el-switch
+                          :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
+                          class="inline-formitem-switch"
+                          v-model="scope.row.isMain"
+                          active-color="#409EFF"
+                          inactive-color="#ddd"
+                          active-value="1"
+                          inactive-value="0"
+                          @change="setMain(scope.$index,detailform.topInfoSiteList)"
                         >
-                          <template slot="prepend">¥</template>
-                          <template slot="append">(万元)</template>
-                        </el-input>
-                      </el-form-item>
-                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                    </template>
-                  </el-table-column>
+                        </el-switch>
+                        <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
+                        <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
+                        <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
+                      </template>
+                    </el-table-column>
 
-                  <el-table-column
-                    :resizable="false"
-                    label="是否为主地点"
-                    prop="contractAmount"
-                    align="center"
-                    show-overflow-tooltip
-                  >
-                    <template slot-scope="scope">
-                      <el-switch
-                        :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                        class="inline-formitem-switch"
-                        v-model="scope.row.isMain"
-                        active-color="#409EFF"
-                        inactive-color="#ddd"
-                        active-value="1"
-                        inactive-value="0"
-                        @change="setMain(scope.$index,detailform.topInfoSiteList)"
-                      >
-                      </el-switch>
-                      <!--<el-radio v-model="scope.row.isMain" label="1">是</el-radio>-->
-                      <!--<el-radio v-model="scope.row.isMain" label="0">否</el-radio>-->
-                      <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
-                    </template>
-                  </el-table-column>
+                    <el-table-column
+                      :resizable="false"
+                      fixed="right"
+                      label="操作"
+                      align="center"
+                      width="80"
+                      show-overflow-tooltip
+                      v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                    >
+                      <template slot-scope="scope">
+                        <el-link
+                          :underline="false"
+                          @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
+                          type="warning"
+                        >删除
+                        </el-link
+                        >
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
 
-                  <el-table-column
-                    :resizable="false"
-                    fixed="right"
-                    label="操作"
-                    align="center"
-                    width="80"
-                    show-overflow-tooltip
-                    v-if="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
-                  >
-                    <template slot-scope="scope">
-                      <el-link
-                        :underline="false"
-                        @click="del(scope.$index,scope.row,detailform.topInfoSiteList)"
-                        type="warning"
-                      >删除
-                      </el-link
-                      >
-                    </template>
-                  </el-table-column>
-                </el-table>
               </div>
             </el-tab-pane>
             <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
@@ -5335,7 +5341,7 @@
         }
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject')?{
+            var datas=this.p.actpoint === "add"||(type!='save'&&(this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject'))?{
               'afterContractInfoBO':this.detailform,
               'beforeContractInfoBO':this.detailFormBefore
             }:this.detailform;
@@ -5404,6 +5410,7 @@
           commonFilesList2: fileList2,
           contractInfo: afterData.contractInfo,
           contractInfoAttachBO: afterData.contractInfoAttachBO,
+          contractInfoHouseSalesList:afterData.contractInfoHouseSalesList,
           contractInfoSubjectMatterList: afterData.contractInfoSubjectMatterList,
           topInfoSiteList:afterData.topInfoSiteList,
           zplx:[],//装配类型
@@ -5419,6 +5426,7 @@
           commonFilesList1: _fileList1,
           commonFilesList2: _fileList2,
           contractInfo: beforData.contractInfo,
+          contractInfoHouseSalesList:beforData.contractInfoHouseSalesList,
           contractInfoAttachBO: beforData.contractInfoAttachBO,
           contractInfoSubjectMatterList: beforData.contractInfoSubjectMatterList,
           topInfoSiteList:beforData.topInfoSiteList,
@@ -5459,6 +5467,7 @@
           contractInfoAttachBO: datas.contractInfoAttachBO,
           contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList,
           topInfoSiteList:datas.topInfoSiteList,
+          contractInfoHouseSalesList:datas.contractInfoHouseSalesList,
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型

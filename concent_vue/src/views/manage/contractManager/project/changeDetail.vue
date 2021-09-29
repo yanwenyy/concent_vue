@@ -2679,6 +2679,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  v-show="detailform.contractInfo.marketFirstName!=='军民融合' && emergingMarketTwo !== undefined"
                   label="新兴市场类别(二级)"
                   prop="contractInfo.marketSecondId"
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
@@ -2688,6 +2689,7 @@
             }:{}"
                 >
                   <el-select
+
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                     filterable
                     clearable

@@ -1761,6 +1761,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  v-show="detailform.contractInfo.marketFirstName!=='军民融合' && emergingMarketTwo !== undefined"
                   label="新兴市场类别(二级):"
                   prop="contractInfo.marketSecondId"
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
@@ -4405,7 +4406,7 @@
           )
           .then((res) => {
           if (res.data.code === 200) {
-          this.detailform.fileList1.splice(index,1);
+          this.detailform.commonFilesList1.splice(index,1);
         }
 
       });
@@ -4851,23 +4852,23 @@
           this.$message.error("增值税需要大于0");
           return false;
         }
-        if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
-          this.$message.error("请至少添加一条年度合同收益");
-          return false;
-        }
-        if(this.detailform.contractInfo.isYearContract=='0'){
-          var ddMoney=0,syMoney=0;
-          this.detailform.topInfoSiteList.forEach((item)=>{
-            ddMoney+=Number(item.contractAmount)
-          });
-          this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-            syMoney+=Number(item.contractAmount)
-          });
-          if(ddMoney!=syMoney){
-            this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
-            return false;
-          }
-        }
+        // if(this.detailform.contractInfo.isYearContract=='0'&&this.detailform.contractInfoHouseSalesList.length=='0'){
+        //   this.$message.error("请至少添加一条年度合同收益");
+        //   return false;
+        // }
+        // if(this.detailform.contractInfo.isYearContract=='0'){
+        //   var ddMoney=0,syMoney=0;
+        //   this.detailform.topInfoSiteList.forEach((item)=>{
+        //     ddMoney+=Number(item.contractAmount)
+        //   });
+        //   this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+        //     syMoney+=Number(item.monthSales)
+        //   });
+        //   if(ddMoney!=syMoney){
+        //     this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
+        //     return false;
+        //   }
+        // }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject')?{

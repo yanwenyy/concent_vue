@@ -1612,6 +1612,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  v-show="detailform.contractInfo.marketFirstName!=='军民融合' && emergingMarketTwo !== undefined"
                   label="新兴市场类别(二级):"
                   prop="contractInfo.marketSecondId"
                   :rules="{
@@ -4851,7 +4852,7 @@
             ddMoney+=Number(item.contractAmount)
           });
           this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-            syMoney+=Number(item.contractAmount)
+            syMoney+=Number(item.monthSales)
           });
           if(ddMoney!=syMoney){
             this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");

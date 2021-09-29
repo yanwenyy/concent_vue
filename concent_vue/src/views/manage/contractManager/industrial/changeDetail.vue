@@ -1534,7 +1534,7 @@
 
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     clearable
                     filterable
                     placeholder="请选择"
@@ -2009,7 +2009,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     clearable
                     filterable
@@ -2039,7 +2039,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                     clearable
@@ -2087,7 +2087,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                       clearable
@@ -2117,7 +2117,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                       clearable
@@ -2148,7 +2148,7 @@
 
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     filterable
                     clearable
                     placeholder="请选择"
@@ -2693,7 +2693,7 @@
                 <el-table
                   :data="detailform.contractInfoProductInformtList"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-
+                  :row-class-name="tableRowClassName"
                   @selection-change="handleSelectionChange"
                   align="center"
                   border
