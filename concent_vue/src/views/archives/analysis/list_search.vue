@@ -9,7 +9,7 @@
             <el-form-item label="填报年度:">
             <el-select
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.selectYear"
             >
           <el-option
@@ -192,7 +192,7 @@
           prop="year">
         <el-select
           placeholder="请选择"
-          size="mini"
+
           v-model="resultform.year"
         >
           <el-option

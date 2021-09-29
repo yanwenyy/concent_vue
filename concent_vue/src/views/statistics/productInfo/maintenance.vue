@@ -58,7 +58,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.vcode"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>
@@ -75,7 +75,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.vname"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>
@@ -91,7 +91,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.vmeasurename"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>

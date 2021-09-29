@@ -57,7 +57,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -75,7 +75,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.sectionId"
-                size="mini"
+
               />
             </div>
           </template>

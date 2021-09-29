@@ -19,7 +19,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.projectTypeId"
           >
             <el-option

@@ -12,7 +12,7 @@
     style="height:42px"
     filterable
     placeholder="请选择工程(行业)类别"
-    size="mini"
+
     v-model="itemform.vprojecttypes"
     @change="engineer"
   >
@@ -113,14 +113,14 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.vname"
-                size="mini"/>
+                 />
             </div>
           </template>
               <!-- <div>
               <el-input
                 style=" width: 100%"
                 v-model="selectItem.vname"
-                size="mini"/>
+                 />
             </div> -->
         </el-table-column>
         <!-- <el-table-column prop="vjldw" label="计量单位" width="120" align="center" :formatter="vjldwFormatter">

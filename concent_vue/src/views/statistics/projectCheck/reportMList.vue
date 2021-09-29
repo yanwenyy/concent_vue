@@ -97,7 +97,7 @@
          <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.reportProjectName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.reportProjectName"  />
             </div>
           </template>
           </el-table-column>
@@ -111,7 +111,7 @@
          <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
             </div>
           </template>
         </el-table-column>
@@ -133,7 +133,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.flowStatus"
               >
                 <el-option
@@ -147,7 +147,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>
@@ -162,7 +162,7 @@
           <template slot="header" slot-scope="scope">
             <span>批复状态</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.pfStatus" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.pfStatus"  />
             </div>
           </template>
         </el-table-column>

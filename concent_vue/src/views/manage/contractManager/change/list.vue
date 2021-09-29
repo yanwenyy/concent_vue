@@ -88,7 +88,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -140,7 +140,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchFrom.state"
               >
                 <!-- <el-option label="待登记" value="edit"></el-option> -->
@@ -388,7 +388,7 @@
           this.$message.info("请选择一条记录进行查看操作！");
           return false;
         }
-        if(this.multipleSelection[0].state=='2'||this.multipleSelection[0].state=='3'){
+        if(this.multipleSelection[0].state=='check'||this.multipleSelection[0].state=='pass'){
           this.$message.info("此条数据不可修改！");
           return false;
         }

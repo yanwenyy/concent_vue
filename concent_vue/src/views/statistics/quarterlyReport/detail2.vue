@@ -110,7 +110,7 @@
 
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.reporttype"
                   >
                       <el-option label="" value="" ></el-option>
@@ -283,7 +283,7 @@
 
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.scale"
                   >
                     <el-option label="" value="" ></el-option>
@@ -595,7 +595,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.registtype"
                   >
                     <el-option label="" value="" ></el-option>
@@ -687,7 +687,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.istawan"
                   >
                     <el-option label="" value="" ></el-option>
@@ -701,7 +701,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.stock"
                   >
                     <el-option label="" value="" ></el-option>
@@ -726,7 +726,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.dependent"
                   >
                     <el-option label="" value="" ></el-option>
@@ -759,7 +759,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.openState"
                   >
                     <el-option label="" value="" ></el-option>
@@ -784,7 +784,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.accountant"
                   >
                     <el-option label="" value="" ></el-option>
@@ -807,7 +807,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.ifDo"
                   >
                     <el-option label="" value="" ></el-option>
@@ -823,7 +823,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.orgtype"
                   >
                     <el-option label="" value="" ></el-option>
@@ -964,7 +964,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.ispublic"
                   >
                     <el-option label="" value="" ></el-option>
@@ -978,7 +978,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.realtylevel"
                   >
                     <el-option label="" value="" ></el-option>
@@ -1003,7 +1003,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.retail"
                   >
                     <el-option label="" value="" ></el-option>
@@ -1024,7 +1024,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.retailType"
                   >
                     <el-option label="" value="" ></el-option>
@@ -1084,7 +1084,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.firmRest"
                   >
                     <el-option label="" value="" ></el-option>
@@ -1104,7 +1104,7 @@
                 >
                   <el-select
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.firmHotel"
                   >
                     <el-option label="" value="" ></el-option>

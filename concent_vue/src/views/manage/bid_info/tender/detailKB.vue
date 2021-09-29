@@ -21,7 +21,7 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.inforName"/>
             </el-form-item>
 
@@ -29,7 +29,7 @@
               <el-input
                 disabled
                 clearable
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.inforNameForeign"/>
             </el-form-item>
             <br>
@@ -51,7 +51,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.enginTypeFirstName"
               >
               </el-input>
@@ -92,7 +92,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.projectNatureFirstName"
               >
               </el-input>
@@ -107,7 +107,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.projectNatureSecondName"
               >
               </el-input>
@@ -263,7 +263,7 @@
               label="设计单位:">
               <el-input
                 disabled
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.designOrg"
               />
             </el-form-item>
@@ -282,7 +282,7 @@
                 disabled
                 clearable
                 placeholder="资审方式"
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.verifyTypeName"
               />
             </el-form-item>
@@ -292,7 +292,7 @@
               label="招标人:">
               <el-input
                 disabled
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.bidPerson"
               />
             </el-form-item>
@@ -303,7 +303,7 @@
               label="招标代理公司:">
               <el-input
                 disabled
-                size="mini"
+
                 v-model="detailform.topInforBO.topInfor.bidAgentCompany"
               />
             </el-form-item>
@@ -409,7 +409,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
+
                   v-model="detailform.topInforBO.topInfor.inforContent"
                 />
               </el-form-item>
@@ -641,7 +641,7 @@
                   type="textarea"
                   clearable
                   placeholder="请输入"
-                  size="mini"
+
                   v-model="detailform. bidInfo.bidExplain"
                 />
               </el-form-item>
@@ -664,7 +664,7 @@
                   clearable
                   placeholder="请输入"
                   type="textarea"
-                  size="mini"
+
                   v-model="detailform.bidInfo.kbOverdueReason"
                 />
               </el-form-item>
@@ -786,7 +786,7 @@
                     disabled
                     clearable
                     placeholder=""
-                    size="mini"
+
                     v-model="scope.row.bidInfoSection.sectionName">
                     <el-option
                       :key="index"
@@ -818,7 +818,7 @@
                     disabled
                     clearable
                     placeholder=""
-                    size="mini"
+
                     v-model="scope.row.bidInfoSection.bidEvaluationMethodName">
                     <el-option
                       :key="index"

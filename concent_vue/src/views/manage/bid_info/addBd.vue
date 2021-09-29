@@ -93,7 +93,7 @@
                  <el-select
                 clearable
                 placeholder="评标办法"
-                size="mini"
+
                 :disabled="type === 'look'"
                 @change="
                 getName(
@@ -119,7 +119,7 @@
             <el-select
               clearable
               placeholder="评标办法"
-              size="mini"
+
               :disabled="type === 'look'&&ifkb!='kbxq'"
               @change="
                 getName(

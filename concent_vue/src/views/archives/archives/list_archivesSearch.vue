@@ -22,7 +22,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.isShare"
           >
             <el-option
@@ -39,7 +39,7 @@
           <el-select
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.archivesTypeId"
           >
             <el-option

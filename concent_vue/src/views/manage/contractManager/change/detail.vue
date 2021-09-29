@@ -54,7 +54,7 @@
             filterable
             placeholder="请选择"
             @change="getTwo"
-            size="mini"
+
             v-model="detailform.contractInfo.enginTypeFirstId"
           >
             <el-option
@@ -79,7 +79,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             @change="
                   getName(
                     detailform.contractInfo.enginTypeSecondId,
@@ -130,7 +130,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.contractCode"
           />
         </el-form-item>
@@ -182,7 +182,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             @change="
                   getName(
                     detailform.contractInfo.constructionOrgId,
@@ -212,7 +212,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.constructionOrg"
           />
         </el-form-item>
@@ -230,7 +230,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.constructionNatureId"
             @change="
                   getName(
@@ -251,7 +251,7 @@
             filterable
             clearable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.designRailwayClassifyId"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
@@ -270,7 +270,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.lineLength"
           />
         </el-form-item>
@@ -284,7 +284,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.isImport"
           >
             <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
@@ -304,7 +304,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.contractBuiltArea"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
@@ -320,7 +320,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.contractAmount"
           />
         </el-form-item>
@@ -334,7 +334,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.ourAmount"
           />
         </el-form-item>
@@ -348,7 +348,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.valueAddedTax"
           />
         </el-form-item>
@@ -362,7 +362,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.outSystemAmount"
           />
         </el-form-item>
@@ -376,7 +376,7 @@
             :disabled="p.actpoint === 'look'"
             clearable
             placeholder=""
-            size="mini"
+
             v-model="detailform.contractInfo.designTempPrice"
           />
         </el-form-item>
@@ -395,7 +395,7 @@
             clearable
             placeholder="请选择"
             @change="getTwoSC"
-            size="mini"
+
             v-model="detailform.contractInfo.marketFirstNameId"
           >
             <el-option
@@ -420,7 +420,7 @@
             filterable
             clearable
             placeholder="请选择"
-            size="mini"
+
             @change="
                   getName(
                     detailform.contractInfo.marketSecondId,
@@ -453,7 +453,7 @@
             filterable
             placeholder="请选择"
             @change="getTwoXZ"
-            size="mini"
+
             v-model="detailform.contractInfo.projectNatureFirstId"
           >
             <el-option
@@ -478,7 +478,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             @change="
                   getName(
                     detailform.contractInfo.projectNatureSecondId,
@@ -510,7 +510,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.isInSystemUnion"
           >
             <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in yesOrNo"></el-option>
@@ -530,7 +530,7 @@
             filterable
             clearable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.isInSystemSub"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
@@ -550,7 +550,7 @@
             filterable
             clearable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.contractOrgId"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options2"></el-option>
@@ -570,7 +570,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.contractInfo.contractProvinceId"
           >
             <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>
@@ -596,7 +596,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.designOrg"
           />
         </el-form-item>
@@ -606,7 +606,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.beginEndPlace"
           />
         </el-form-item>
@@ -636,7 +636,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.createOrgName"
           />
         </el-form-item>
@@ -666,7 +666,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.contractType"
           />
         </el-form-item>
@@ -696,7 +696,7 @@
           <el-input
             clearable
             placeholder="请输入"
-            size="mini"
+
             v-model="detailform.contractInfo.contractPeriod"
           />
         </el-form-item>
@@ -716,7 +716,7 @@
               type="textarea"
               clearable
               placeholder="请输入"
-              size="mini"
+
               v-model="detailform.contractInfo.bcPlateTypeId"
             />
           </el-form-item>
@@ -945,7 +945,7 @@
                 <!--}"-->
                   <!--label-width="0"-->
                 <!--&gt;-->
-                  <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.inforName"></el-input>-->
+                  <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'"   v-model="scope.row.inforName"></el-input>-->
                 <!--</el-form-item>-->
                 <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
               <!--</template>-->

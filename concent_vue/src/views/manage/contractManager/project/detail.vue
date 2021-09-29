@@ -504,7 +504,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="detailform.contractInfo.belongEnterPrisesId"
             >
               <el-option
@@ -1178,7 +1178,7 @@
               :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: ['change','blur'],
             }"
             >
               <el-select
@@ -2222,7 +2222,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.moduleId"
                       @change="
                     getBdName(
@@ -2409,7 +2409,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.moduleId"
                       @change="
                     getBdName(
@@ -2564,7 +2564,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="scope.row.orgId"
                     @change="
                     getXtwName(
@@ -2620,7 +2620,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.moduleId"
                       @change="
                     getBdName(
@@ -2775,7 +2775,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="scope.row.orgId"
                     @change="
                     getXtwName(
@@ -2831,7 +2831,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.moduleId"
                       @change="
                     getBdName(
@@ -3016,7 +3016,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.moduleId"
                       @change="
                     getBdName(
@@ -8133,7 +8133,7 @@ export default {
             element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrgName = outside.customerName
+            element.constructionOrgName = outside?outside.customerName:''
           }
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)
@@ -9279,7 +9279,7 @@ export default {
                   });
                   if (type=='save') {
                     this.id=res.data.data.contractInfo.uuid;
-                    this.detailform.contractInfo.uuid.id=res.data.data.contractInfo.uuid;
+                    this.detailform.contractInfo.uuid=res.data.data.contractInfo.uuid;
                     this.getDetail();
                   } else {
                     this.$router.back()

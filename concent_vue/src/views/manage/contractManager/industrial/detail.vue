@@ -158,7 +158,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.customerNatureId"
                 >
                   <el-option
@@ -961,7 +961,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.belongEnterPrisesId"
                 >
                   <el-option
@@ -1930,7 +1930,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2117,7 +2117,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2272,7 +2272,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -2328,7 +2328,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2483,7 +2483,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -2539,7 +2539,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2724,7 +2724,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -4108,7 +4108,7 @@ export default {
                 });
                 if (type=='save') {
                   this.id=res.data.data.contractInfo.uuid;
-                  this.detailform.contractInfo.uuid.id=res.data.data.contractInfo.uuid;
+                  this.detailform.contractInfo.uuid=res.data.data.contractInfo.uuid;
                   this.getDetail();
                 } else {
                   this.$router.back()

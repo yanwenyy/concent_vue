@@ -53,7 +53,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.newFormName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -71,7 +71,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.oldFormName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -89,7 +89,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.oldDataCount"
-                size="mini"
+
               />
             </div>
           </template>
@@ -107,7 +107,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.addDataCount"
-                size="mini"
+
               />
             </div>
           </template>
@@ -125,7 +125,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.updateDataCount"
-                size="mini"
+
               />
             </div>
           </template>
@@ -143,7 +143,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.failedDataDetail"
-                size="mini"
+
               />
             </div>
           </template>
@@ -162,7 +162,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.remarks"
-                size="mini"
+
               />
             </div>
           </template>
@@ -190,12 +190,12 @@
           <el-input
             :disabled="type=='look'"
             v-model="form.reportName"
-            size="mini"
+
           />
         </el-form-item>
 
         <el-form-item label="报表类型:" :label-width="formLabelWidth">
-          <el-select v-model="form.reportType" placeholder="请选择报表类型" size="mini"
+          <el-select v-model="form.reportType" placeholder="请选择报表类型"
                      :disabled="type=='look'"
                      :rules="{
                 required: true,
@@ -212,7 +212,7 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="报表层级:" prop="value1" :label-width="formLabelWidth" size="mini">
+        <el-form-item label="报表层级:" prop="value1" :label-width="formLabelWidth"  >
           <el-select v-model="form.reportHeyComb"
                      @change="getMultipleName(form.reportHeyComb,options,'reportHierarchyId','reportHierarchy')"
                      multiple
@@ -229,7 +229,7 @@
           </el-select>
           </el-form-item>
         <el-form-item label="启用状态:" :label-width="formLabelWidth">
-          <el-select v-model="form.enableStatus" placeholder="请选择启用状态" size="mini"
+          <el-select v-model="form.enableStatus" placeholder="请选择启用状态"
                      :disabled="type=='look'">
             <el-option label="启用" value="1"></el-option>
             <el-option label="禁用" value="0"></el-option>
@@ -240,7 +240,7 @@
           <el-input
             :disabled="type=='look'"
             v-model="form.reportSort"
-            size="mini"
+
           />
         </el-form-item>
       </el-form>

@@ -56,7 +56,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.nameImport"
-                size="mini"
+
               />
             </div>
           </template>
@@ -75,7 +75,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.nameStandard"
-                size="mini"
+
               />
             </div>
           </template>
@@ -94,7 +94,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.unitImport"
-                size="mini"
+
               />
             </div>
           </template>
@@ -112,7 +112,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.unitStandard"
-                size="mini"
+
               />
             </div>
           </template>
@@ -130,7 +130,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.featureImport"
-                size="mini"
+
               />
             </div>
           </template>
@@ -148,7 +148,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.featureStandard"
-                size="mini"
+
               />
             </div>
           </template>
@@ -170,7 +170,7 @@
           <el-input
             disabled
             v-model="form.nameImport"
-            size="mini"
+
           />
         </el-form-item>
 
@@ -178,7 +178,7 @@
           <el-input
             disabled
             v-model="form.nameStandard"
-            size="mini"
+
           />
         </el-form-item>
 
@@ -186,14 +186,14 @@
           <el-input
             disabled
             v-model="form.unitImport"
-            size="mini"
+
           />
         </el-form-item>
         <el-form-item label="标准单位:" :label-width="formLabelWidth">
           <el-input
             disabled
             v-model="form.unitStandard"
-            size="mini"
+
           />
         </el-form-item>
         <el-form-item label="基础项目特征:" :label-width="formLabelWidth">
@@ -201,7 +201,7 @@
             type="textarea"
             disabled
             v-model="form.featureImport"
-            size="mini"
+
           />
         </el-form-item>
         <el-form-item label="标准项目特征:" :label-width="formLabelWidth">
@@ -209,7 +209,7 @@
             type="textarea"
             disabled
             v-model="form.featureStandard"
-            size="mini"
+
           />
         </el-form-item>
       </el-form>

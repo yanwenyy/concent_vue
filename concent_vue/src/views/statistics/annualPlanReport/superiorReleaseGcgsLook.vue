@@ -105,7 +105,7 @@
           <template slot="header" slot-scope="scope">
             <span>填报类型</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.monthReportType" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.monthReportType"  />
             </div>
           </template>
           <template  slot-scope="scope">

@@ -68,7 +68,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.projectModuleId">
                 <el-option
                   :key="index"
@@ -89,7 +89,7 @@
           <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.companyBelongName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.companyBelongName"  />
             </div>
           </template>
         </el-table-column>
@@ -103,7 +103,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectName"  />
             </div>
           </template>
         </el-table-column>
@@ -117,7 +117,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目编码</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectCode" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectCode"  />
             </div>
           </template>
         </el-table-column>
@@ -137,7 +137,7 @@
                 filterable
                 placeholder="请选择"
                 @change="getProjectTwo"
-                size="mini"
+
                 v-model="searchform.projectTypeFirstId">
                 <el-option
                   :key="index"
@@ -161,7 +161,7 @@
               clearable
               filterable
               placeholder="请先选择一级类别"
-              size="mini"
+
               :disabled="!searchform.projectTypeFirstId"
               v-model="searchform.projectTypeSecondId">
               <el-option
@@ -182,8 +182,8 @@
           <template slot="header" slot-scope="scope">
             <span>项目所在地区</span>
             <div>
-              <el-input v-model="searchform.projectLocation" placeholder="项目所在地" size="mini" clearable>
-                <el-button slot="append" icon="el-icon-search" size="mini" @click="selectPosition()"></el-button>
+              <el-input v-model="searchform.projectLocation" placeholder="项目所在地"   clearable>
+                <el-button slot="append" icon="el-icon-search"   @click="selectPosition()"></el-button>
               </el-input>
             </div>
           </template>
@@ -200,7 +200,7 @@
               <el-date-picker
                 v-model="searchform.createTime"
                 type="date"
-                size="mini"
+
                 style=" width: 100%"
                 value-format="timestamp"
                 placeholder="选择日期时间"/>
@@ -225,7 +225,7 @@
               <el-select
                 filterable
                 clearable
-                size="mini"
+
                 placeholder="请选择"
                 v-model="searchform.flowStatus">
                 <el-option

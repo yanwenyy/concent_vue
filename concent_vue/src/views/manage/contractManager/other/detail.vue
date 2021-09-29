@@ -48,7 +48,7 @@
                   <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
                   <!--clearable-->
                   <!--placeholder="请输入"-->
-                  <!--size="mini"-->
+                  <!-- -->
                   <!--v-model="detailform.contractInfo.contractName"-->
                 <!--/>-->
                 <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.type == 'bq'||p.actpoint=='Yjedit'" placeholder="请输入内容" v-model="detailform.contractInfo.contractName" class="input-with-select">
@@ -63,7 +63,7 @@
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId||p.actpoint=='Yjedit'"
                   clearable
                   placeholder="请输入"
-                  size="mini"
+
                   v-model="detailform.contractInfo.contractNameForeign"
                 />
               </el-form-item>
@@ -75,7 +75,7 @@
                   disabled
                   clearable
                   placeholder="保存后系统自动生成"
-                  size="mini"
+
                   v-model="detailform.contractInfo.contractCode"
                 />·
               </el-form-item>
@@ -86,7 +86,7 @@
                 <el-date-picker
                   :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
                   v-model="detailform.contractInfo.contractSignTime"
-                  size="mini"
+
                   type="date"
                   value-format="timestamp"
                   placeholder="选择日期">
@@ -476,7 +476,7 @@
                   <!--clearable-->
                   <!--filterable-->
                   <!--placeholder="请选择"-->
-                  <!--size="mini"-->
+                  <!-- -->
                   <!--v-model="detailform.contractInfo.enginTypeFirstId"-->
                   <!--@change="-->
                   <!--getName(-->
@@ -509,7 +509,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.contractCharacterCode"
                   @change="
                   getName(
@@ -544,7 +544,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.businessTypeId"
                   @change="
                   getName(
@@ -579,7 +579,7 @@
                   clearable
                   placeholder="请选择"
                   @change="getTwoSC"
-                  size="mini"
+
                   v-model="detailform.contractInfo.marketFirstNameId"
                 >
                   <el-option
@@ -605,7 +605,7 @@
                   filterable
                   clearable
                   placeholder="请选择"
-                  size="mini"
+
                   @clear="clear(detailform.contractInfo.marketSecondId,detailform.contractInfo.marketSecondName)"
                   @change="
               getName(
@@ -643,7 +643,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.cdmc"
                   @change="getMultipleName(detailform.cdmc,siteName,'siteNameId','siteName')"
                 >
@@ -674,7 +674,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.zplx"
                 >
                   <el-option
@@ -699,7 +699,7 @@
                 >
                   <el-input
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.actpoint=='Yjedit'"
-                    size="mini"
+
                     v-model="detailform.contractInfo.otherAssemblyRate"
                   />
                 </el-form-item>
@@ -722,7 +722,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="detailform.jzlx"
                   >
                     <el-option
@@ -752,7 +752,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="detailform.jzjglx"
                   >
                     <el-option
@@ -822,7 +822,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.customerNatureId"
                 >
                   <el-option
@@ -850,7 +850,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.belongEnterPrisesId"
                 >
                   <el-option
@@ -1549,7 +1549,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -1736,7 +1736,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -1891,7 +1891,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -1947,7 +1947,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2102,7 +2102,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -2158,7 +2158,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2343,7 +2343,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -3635,7 +3635,7 @@
               });
               if (type=='save') {
                 this.id=res.data.data.contractInfo.uuid;
-                this.detailform.contractInfo.uuid.id=res.data.data.contractInfo.uuid;
+                this.detailform.contractInfo.uuid=res.data.data.contractInfo.uuid;
                 this.getDetail();
               } else {
                 this.$router.back()

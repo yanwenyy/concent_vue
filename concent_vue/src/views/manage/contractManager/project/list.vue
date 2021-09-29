@@ -75,7 +75,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -97,7 +97,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -116,7 +116,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -136,7 +136,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.createOrgName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -155,7 +155,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.pushOrgName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -177,7 +177,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractAmount"
-                size="mini"
+
               />
             </div>
           </template>
@@ -196,7 +196,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.createUserName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -248,7 +248,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchFrom.flowStatus"
               >
                 <el-option label="草稿" value="edit"></el-option>
@@ -260,7 +260,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>

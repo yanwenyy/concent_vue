@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目状态:">
-          <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+          <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
         </el-form-item>
       </el-form>
       <div style="float: right">
@@ -67,7 +67,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.createOrgName"
-                size="mini"
+
               />
             </div>
           </template>-->
@@ -94,7 +94,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -124,7 +124,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.status"
               >
                 <el-option
@@ -138,7 +138,7 @@
               &lt;!&ndash;class="list-search-picker"&ndash;&gt;
               &lt;!&ndash;style=" width: 100%"&ndash;&gt;
               &lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;
-              &lt;!&ndash;size="mini"&ndash;&gt;
+              &lt;!&ndash; &ndash;&gt;
               &lt;!&ndash;/>&ndash;&gt;
             </div>
           </template>-->
@@ -163,7 +163,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -189,7 +189,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -215,7 +215,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -241,7 +241,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -267,7 +267,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->

@@ -54,7 +54,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.expandName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -73,7 +73,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.createOrgName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -92,7 +92,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.expandTypeName"
-                size="mini"
+
               />
             </div>
           </template>

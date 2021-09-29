@@ -348,7 +348,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.topInfor.investment"
           >
           <template slot="prepend">¥</template>
@@ -615,7 +615,7 @@
                       }:{}">
           <el-input
             placeholder=""
-            size="mini"
+
             disabled
             v-model="detailform.verify.outOrg"
           >
@@ -649,7 +649,7 @@
                 clearable
                 placeholder="请输入"
                 type="textarea"
-                size="mini"
+
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
@@ -672,7 +672,7 @@
                   clearable
                   placeholder="请输入"
                   type="textarea"
-                  size="mini"
+
                   v-model="detailform.verify.overdueReason"
                 />
               </el-form-item>
@@ -754,7 +754,7 @@
                   :resizable="false"
                   label="操作"
                   show-overflow-tooltip
-                  
+
                   width="80"
                 >
                   <template slot-scope="scope">
@@ -855,7 +855,7 @@
                   class="group-no-padding"
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder=""
-                  size="mini"
+
                   v-model="scope.row.verifySection.investmentReckon"
                 >
                   <template slot="prepend">¥</template>
@@ -886,7 +886,7 @@
                 class="group-no-padding"
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
                   placeholder=""
-                  size="mini"
+
                   v-model="scope.row.verifySection.jananInvestment"
                   @input="calcTzys(scope.row.verifySection.jananInvestment,scope.row.verifySection.investmentReckon,scope.$index,detailform.verifySectionList)"
                 >
@@ -1199,7 +1199,7 @@ export default {
         }
       }
     },
-      
+
       //判断附件大小
       beforeAvatarUpload(file) {
         var fileLimit=Number(this.fileLimit);

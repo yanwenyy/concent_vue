@@ -140,7 +140,7 @@
               v-if="type!='look'"
               @click="add('inside',1)"
               class="detatil-flie-btn"
-              size="mini"
+
               type="primary"
             >新增</el-button >
           </div>
@@ -230,7 +230,7 @@
               v-if="type!='look'"
               @click="add('outside',2)"
               class="detatil-flie-btn"
-              size="mini"
+
               type="primary"
             >新增</el-button >
           </div>

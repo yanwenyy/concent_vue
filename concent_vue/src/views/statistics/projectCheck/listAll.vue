@@ -67,7 +67,7 @@
          <template slot="header" slot-scope="scope">
             <span>项目简称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectOmit" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectOmit"  />
             </div>
           </template>
           </el-table-column>
@@ -81,7 +81,7 @@
            <template slot="header" slot-scope="scope">
               <span>项目名称</span>
               <div>
-                <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
+                <el-input style=" width: 100%" v-model="searchform.projectName"  />
               </div>
             </template>
             </el-table-column>
@@ -95,7 +95,7 @@
          <template slot="header" slot-scope="scope">
             <span>项目状态</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectStatusName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectStatusName"  />
             </div>
           </template>
            <template slot="header"
@@ -104,7 +104,7 @@
              <div>
                <el-select class="list-search-picker" clearable filterable
                           placeholder="请选择"
-                          size="mini"
+
                           v-model="searchform.projectStatusName"
                >
                  <el-option :key="index"
@@ -126,7 +126,7 @@
         <!--<template slot="header" slot-scope="scope">-->
             <!--<span>工程合同额(万元)</span>-->
             <!--<div>-->
-              <!--<el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.contractAmountEngine"  />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -141,7 +141,7 @@
           <template slot="header" slot-scope="scope">
             <span>本月(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.monthValue"  />
             </div>
           </template>
         </el-table-column>
@@ -155,7 +155,7 @@
           <!--<template slot="header" slot-scope="scope">-->
             <!--<span>本年(万元)</span>-->
             <!--<div>-->
-              <!--<el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.yearValue"  />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -169,7 +169,7 @@
           <!--<template slot="header" slot-scope="scope">-->
             <!--<span>开累(万元)</span>-->
             <!--<div>-->
-              <!--<el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.totalValue"  />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -183,7 +183,7 @@
            <template slot="header" slot-scope="scope">
              <span>所属单位</span>
              <div>
-               <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+               <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
              </div>
            </template>
          </el-table-column>
@@ -197,7 +197,7 @@
            <template slot="header" slot-scope="scope">
              <span>行业类别</span>
              <div>
-               <el-input style=" width: 100%" v-model="searchform.projectTypeFirst" size="mini"/>
+               <el-input style=" width: 100%" v-model="searchform.projectTypeFirst"  />
              </div>
            </template>
          </el-table-column>
@@ -211,7 +211,7 @@
             <template slot="header" slot-scope="scope">
               <span>项目类型</span>
               <div>
-                <el-input style=" width: 100%" v-model="searchform.projectTypeName" size="mini"/>
+                <el-input style=" width: 100%" v-model="searchform.projectTypeName"  />
               </div>
             </template>
           </el-table-column>
@@ -225,7 +225,7 @@
               <template slot="header" slot-scope="scope">
                 <span>填报类型</span>
                 <div>
-                  <el-input style=" width: 100%" v-model="searchform.monthReportType" size="mini"/>
+                  <el-input style=" width: 100%" v-model="searchform.monthReportType"  />
                 </div>
               </template>
               <template  slot-scope="scope">
@@ -242,7 +242,7 @@
               <template slot="header" slot-scope="scope">
                 <span>本月上报</span>
                 <div>
-                  <el-input style=" width: 100%" v-model="searchform.flowStatus" size="mini"/>
+                  <el-input style=" width: 100%" v-model="searchform.flowStatus"  />
                 </div>
               </template>
              <template  slot-scope="scope">

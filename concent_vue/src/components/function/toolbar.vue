@@ -24,13 +24,13 @@
       </el-col>
       <el-col :span="2">
         <el-button-group class="btngroup">
-          <el-button @click.native="right()" icon="el-icon-caret-left" size="mini" style="font-size:22px;padding:2px;"></el-button>
-          <el-button @click.native="left()" icon="el-icon-caret-right" size="mini" style="font-size:22px;padding:2px;"></el-button>
+          <el-button @click.native="right()" icon="el-icon-caret-left"   style="font-size:22px;padding:2px;"></el-button>
+          <el-button @click.native="left()" icon="el-icon-caret-right"   style="font-size:22px;padding:2px;"></el-button>
           <el-dropdown>
             <span class="el-dropdown-link">
               <el-button
                 icon="el-icon-arrow-down el-icon-arrow-up"
-                size="mini"
+
                 style="background:rgba(255,255,255,1);margin-left:10px;font-size:22px;padding:2px;"
               ></el-button>
             </span>

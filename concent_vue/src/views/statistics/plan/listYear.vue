@@ -105,7 +105,7 @@
               <el-select
                 filterable
                 clearable
-                size="mini"
+
                 @change="searchformSubmit"
                 placeholder="请选择"
                 v-model="searchform.flowStatus">

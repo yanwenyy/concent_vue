@@ -322,7 +322,7 @@
             <el-input
               disabled
               placeholder=""
-              size="mini"
+
               v-model="detailformBefore.topInfor.investment"
             >
           <template slot="prepend">¥</template>
@@ -581,7 +581,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailformBefore.verify.outOrg"
           />
 
@@ -604,7 +604,7 @@
                     disabled
                     placeholder="请输入"
                     type="textarea"
-                    size="mini"
+
                     v-model="detailformBefore.verify.verifyExplain"
                   />
                 </el-form-item>
@@ -740,7 +740,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="scope.row.verifySection.investmentReckon"
           >
           <template slot="prepend">¥</template>
@@ -762,7 +762,7 @@
            <el-input
              disabled
              placeholder=""
-             size="mini"
+
              v-model="scope.row.verifySection.jananInvestment"
            >
           <template slot="prepend">¥</template>
@@ -1070,7 +1070,7 @@
              <el-input
                disabled
                placeholder=""
-               size="mini"
+
                v-model="detailformAfter.topInfor.investment"
              >
           <template slot="prepend">¥</template>
@@ -1372,7 +1372,7 @@
           <el-input
             placeholder=""
             :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'"
-            size="mini"
+
             v-model="detailformAfter.verify.outOrg"
           >
             <el-button v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid != null" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(detailformAfter.verify.outOrgId,detailformAfter.verify.outOrg,'/api/contract/Companies/detail/findCompanies','外部联合体单位')"></el-button>
@@ -1401,7 +1401,7 @@
                     clearable
                     placeholder="请输入"
                     type="textarea"
-                    size="mini"
+
                     v-model="detailformAfter.verify.verifyExplain"
                   />
                 </el-form-item>
@@ -1497,7 +1497,7 @@
               <p  v-if="detailformAfter.topInfor.moduleId=='7f4fcba4255b43a8babf15afd6c04a53'||detailformAfter.topInfor.moduleId=='f6823a41e9354b81a1512155a5565aeb'" style="overflow:hidden;margin-right: 30px"><span style="font-size: 14px">标段信息: </span>
                 <el-button v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   @click="dialogTopInfoSection = true"
-                  size="mini"
+
                   class="detatil-flie-btn"
                   type="primary"
                 >新增
@@ -1585,7 +1585,7 @@
           <el-input
             :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
             placeholder=""
-            size="mini"
+
             v-model="scope.row.verifySection.investmentReckon"
           >
           <template slot="prepend">¥</template>
@@ -1607,7 +1607,7 @@
            <el-input
              :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
              placeholder=""
-             size="mini"
+
              v-model="scope.row.verifySection.jananInvestment"
            >
           <template slot="prepend">¥</template>
@@ -2313,7 +2313,7 @@ export default {
     handleSelectionChange1(val) {
       this.multipleSelection1 = val
     },
-    
+
     tableSection({ row, rowIndex }){
       if(this.detailform1.topInfoSectionList[rowIndex] != null && this.detailform1.topInfoSectionList[rowIndex].isTrack === "0"){
         return "none-show"
@@ -2346,7 +2346,7 @@ export default {
             for(var i in this.detailformBefore){
               this.detailformAfter[i]=JSON.parse(JSON.stringify(this.detailformBefore[i]));
             }
-                
+
             this.ifYq();
             this.ifYqBefore();
             // alert( JSON.stringify(this.detailformAfter.verifySectionList))

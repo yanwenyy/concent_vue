@@ -178,7 +178,7 @@
           <el-row>
             <el-form-item
               v-show="detailForm.project.contractInfoList!=''"
-              label="合同总金额(万元):" 
+              label="合同总金额(万元):"
               prop="project.contractAmountTotal"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
@@ -193,7 +193,7 @@
             </el-form-item>
             <el-form-item
               v-show="detailForm.project.contractInfoList == ''"
-              label="合同金额(万元):" 
+              label="合同金额(万元):"
               prop="project.contractMoney"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
@@ -346,15 +346,15 @@
                 required: true, message: '此项不能为空', trigger: ['blur','change']
               }"
             >
-              <el-input 
-                clearable 
-                disabled 
-                placeholder="请输入内容" 
+              <el-input
+                clearable
+                disabled
+                placeholder="请输入内容"
                 v-model="detailForm.project.companyName" class="input-with-select">
-                <el-button 
-                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
-                  icon="el-icon-circle-plus-outline" 
-                  @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
+                <el-button
+                  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append"
+                  icon="el-icon-circle-plus-outline"
+                  @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)"
                   >
                 </el-button>
               </el-input>
@@ -468,7 +468,7 @@
                   v-for="(item, index) in material"/>
               </el-select>
             </el-form-item> -->
-            
+
           </el-row>
           <el-row>
             <el-form-item
@@ -928,7 +928,7 @@
                       :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.subjectMatterName"
                       @change="
                       getBdwdw(
@@ -975,7 +975,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-form-item class="tabelForm" 
+                  <el-form-item class="tabelForm"
                   :prop="'project.infoSubjectMatterList[' + scope.$index + '].subjectMatterUnit'"
                   :rules="{
                     required: true, message: '此项不能为空', trigger: 'blur'
@@ -1185,7 +1185,7 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        constructionOrgList: [], 
+        constructionOrgList: [],
         sjdwList: [],
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
@@ -1357,7 +1357,7 @@
         });
         this.key = this.key + 1;
       },
-      
+
       //获取标的物单位
       getBdwdw( name,index) {
         var list = this.detailForm.project.infoSubjectMatterList
@@ -1544,8 +1544,8 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          }); 
-        });       
+          });
+        });
         // console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
@@ -1691,7 +1691,7 @@
             showClose: true
           });
           return false
-        }        
+        }
         var url='';
         if(type=='save'){
           url="/api/statistics/StatisticsProject/list/saveProject"

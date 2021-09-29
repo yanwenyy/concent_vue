@@ -66,7 +66,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -87,7 +87,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.enginTypeFirstName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -108,7 +108,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
-                size="mini"
+
               />
             </div>
           </template>
@@ -129,7 +129,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.noticeTypeName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -202,7 +202,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.username"
-                size="mini"
+
               />
             </div>
           </template>

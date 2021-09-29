@@ -56,7 +56,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -78,7 +78,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.inforCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -98,7 +98,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.moduleName"
             >
               <el-option
@@ -125,7 +125,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeFirstId"
             >
               <el-option
@@ -153,7 +153,7 @@
               clearable
               filterable
               placeholder="请选择工程类别(一级)"
-              size="mini"
+
               v-model="searchform.enginTypeSecondId"
             >
               <el-option
@@ -179,7 +179,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
-                size="mini"
+
               />
             </div>
           </template>
@@ -198,7 +198,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.noticeTypeId"
             >
               <el-option
@@ -302,7 +302,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.trackStatus"
               >
                 <el-option label="持续跟踪中" value="1"></el-option>
@@ -341,7 +341,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.flowStatus"
               >
                 <el-option label="待登记" value="edit"></el-option>
@@ -353,7 +353,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>
@@ -396,7 +396,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.importFileRecordId"
               >
                 <el-option label="是" value="1"></el-option>

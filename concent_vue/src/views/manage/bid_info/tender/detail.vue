@@ -778,7 +778,7 @@
                 clearable
                 placeholder="请输入"
                 type="textarea"
-                size="mini"
+
                 v-model="detailform.bidInfo.overdueReason"
               />
             </el-form-item>
@@ -1345,7 +1345,7 @@ export default {
         callback(new Error('不能为空'))
       } else {
         callback()
-      } 
+      }
     }
     return {
       companyMulStatus:false,//设计单位等多选列表状态
@@ -1604,12 +1604,12 @@ export default {
           }
         })
       })
-      for(var i = 0 ;i<bdList.length;i++) {  
-        if(bdList[i] =="" || bdList[i] == null || typeof(bdList[i]) == "undefined") {  
-          bdList.splice(i,1);  
-          i= i-1;  
-        }  
-      }  
+      for(var i = 0 ;i<bdList.length;i++) {
+        if(bdList[i] =="" || bdList[i] == null || typeof(bdList[i]) == "undefined") {
+          bdList.splice(i,1);
+          i= i-1;
+        }
+      }
       this.$nextTick(() => {
         this.$refs.infoBD.init(
           bdList,

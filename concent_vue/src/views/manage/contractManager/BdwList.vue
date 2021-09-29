@@ -63,7 +63,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.subjectMatterName"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>

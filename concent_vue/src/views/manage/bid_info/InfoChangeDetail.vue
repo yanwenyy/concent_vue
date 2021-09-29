@@ -1804,7 +1804,7 @@
               <el-button
                 v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 @click="openBd('add')"
-                size="mini"
+
                 style="
                   width: 70px;
                   height: 32px;
@@ -1973,7 +1973,7 @@
                 :width="180"
               >
               </el-table-column>
-<!-- 
+<!--
             <el-table-column
               :resizable="false"
               label="其他投标单位(系统内)"

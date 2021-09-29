@@ -56,7 +56,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.importCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -75,7 +75,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.name"
-                size="mini"
+
               />
             </div>
           </template>
@@ -94,7 +94,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.unit"
-                size="mini"
+
               />
             </div>
           </template>
@@ -112,7 +112,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.feature"
-                size="mini"
+
               />
             </div>
           </template>
@@ -138,7 +138,7 @@
               <!--<el-input-->
                 <!--style=" width: 100%"-->
                 <!--v-model="searchform.parentCode"-->
-                <!--size="mini"-->
+                <!-- -->
               <!--/>-->
             <!--</div>-->
           <!--</template>-->
@@ -173,7 +173,7 @@
             <el-input
               :disabled="ifLook==true"
               clearable
-              size="mini"
+
               v-model="form.boqOrdinaryStandard.importCode"/>
           </el-form-item>
 
@@ -189,7 +189,7 @@
             <el-input
               :disabled="ifLook==true"
               clearable
-              size="mini"
+
               v-model="form.boqOrdinaryStandard.name"/>
           </el-form-item>
 
@@ -224,7 +224,7 @@
             <!--<el-input-->
               <!--:disabled="ifLook==true"-->
               <!--clearable-->
-              <!--size="mini"-->
+              <!-- -->
               <!--v-model="form.boqOrdinaryStandard.unit"/>-->
           </el-form-item>
 
@@ -244,7 +244,7 @@
               filterable
               clearable
               placeholder=""
-              size="mini"
+
               v-model="form.boqOrdinaryStandard.enable"
             >
               <el-option
@@ -265,7 +265,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               @change="
                   getName(
                     form.boqOrdinaryStandard.projectType,
@@ -301,7 +301,7 @@
           <!--<span style="float: left">项目特征修改: </span>-->
           <!--<el-button-->
             <!--@click="whStatus=false,dialogResult1=true"-->
-            <!--size="mini"-->
+            <!-- -->
             <!--style="-->
                   <!--float: right;-->
                   <!--width: 60px;-->

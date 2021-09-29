@@ -76,7 +76,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目简称</span>
             <div>
-                <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.projectOmit" size="mini"/>
+                <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.projectOmit"  />
             </div>
           </template>
         </el-table-column>
@@ -90,7 +90,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input @keypress.native.enter="searchformSubmit" v-model="searchform.projectName" size="mini"/>
+              <el-input @keypress.native.enter="searchformSubmit" v-model="searchform.projectName"  />
             </div>
           </template>
         </el-table-column>
@@ -110,7 +110,7 @@
                 filterable
                 placeholder="请选择"
                 @change="getProjectTwo"
-                size="mini"
+
                 v-model="searchform.projectTypeFirstId">
                 <el-option
                   :key="index"
@@ -135,7 +135,7 @@
               filterable
               @change="searchformSubmit"
               placeholder="请先选择一级类别"
-              size="mini"
+
               :disabled="searchform.projectTypeFirstId==''"
               v-model="searchform.projectTypeSecondId">
               <el-option
@@ -157,7 +157,7 @@
           <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.companyBelongName" size="mini"/>
+              <el-input @keypress.native.enter="searchformSubmit"  v-model="searchform.companyBelongName"  />
             </div>
           </template>
         </el-table-column>
@@ -177,7 +177,7 @@
               <el-select
                 filterable
                 clearable
-                size="mini"
+
                 @clear="searchform.flowStatus=''"
                 @change="searchformSubmit"
                 placeholder="请选择"

@@ -64,7 +64,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectName"  />
             </div>
           </template>
         </el-table-column>
@@ -78,7 +78,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目编码</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectCode" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectCode"  />
             </div>
           </template>
         </el-table-column>
@@ -92,7 +92,7 @@
           <template slot="header" slot-scope="scope">
             <span>合同号</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.contractNumber" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.contractNumber"  />
             </div>
           </template>
         </el-table-column>
@@ -107,7 +107,7 @@
           <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.companyBelongName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.companyBelongName"  />
             </div>
           </template>
         </el-table-column>
@@ -124,7 +124,7 @@
               <el-select
                 filterable
                 clearable
-                size="mini"
+
                 placeholder="请选择"
                 v-model="searchform.projectStatusId">
                 <el-option
@@ -146,7 +146,7 @@
           <template slot="header" slot-scope="scope">
             <span>签约总金额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.contractMoney" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.contractMoney"  />
             </div>
           </template>
         </el-table-column>
@@ -160,7 +160,7 @@
           <template slot="header" slot-scope="scope">
             <span>我方份额(万元)</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.amountWe" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.amountWe"  />
             </div>
           </template>
         </el-table-column>
@@ -180,7 +180,7 @@
               <el-select
                 filterable
                 clearable
-                size="mini"
+
                 placeholder="请选择"
                 v-model="searchform.flowStatus">
                 <el-option
@@ -202,7 +202,7 @@
           <template slot="header" slot-scope="scope">
             <span>推送人</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectPusher" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectPusher"  />
             </div>
           </template>
         </el-table-column>
@@ -216,7 +216,7 @@
           <template slot="header" slot-scope="scope">
             <span>推送人联系方式</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectPusherPhone" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectPusherPhone"  />
             </div>
           </template>
         </el-table-column>

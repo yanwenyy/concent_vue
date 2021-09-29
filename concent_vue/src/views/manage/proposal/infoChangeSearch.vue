@@ -15,7 +15,7 @@
             filterable
             placeholder="请选择"
             @change="getTwo"
-            size="mini"
+
             v-model="searchform.enginTypeFirstId"
           >
             <el-option
@@ -33,7 +33,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.enginTypeSecondId"
           >
             <el-option
@@ -318,7 +318,7 @@
     font-size: 14px;
     padding-left: 130px;
   }
-  
+
   >>>.el-cascader-node>.el-radio, .el-radio:last-child {
     margin-right: 0;
     margin-left: 3px;
