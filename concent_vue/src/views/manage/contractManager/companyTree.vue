@@ -159,7 +159,7 @@
         this.index=index;
         this.tableList=tableList;
         //可以选择股份公司的单位
-        if(type=='使用资质单位'||type=='签约单位'){
+        if(type=='使用资质单位'||type=='签约单位'||type=='内部联合体单位'){
           this.ifGFGS=true;
         }
         if(list&&list!=''){

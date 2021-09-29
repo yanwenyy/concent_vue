@@ -1232,6 +1232,7 @@
                    class="formItem"
                  >
               <el-select
+                :class="detailformAfter.verify.bidModeId!=detailformBefore.verify.bidModeId?'changeRed':''"
                 :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                 filterable
                 clearable
@@ -1285,6 +1286,7 @@
         }"
         >
           <el-date-picker
+            :class="detailformAfter.verify.publishTime!=detailformBefore.verify.publishTime?'changeRed':''"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
@@ -1304,6 +1306,7 @@
         }"
         >
           <el-date-picker
+            :class="detailformAfter.verify.saleTime!=detailformBefore.verify.saleTime?'changeRed':''"
             @change="ifYq"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
@@ -1326,6 +1329,7 @@
        >
 
           <el-date-picker
+            :class="detailformAfter.verify.subTime!=detailformBefore.verify.subTime?'changeRed':''"
             clearable
             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
             value-format="timestamp"
@@ -1352,12 +1356,15 @@
            v-model="detailformAfter.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-           @change="detailformAfter.verify.isCoalitionBid=='否'?(detailformAfter.verifyOrgLists='',detailformAfter.verify.outOrg=''):''"
+           @change="detailformAfter.verify.isCoalitionBid=='否'?(detailformAfter.verifyOrgLists='',detailformAfter.verify.orgName='',detailformAfter.verify.outOrg=''):''"
          >
             </el-switch>
       </el-form-item>
         <el-form-item label="内部联合体单位:">
-          <el-input :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" v-model="detailformAfter.verify.orgName">
+          <el-input 
+          :class="detailformAfter.verify.orgName!=detailformBefore.verify.orgName?'changeRed':''"
+          :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'" 
+          v-model="detailformAfter.verify.orgName">
             <!--<el-button-->
             <!--v-if="p.actpoint != 'look' &&p.actpoint != 'task'&& detailformAfter.verify.isCoalitionBid != '否' && detailformAfter.verify.isCoalitionBid!=null"-->
             <!--slot="append" icon="el-icon-search" @click="selectOrg()"></el-button>-->
@@ -1370,6 +1377,7 @@
 
         <el-form-item  label="外部联合体单位:">
           <el-input
+            :class="detailformAfter.verify.outOrg!=detailformBefore.verify.outOrg?'changeRed':''"
             placeholder=""
             :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'"
             size="mini"
@@ -1397,6 +1405,7 @@
                 >
                   <!-- <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"> </el-input> -->
                   <el-input
+                    :class="detailformAfter.verify.verifyExplain!=detailformBefore.verify.verifyExplain?'changeRed':''"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                     clearable
                     placeholder="请输入"
@@ -2147,7 +2156,11 @@ export default {
                   message:  `${type=='save'?'保存':'提交'}成功`,
                   type: "success",
                 });
-                this.$router.back();
+                if (type=='save') {
+                  // this.detailform.verify.uuid = res.data.data.verify.uuid
+                }else{
+                  this.$router.back();
+                }
                 // this.$refs[formName].resetFields();
                 // this.$router.push({
                 //   path: "/manage/verify/listChange",
@@ -2652,5 +2665,10 @@ export default {
     >>>.none-show{
       display: none!important;
     }
+
+    
+  .changeRed >>>input,.changeRed >>>select,.changeRed >>>textarea,.changeRed{
+    color:red!important;
+  }
 </style>
 
