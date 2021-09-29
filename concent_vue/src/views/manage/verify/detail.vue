@@ -924,7 +924,7 @@
     </div>
     </el-tab-pane>
       <el-tab-pane label="审批流程" v-if="p.actpoint == 'task'||p.actpoint == 'look'&&detailform.verify.flowStatus!='edit'&&detailform.verify.flowStatus!=null">
-        <Audit-Process :task="p.task||{businessId:p.newUuid+'-'+p.uuid,businessType:' contract_qual_new'}"></Audit-Process>
+        <Audit-Process :task="p.task||{businessId:p.newUuid+'-'+p.uuid,businessType:'contract_qual_new'}"></Audit-Process>
       </el-tab-pane>
     </el-tabs>
     <el-dialog title="前期项目标段列表" :visible.sync="dialogTopInfoSection">

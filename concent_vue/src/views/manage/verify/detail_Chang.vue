@@ -1558,7 +1558,8 @@
                   v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+            :disabled="p.actpoint === 'look'||p.actpoint === 'task'">
             <span  >
               {{scope.row.verifySectionOrgNameType01}}
             </span>
@@ -1574,7 +1575,8 @@
           v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
           width="500">
 
-          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'">
+          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
+            :disabled="p.actpoint === 'look'||p.actpoint === 'task'">
 
             <span  >
               {{scope.row.verifySectionOrgNameType02}}
@@ -2420,6 +2422,11 @@ export default {
     },
 
     handleSelectionChange(val) {
+      val.forEach(function(item,index){
+        if(item.isTrack=='0'){
+          val.splice(index, 1);
+        }
+      })
       this.multipleSelection = val
     },
     handleRemove(file,index) {

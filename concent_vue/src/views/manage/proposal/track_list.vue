@@ -344,7 +344,7 @@
                 size="mini"
                 v-model="searchform.flowStatus"
               >
-                <el-option label="待登记" value="edit"></el-option>
+                <el-option label="草稿" value="edit"></el-option>
                 <el-option label="审核中" value="check"></el-option>
                 <el-option label="审核通过" value="pass"></el-option>
                 <el-option label="审核退回" value="reject"></el-option>

@@ -590,7 +590,7 @@
       //   this.$message.info("当前登记的项目信息已经添加的资审信息！");
       //   return;
       // }
-      let p = {actpoint: "look", instid: row.inforid, topinfoid: row.tiouuid};
+      let p = {actpoint: "look", instid: row.inforid, topinfoid: row.tiouuid,uuid:row.topInfoOrgId,newUuid:row.uuid};
       this.$router.push({
         path: "./detail/",
         query: {p: this.$utils.encrypt(JSON.stringify(p))},
