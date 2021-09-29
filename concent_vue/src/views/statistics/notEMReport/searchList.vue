@@ -8,7 +8,7 @@
         <el-select
           filterable
           placeholder="请选择"
-          size="mini"
+
           v-model="searchform.gyType"
           @change="gyTypeChange"
         >
@@ -62,7 +62,7 @@
           filterable
           placeholder="请选择"
           @change="getTwo"
-          size="mini"
+
           v-model="searchform.projectTypeFirstId"
         >
           <el-option
@@ -80,7 +80,7 @@
           clearable
           filterable
           placeholder="请选择工程类别(一级)"
-          size="mini"
+
           v-model="searchform.projectTypeSecondId"
         >
           <el-option

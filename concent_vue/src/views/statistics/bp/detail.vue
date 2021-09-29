@@ -27,7 +27,7 @@
 
         <el-input
           disabled
-          size="mini"
+
           v-model="detailform.topInfor.inforName"
         />
       </el-form-item>
@@ -41,14 +41,14 @@
 <!--          clearable-->
 <!--          filterable-->
 <!--          placeholder="请选择"-->
-<!--          size="mini"-->
+<!--           -->
 <!--          v-model="detailform.clothSize.bcTypeId"-->
 <!--        >-->
 <!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
 <!--        </el-select>-->
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.topInfor.enginTypeFirstName"
           />
       </el-form-item>
@@ -59,7 +59,7 @@
       >
         <el-input
           disabled
-          size="mini"
+
           v-model="detailform.topInfor.enginTypeSecondName"
         />
       </el-form-item>
@@ -70,7 +70,7 @@
         >
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.topInfor.noticeTypeName"
           />
 
@@ -80,7 +80,7 @@
           style="width: 33%">
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.topInfor.designOrg"
           />
 
@@ -93,7 +93,7 @@
         >
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.topInfor.constructionOrg"
           />
 
@@ -107,7 +107,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.topInfor.bidAgentCompany"
           />
 
@@ -120,7 +120,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.topInfor.projectModelName"
           />
 
@@ -132,7 +132,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.topInfor.verifyTypeName"
           />
 
@@ -146,7 +146,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.capitalName"
           />
 
@@ -158,7 +158,7 @@
         >
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.topInfor.projectTrackResponPerson"
           />
         </el-form-item>
@@ -169,7 +169,7 @@
           <el-input
             disabled
             placeholder=""
-            size="mini"
+
             v-model="detailform.topInfor.contactMode"
           />
 
@@ -185,7 +185,7 @@
             disabled
             placeholder="请输入"
             type="textarea"
-            size="mini"
+
             v-model="detailform.topInfor.inforContent"
           />
         </el-form-item>
@@ -263,7 +263,7 @@
             :disabled="p.actpoint === 'look'"
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.verify.bidModeName"
           >
             <el-option
@@ -274,7 +274,7 @@
             ></el-option>
           </el-select>
 <!--          <el-input-->
-<!--            size="mini"-->
+<!--             -->
 <!--            v-model="detailform.verify.bidModeName"-->
 <!--          />-->
       </el-form-item>
@@ -296,7 +296,7 @@
 <!--        <el-input-->
 <!--          clearable-->
 <!--          :readonly="p.actpoint === 'look'"-->
-<!--          size="mini"-->
+<!--           -->
 <!--          v-model="detailform.verify.isCoalitionBid"-->
 <!--        />-->
       </el-form-item>
@@ -315,7 +315,7 @@
         >
           <el-input
             placeholder=""
-            size="mini"
+
             v-model="detailform.verify.outOrg"
           />
 
@@ -339,7 +339,7 @@
                 clearable
                 placeholder="请输入"
                 type="textarea"
-                size="mini"
+
                 v-model="detailform.verify.verifyExplain"
               />
             </el-form-item>
@@ -409,7 +409,7 @@
      <p style="overflow:hidden;margin-right: 30px"><span >标段信息: </span>   <el-button
        @click="dialogTopInfoSection = true"
        v-show="p.actpoint != 'look'"
-            size="mini"
+
             style="width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
           >新增</el-button> </p>
@@ -494,7 +494,7 @@
           <el-input
             :disabled="p.actpoint === 'look'"
             placeholder=""
-            size="mini"
+
             v-model="scope.row.verifySection.investmentReckon"
           >
           <template slot="prepend">¥</template>
@@ -517,7 +517,7 @@
            <el-input
              :disabled="p.actpoint === 'look'"
              placeholder=""
-             size="mini"
+
              v-model="scope.row.verifySection.jananInvestment"
            >
           <template slot="prepend">¥</template>

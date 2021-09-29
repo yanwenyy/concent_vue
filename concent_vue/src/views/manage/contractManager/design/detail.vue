@@ -436,7 +436,7 @@
                   clearable
                   filterable
                   placeholder="请选择"
-                  size="mini"
+
                   v-model="detailform.contractInfo.belongEnterPrisesId"
                 >
                   <el-option
@@ -972,7 +972,7 @@
               </el-form-item>
               <el-form-item
                 label="承揽所属省市:"
-                prop="contractInfo.contractProvinceId"
+                prop="contractInfo.contractProvinceName"
                 :rules="{
               required: true,
               message: '此项不能为空',
@@ -985,7 +985,7 @@
                   filterable
                   placeholder="请选择"
 
-                  v-model="detailform.contractInfo.contractProvinceId"
+                  v-model="detailform.contractInfo.contractProvinceName"
                   @change="
                   getName(
                     detailform.contractInfo.contractProvinceId,
@@ -2191,7 +2191,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2378,7 +2378,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2533,7 +2533,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -2589,7 +2589,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2744,7 +2744,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="scope.row.orgId"
                       @change="
                     getXtwName(
@@ -2800,7 +2800,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -2985,7 +2985,7 @@
                         clearable
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.moduleId"
                         @change="
                     getBdName(
@@ -4428,7 +4428,7 @@
                   });
                   if (type=='save') {
                     this.id=res.data.data.contractInfo.uuid;
-                    this.detailform.contractInfo.uuid.id=res.data.data.contractInfo.uuid;
+                    this.detailform.contractInfo.uuid=res.data.data.contractInfo.uuid;
                     this.getDetail();
                   } else {
                     this.$router.back()

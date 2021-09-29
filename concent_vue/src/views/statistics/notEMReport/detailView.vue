@@ -115,7 +115,7 @@
                     filterable
                     placeholder="请选择"
                     @change="getTwo"
-                    size="mini"
+
                     v-model="searchform.design.projectTypeFirstId"
                   >
                     <el-option
@@ -133,7 +133,7 @@
                     clearable
                     filterable
                     placeholder="请选择工程类别(二级)"
-                    size="mini"
+
                     v-model="searchform.design.projectTypeSecondId"
                   >
                     <el-option
@@ -151,7 +151,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.design.projectStatusId"
                   >
                     <el-option
@@ -169,7 +169,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="searchform.design.businessId"
                   >
                     <el-option
@@ -591,17 +591,17 @@
                 <el-button @click="searchDate('industry','gy_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('industry','工业制造板块')" type="primary" plain>导出</el-button>
               </el-form>
-              <el-dialog 
+              <el-dialog
                 :visible.sync="workAmountShow"
                 title="标的物信息"
                 width="70%"
-              > 
+              >
                 <el-table
                   :max-height="$tableHeight-10"
                   :height="$tableHeight-10"
                   :data="workAmountList"
                   :header-cell-style="{
-                    'text-align': 'center', 
+                    'text-align': 'center',
                     'background-color': 'rgba(246,248,252,1)',
                     color: 'rgba(0,0,0,1)',
                   }"
@@ -807,7 +807,7 @@
                   >
                       <template slot-scope="scope" style="text-align: right;">
                         <p v-if="scope.row.country=='01'" >{{scope.row.industry}}</p>
-                        <p v-if="scope.row.country=='02'" >{{scope.row.overseasIndustry}}</p> 
+                        <p v-if="scope.row.country=='02'" >{{scope.row.overseasIndustry}}</p>
                       <!-- <el-input
                         @input="isFloor(scope.row.industry,scope.$index,detailform.gy_list,'industry'),getGyzzCz(detailform.gy_list,detailform.sumByMon_1,'industry')"
                         v-if="scope.row.country=='01'"
@@ -1201,7 +1201,7 @@
                   >
                     <template slot-scope="scope" style="text-align: right;">
                       <p v-if="scope.row.vjnw=='境内'" >{{scope.row.ngyvalueJn}}</p>
-                      <p v-if="scope.row.vjnw=='境外'" >{{scope.row.ngyvalueJw}}</p>                      
+                      <p v-if="scope.row.vjnw=='境外'" >{{scope.row.ngyvalueJw}}</p>
                       <!-- <el-input
                         @input="isFloor(scope.row.ngyvalueJn,scope.$index,detailform.gycp_list,'ngyvalueJn'),getGyzzCz(detailform.gycp_list,detailform.sumByMon_cp,'ngyvalueJn')"
                         v-if="scope.row.vjnw=='境内'"
@@ -1406,17 +1406,17 @@
                 <el-button @click="searchDate('material','wz_list')" type="primary" plain>查询</el-button>
                 <el-button @click="exportdata('material','物资贸易板块')" type="primary" plain>导出</el-button>
               </el-form>
-              <el-dialog 
+              <el-dialog
                 :visible.sync="projectContentShow"
                 title="标的物信息"
                 width="83%"
-              > 
+              >
                 <el-table
                   :max-height="$tableHeight-10"
                   :height="$tableHeight-10"
                   :data="projectContentList"
                   :header-cell-style="{
-                    'text-align': 'center', 
+                    'text-align': 'center',
                     'background-color': 'rgba(246,248,252,1)',
                     color: 'rgba(0,0,0,1)',
                   }"
@@ -3889,7 +3889,7 @@
             detailName:'否'
           }
         ],
-        rules:{ 
+        rules:{
           //表单验证规则
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
@@ -4050,7 +4050,7 @@
           list[index].htquantity_after = list[index].htquantity - list[index].industry - list[index].equipmentManufacturin - list[index].componentManufacturin - list[index].otherIndustrayProduct
         }else if ( name == "overseasIndustry") {
           list[index].htquantity_after = list[index].htquantity - list[index].overseasIndustry - list[index].equipmentManufacturinHw - list[index].componentManufacturinHw - list[index].otherIndustrayProductHw
-        }       
+        }
         if (name == "sale") { // 物资贸易
           list[index].htquantity_after = list[index].htquantity - list[index].sale
         }else if ( name == "overseasSale") {
@@ -4073,7 +4073,7 @@
         }
         if (name == "equipmentLeasing") { // 其他
           list[index].htquantity_after = list[index].htquantity - list[index].equipmentLeasing - list[index].transportation - list[index].accommodationCatering - list[index].educationTraining - list[index].informationConstruction - list[index].leaseHouses - list[index].otherProject
-        } else if (name == "equipmentLeasingHw") { 
+        } else if (name == "equipmentLeasingHw") {
           list[index].htquantity_after = list[index].htquantity - list[index].equipmentLeasingHw- list[index].transportationHw - list[index].accommodationCateringHw - list[index].educationTrainingHw - list[index].informationConstructionHw - list[index].leaseHousesHw - list[index].otherProjectHw
         }
         // 判断是不是小于0
@@ -4091,7 +4091,7 @@
           return 'success_row';
         }
         return '';
-      },   
+      },
       //修改产值
       getGyzzCz(list,obj,name){
       //  list 列表数据 obj 修改哪个对象 name 修改对象里的哪个值
@@ -4506,7 +4506,7 @@
             });
             isSave = false
           }
-        })        
+        })
         this.detailform.qt_list.forEach((element) => {
           if (element.htquantity_after < 0) {
             this.$message({
@@ -4527,7 +4527,7 @@
             });
             isSave = false
           }
-        })        
+        })
         // 上面判断都通过才可以保存
         if (!isSave) {
           return false
@@ -4661,7 +4661,7 @@
               } else {
                 element.isRed = false
               }
-            })            
+            })
           }
           // 物资贸易
           if (name == "wz_list") {
@@ -4693,7 +4693,7 @@
               }
             })
           }
-          // 金融保险 
+          // 金融保险
           if (name == "jrbx_list") {
             res.data.data.jrbx_list.forEach((element)=>{
               if (element.country == "01") {
@@ -4723,7 +4723,7 @@
               }
             })
           }
-          // 其他 
+          // 其他
           if (name == "qt_list") {
             res.data.data.qt_list.forEach((element)=>{
               if (element.country == "01") {
@@ -4740,7 +4740,7 @@
           }
           var datas=res.data.data;
           this.detailform[name]=datas[name];
-        })        
+        })
       },
       // 加载列表
       getDetail() {
@@ -4780,7 +4780,7 @@
               } else {
                 element.isRed = false
               }
-            })            
+            })
           }
           // 物资贸易
           res.data.data.wz_list.forEach((element)=>{
@@ -4808,7 +4808,7 @@
               element.isRed = false
             }
           })
-          // 金融保险 
+          // 金融保险
           res.data.data.jrbx_list.forEach((element)=>{
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.finance)- Number(element.secure)- Number(element.otherFinance)
@@ -4834,7 +4834,7 @@
               element.isRed = false
             }
           })
-          // 其他 
+          // 其他
           res.data.data.qt_list.forEach((element)=>{
             if (element.country == "01") {
               element.htquantity_after = Number(element.htquantity) - Number(element.equipmentLeasing)- Number(element.transportation)- Number(element.accommodationCatering)- Number(element.educationTraining)- Number(element.informationConstruction)- Number(element.leaseHouses)- Number(element.otherProject)

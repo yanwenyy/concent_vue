@@ -13,14 +13,14 @@
       :show-file-list="false"
       class
     >
-      <el-button size="mini" type="primary" class="picUpBtn">上传图片</el-button>
+      <el-button   type="primary" class="picUpBtn">上传图片</el-button>
     </el-upload>
 
     <el-button
       :style="{background:color,borderColor:color}"
       @click=" dialogVisible=true"
       class="picUpBtn"
-      size="mini"
+
       type="primary"
       v-if="type===2"
     >上传图片</el-button>

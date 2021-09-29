@@ -6,7 +6,7 @@
           <div class="dbTabel">
             <el-button class="sub-btn" @click="submit" plain type="primary"><i class="el-icon-plus"></i>批量审核</el-button>
             <el-table
-              class="tableStyle"
+              class="tableStyle2"
               :max-height="$tableHeight"
               :height="$tableHeight"
               :data="page.records"
@@ -346,6 +346,10 @@
   .tableStyle{
     min-height:calc(100vh - 166px)!important;
     max-height:calc(100vh - 166px)!important ;
+  }
+  .tableStyle2{
+    min-height:calc(100vh - 176px)!important;
+    max-height:calc(100vh - 176px)!important ;
   }
   .sub-btn{
     float: right;

@@ -59,7 +59,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -82,7 +82,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeFirstName"
             >
               <el-option
@@ -108,7 +108,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.enginTypeSecondName"
             >
               <el-option
@@ -135,7 +135,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
-                size="mini"
+
               />
             </div>
           </template>
@@ -153,7 +153,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.noticeTypeName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -171,7 +171,7 @@
             <el-date-picker
               style=" width: 100%"
               v-model="searchform.endTime"
-              size="mini"
+
               value-format="timestamp"
               >
               </el-date-picker>
@@ -194,7 +194,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.createUserName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -212,7 +212,7 @@
             <div>
               <el-date-picker
                 style=" width: 100%"
-                size="mini"
+
                 value-format="timestamp"
                 v-model="searchform.ccrCreateTime"
               >
@@ -241,7 +241,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.flowStatus"
               >
                 <el-option label="草稿" value="edit"></el-option>
@@ -253,7 +253,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>

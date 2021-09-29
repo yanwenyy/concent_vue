@@ -59,7 +59,7 @@
           <p style="text-align:center;">
             <span style="color:gray;" v-if="checkedOptions.length===0">暂无数据</span>
           </p>
-          <el-checkbox-group size="mini" style="width:100%;" v-model="checkedBox">
+          <el-checkbox-group   style="width:100%;" v-model="checkedBox">
             <el-checkbox-button
               :key="item.uuid"
               :label="item.uuid"

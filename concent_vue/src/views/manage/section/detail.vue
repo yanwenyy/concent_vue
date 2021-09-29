@@ -24,7 +24,7 @@
       >
         <el-input
           clearable
-          size="mini"
+
           v-model="detailform.Verify.inforName"
         />
       </el-form-item>
@@ -41,14 +41,14 @@
 <!--          clearable-->
 <!--          filterable-->
 <!--          placeholder="请选择"-->
-<!--          size="mini"-->
+<!--           -->
 <!--          v-model="detailform.clothSize.bcTypeId"-->
 <!--        >-->
 <!--          <el-option :key="index" :label="item.label" :value="item.value" v-for="(item,index) in options1"></el-option>-->
 <!--        </el-select>-->
           <el-input
             clearable
-            size="mini"
+
             v-model="detailform.Verify.enginTypeFirstName"
           />
       </el-form-item>
@@ -61,7 +61,7 @@
       >
         <el-input
           clearable
-          size="mini"
+
           v-model="detailform.Verify.enginTypeSecondName"
         />
       </el-form-item>
@@ -79,7 +79,7 @@
         <el-input
           clearable
 
-          size="mini"
+
           v-model="detailform.Verify.noticeTypeName"
          />
 
@@ -94,7 +94,7 @@
           <el-input
             clearable
 
-            size="mini"
+
             v-model="detailform.Verify.bidModeName"
           />
       </el-form-item>
@@ -110,7 +110,7 @@
         <el-input
           clearable
 
-          size="mini"
+
           v-model="detailform.Verify.isCoalitionBid"
         />
       </el-form-item>
@@ -126,7 +126,7 @@
         <el-input
           clearable
 
-          size="mini"
+
           v-model="detailform.Verify.saleTime"
         />
       </el-form-item>
@@ -143,7 +143,7 @@
         <el-input
           clearable
 
-          size="mini"
+
           v-model="detailform.Verify.designOrg"
          />
 
@@ -159,7 +159,7 @@
       >
         <el-input
           clearable
-          size="mini"
+
           v-model="detailform.Verify.subTime"
          />
 
@@ -175,7 +175,7 @@
     }"
       >
         <el-input
-          size="mini"
+
           v-model="detailform.Verify.publishTime"
          />
 
@@ -192,7 +192,7 @@
         <el-input
           clearable
           placeholder=""
-          size="mini"
+
           v-model="detailform.Verify.bidAgentCompany"
          />
 
@@ -209,7 +209,7 @@
         <el-input
           clearable
           placeholder=""
-          size="mini"
+
           v-model="detailform.Verify.projectModelName"
          />
 
@@ -227,7 +227,7 @@
         <el-input
           clearable
           placeholder=""
-          size="mini"
+
           v-model="detailform.Verify.verifyTypeName"
          />
 
@@ -244,7 +244,7 @@
         <el-input
           clearable
           placeholder=""
-          size="mini"
+
           v-model="detailform.Verify.capitalNames"
          />
 
@@ -255,7 +255,7 @@
         "
       >
         <el-input
-          size="mini"
+
           v-model="detailform.Verify.projectTrackResponPerson"
          />
 
@@ -268,7 +268,7 @@
       >
         <el-input
           placeholder=""
-          size="mini"
+
           v-model="detailform.Verify.contactMode"
          />
 
@@ -281,7 +281,7 @@
         >
           <el-input
             clearable
-            size="mini"
+
             v-model="detailform.TopInfo.constructionOrg"
           />
 
@@ -297,7 +297,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
+
                 v-model="detailform.TopInfo.inforContent"
               />
             </el-form-item>
@@ -318,7 +318,7 @@
               <el-input
                 clearable
                 placeholder="请输入"
-                size="mini"
+
                 v-model="detailform.Verify.verifyExplain"
               />
             </el-form-item>
@@ -343,7 +343,7 @@
 
      <p style="overflow:hidden;margin-right: 30px"><span style="float:left;">标段信息: </span>   <el-button
           @click="show('add')"
-            size="mini"
+
             style="float:right;width: 70px;height: 32px;background: #5C8BFA;font-size: 16px;"
             type="primary"
           >新增</el-button> </p>
@@ -377,7 +377,7 @@
                 label-width="0"
 
               >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
+                <el-input max-length=50 clearable :disabled="p.actpoint==='look'"   v-model="scope.row.part"></el-input>
               </el-form-item>
               <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
             </template>
@@ -392,7 +392,7 @@
                 label-width="0"
 
               >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
+                <el-input max-length=50 clearable :disabled="p.actpoint==='look'"   v-model="scope.row.part"></el-input>
               </el-form-item>
               <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
             </template>
@@ -407,7 +407,7 @@
                 label-width="0"
 
               >
-                <el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.part"></el-input>
+                <el-input max-length=50 clearable :disabled="p.actpoint==='look'"   v-model="scope.row.part"></el-input>
               </el-form-item>
               <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
             </template>

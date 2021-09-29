@@ -14,7 +14,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeFirstName"
             >
               <el-option
@@ -31,7 +31,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeSecondName"
             >
               <el-option
@@ -76,7 +76,7 @@
           clearable
           filterable
           placeholder="请选择"
-          size="mini"
+
           v-model="searchform.noticeTypeId"
         >
           <el-option
@@ -123,7 +123,7 @@
           clearable
           filterable
           placeholder="请选择"
-          size="mini"
+
           v-model="searchform.isWinBid"
         >
           <el-option

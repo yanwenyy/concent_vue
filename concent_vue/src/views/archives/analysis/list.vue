@@ -197,7 +197,7 @@
           </el-form-item>
 <!--        <el-select-->
 <!--          placeholder="请选择"-->
-<!--          size="mini"-->
+<!--           -->
 <!--          v-model="resultform.year"-->
 <!--        >-->
 <!--          <el-option-->
@@ -230,7 +230,7 @@
           >
               <el-input
                 placeholder="请输入"
-                size="mini"
+
                 type="textarea"
                 v-model="editform.remarks"
               />

@@ -22,7 +22,7 @@
           clearable
           filterable
           placeholder="请选择"
-          size="mini"
+
           v-model="searchform.moduleId"
         >
           <el-option
@@ -53,7 +53,7 @@
           <!--filterable-->
           <!--placeholder="请选择"-->
           <!--@change="getTwo"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.projectNatureFirstId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -71,7 +71,7 @@
           <!--clearable-->
           <!--filterable-->
           <!--placeholder="请选择项目性质(一级)"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.projectNatureSecondId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -90,7 +90,7 @@
           <!--filterable-->
           <!--placeholder="请选择"-->
           <!--@change="getTwo"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.enginTypeFirstId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -109,7 +109,7 @@
           <!--filterable-->
           <!--placeholder="请选择"-->
           <!--@change="getTwo"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.enginTypeFirstId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -127,7 +127,7 @@
           <!--clearable-->
           <!--filterable-->
           <!--placeholder="请选择工程类别(一级)"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.enginTypeSecondId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -145,7 +145,7 @@
           <!--clearable-->
           <!--filterable-->
           <!--placeholder="请选择"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.marketFirstNameId"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -170,7 +170,7 @@
           <!--clearable-->
           <!--filterable-->
           <!--placeholder="请选择"-->
-          <!--size="mini"-->
+          <!-- -->
           <!--v-model="searchform.flowStatus"-->
         <!--&gt;-->
           <!--<el-option-->
@@ -341,7 +341,7 @@
       :append-to-body="true">
       <el-button
         @click="addXs()"
-        size="mini"
+
         class="detatil-flie-btn"
         type="primary"
       >新增</el-button>

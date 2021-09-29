@@ -56,7 +56,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.createOrgName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -77,7 +77,7 @@
                 type="year"
 
                 placeholder="选择年"
-              size="mini"
+
               style="width: 60%">
               </el-date-picker>
             </div>
@@ -109,7 +109,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.stauts"
               >
                 <el-option
@@ -123,7 +123,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>

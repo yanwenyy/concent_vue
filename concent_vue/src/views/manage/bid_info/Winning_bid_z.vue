@@ -268,7 +268,7 @@
 
                       clearable
                       placeholder="评标办法"
-                      size="mini"
+
                       :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"
                       @change="
                     getName(

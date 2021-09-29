@@ -35,7 +35,7 @@
 
         <el-input
           :disabled="p.actpoint === 'look'"
-          size="mini"
+
           v-model="detailform.archivesInfo.name"
         />
 
@@ -49,7 +49,7 @@
           :disabled="p.actpoint === 'look'"
           filterable
           placeholder="请选择"
-          size="mini"
+
           v-model="detailform.archivesInfo.archivesTypeId"
         >
           <el-option
@@ -70,7 +70,7 @@
             :disabled="p.actpoint === 'look'"
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="detailform.archivesInfo.isShare"
           >
             <el-option
@@ -116,7 +116,7 @@
                 :readonly="p.actpoint === 'look'"
                 clearable
                 placeholder="请输入"
-                size="mini"
+
                 v-model="detailform.archivesInfo.remarks"
               />
             </el-form-item>
@@ -158,7 +158,7 @@
       >
         <el-input
           disabled
-          size="mini"
+
           v-model="detailform.archivesInfo.createOrgName"
         />
       </el-form-item>
@@ -169,7 +169,7 @@
 
           <el-input
             disabled
-            size="mini"
+
             v-model="detailform.archivesInfo.createUserName"
           />
         </el-form-item>

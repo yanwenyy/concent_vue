@@ -82,7 +82,7 @@
             <div>
               <el-input style=" width: 100%"
                         v-model="searchform.projectName"
-                        size="mini"/>
+                         />
             </div>
           </template>
         </el-table-column>
@@ -97,7 +97,7 @@
             <div>
               <el-input style=" width: 100%"
                         v-model="searchform.projectStatusName"
-                        size="mini"/>
+                         />
             </div>
           </template>
           <template slot="header"
@@ -106,7 +106,7 @@
             <div>
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
-                         size="mini"
+
                          v-model="searchform.projectStatusName"
               >
                 <el-option :key="index"
@@ -129,7 +129,7 @@
             <!--<div>-->
               <!--<el-input style=" width: 100%"-->
                         <!--v-model="searchform.contractAmountEngine"-->
-                        <!--size="mini"/>-->
+                        <!-- />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -144,7 +144,7 @@
           <!--<div>-->
             <!--<el-input style=" width: 100%"-->
                       <!--v-model="searchform.totalValue"-->
-                      <!--size="mini"/>-->
+                      <!-- />-->
           <!--</div>-->
         <!--</template>-->
       </el-table-column>
@@ -181,7 +181,7 @@
             <div>
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
-                         size="mini"
+
                          @clear="searchform.flowStatus=''"
                          v-model="searchform.flowStatus"
               >

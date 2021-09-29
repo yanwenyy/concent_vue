@@ -221,7 +221,7 @@
             >
               <template slot-scope="scope">
                 <div class="textRight">{{scope.row.yearValue}}</div>
-                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'"  />-->
               </template>
             </el-table-column>
             <el-table-column
@@ -232,7 +232,7 @@
             >
               <template slot-scope="scope">
                 <div class="textRight">{{scope.row.yearValuationFee}}</div>
-                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'"  />-->
               </template>
             </el-table-column>
             <el-table-column
@@ -243,7 +243,7 @@
             >
               <template slot-scope="scope">
                 <div class="textRight">{{scope.row.yearTaxFee}}</div>
-                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'" size="mini"/>-->
+                <!-- <el-input style="text-align: right"  v-model="scope.row.yearValue" :disabled="scope.row.yearValue=='0'"  />-->
               </template>
             </el-table-column>
          <!--   <el-table-column

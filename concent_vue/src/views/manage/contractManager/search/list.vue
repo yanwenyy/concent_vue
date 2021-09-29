@@ -34,7 +34,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.moduleId"
               >
                 <el-option
@@ -44,14 +44,14 @@
                   v-for="(item, index) in projectPlate"
                 ></el-option>
               </el-select>
-            </el-form-item>            
+            </el-form-item>
             <el-form-item label="项目性质(一级):" >
               <el-select
                 clearable
                 filterable
                 placeholder="请选择"
                 @change="getTwoXZ"
-                size="mini"
+
                 v-model="searchform.projectNatureFirstId"
                 @clear="searchform.projectNatureFirstId='',searchform.projectNatureFirstName=''"
               >
@@ -68,7 +68,7 @@
                 clearable
                 filterable
                 placeholder="请选择工程类别(二级)"
-                size="mini"
+
                 v-model="searchform.projectNatureSecondId"
               >
                 <el-option
@@ -85,7 +85,7 @@
                 filterable
                 placeholder="请选择"
                 @change="getTwo"
-                size="mini"
+
                 v-model="searchform.flowStatus"
               >
                 <el-option
@@ -102,7 +102,7 @@
                 filterable
                 placeholder="请选择"
                 @change="getTwo"
-                size="mini"
+
                 v-model="searchform.enginTypeFirstId"
               >
                 <el-option
@@ -118,7 +118,7 @@
                 clearable
                 filterable
                 placeholder="请选择工程类别(二级)"
-                size="mini"
+
                 v-model="searchform.enginTypeSecondId"
               >
                 <el-option
@@ -134,7 +134,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.marketFirstNameId"
               >
                 <el-option
@@ -152,7 +152,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.changeStatus"
             &gt;
             <el-option
@@ -168,7 +168,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.isImport"
               >
                 <el-option
@@ -184,7 +184,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.isOpenBid"
               >
                 <el-option
@@ -216,7 +216,7 @@
           <!-- </el-form>
         </el-menu-item-group>
       </el-submenu>
-    </el-menu>  
+    </el-menu>
     <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()"> -->
       <el-form-item style="float:right">
         <el-button @click="searchformReset" type="info" plain style="color:black;background:none;float:right; margin-right:20px;"><i class="el-icon-refresh-right"></i>重置</el-button>

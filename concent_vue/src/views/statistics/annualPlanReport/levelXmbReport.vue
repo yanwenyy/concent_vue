@@ -3,7 +3,7 @@
     <div style="width: 100%; overflow: hidden">
       <el-form class="search-form" :inline="true" :model="searchform" @keyup.enter.native="init()">
         <el-form-item label="项目简称:">
-          <el-input clearable style=" width: 100%" v-model="searchform.projectOmit" size="mini"/>
+          <el-input clearable style=" width: 100%" v-model="searchform.projectOmit"  />
         </el-form-item>
         <el-form-item label="项目状态:">
           <el-select
@@ -82,7 +82,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.createOrgName"
-                size="mini"
+
               />
             </div>
           </template>-->
@@ -108,7 +108,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->
@@ -143,7 +143,7 @@
                    class="list-search-picker"
                    style=" width: 100%"
                    v-model="searchform.createOrgName"
-                   size="mini"
+
                  />
                </div>
              </template>-->

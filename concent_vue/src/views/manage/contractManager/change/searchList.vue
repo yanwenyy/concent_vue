@@ -73,7 +73,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchFrom.moduleId"
               >
                 <el-option
@@ -103,7 +103,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchFrom.contractName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -155,7 +155,7 @@
                 <!--clearable-->
                 <!--filterable-->
                 <!--placeholder="请选择"-->
-                <!--size="mini"-->
+                <!-- -->
                 <!--v-model="searchFrom.state"-->
               <!--&gt;-->
                 <!--&lt;!&ndash;<el-option label="待登记" value="0"></el-option>&ndash;&gt;-->

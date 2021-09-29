@@ -75,7 +75,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -97,7 +97,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.inforCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -117,7 +117,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.moduleName"
             >
               <el-option
@@ -144,7 +144,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeFirstId"
             >
               <el-option
@@ -172,7 +172,7 @@
               clearable
               filterable
               placeholder="请选择工程类别(一级)"
-              size="mini"
+
               v-model="searchform.enginTypeSecondId"
             >
               <el-option
@@ -198,7 +198,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
-                size="mini"
+
               />
             </div>
           </template>
@@ -217,7 +217,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.noticeTypeId"
             >
               <el-option
@@ -273,7 +273,7 @@
                 <!--clearable-->
                 <!--filterable-->
                 <!--placeholder="请选择"-->
-                <!--size="mini"-->
+                <!-- -->
                 <!--v-model="searchform.flowStatus"-->
               <!--&gt;-->
                 <!--<el-option-->
@@ -287,7 +287,7 @@
               <!--&lt;!&ndash;class="list-search-picker"&ndash;&gt;-->
               <!--&lt;!&ndash;style=" width: 100%"&ndash;&gt;-->
               <!--&lt;!&ndash;v-model="searchform.flowStatus"&ndash;&gt;-->
-              <!--&lt;!&ndash;size="mini"&ndash;&gt;-->
+              <!--&lt;!&ndash; &ndash;&gt;-->
               <!--&lt;!&ndash;/>&ndash;&gt;-->
             <!--</div>-->
           <!--</template>-->
@@ -311,7 +311,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.importFileRecordId"
               >
                 <el-option
@@ -327,7 +327,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.importFileRecordId"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>
@@ -346,7 +346,7 @@
                 <!--class="list-search-picker"-->
                 <!--style=" width: 100%"-->
                 <!--v-model="searchform.version"-->
-                <!--size="mini"-->
+                <!-- -->
               <!--/>-->
             <!--</div>-->
           <!--</template>-->
@@ -380,7 +380,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.isSubmit"
               >
                 <el-option

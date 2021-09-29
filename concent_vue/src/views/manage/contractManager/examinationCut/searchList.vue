@@ -14,7 +14,7 @@
               <!--clearable-->
               <!--filterable-->
               <!--placeholder="请选择"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--v-model="searchFrom.flowStatus"-->
             <!--&gt;-->
               <!--<el-option label="待登记" value="0"></el-option>-->
@@ -63,6 +63,7 @@
         <el-table-column
           label="合同板块"
           prop="moduleName"
+          :width="150"
           show-overflow-tooltip
         >
           <template slot="header" slot-scope="scope">
@@ -73,7 +74,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchFrom.flowStatus"
               >
                 <el-option label="工程承包" value="7f4fcba4255b43a8babf15afd6c04a53"></el-option>

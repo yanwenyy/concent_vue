@@ -20,7 +20,7 @@
             <!-- <el-button
               @click="handleBuild"
               class="el-icon-finished icon-cursor"
-              size="mini"
+
               title="按模板生成"
               type="primary"
               v-if="lc_build && lc_actpoint==='edit'"
@@ -28,7 +28,7 @@
             <el-button
               @click="selgxzl"
               class="el-icon-folder-checked icon-cursor"
-              size="mini"
+
               title="选择共享资料"
               type="primary"
               v-if="lc_gxzl==='ok' && lc_actpoint==='edit'"
@@ -36,7 +36,7 @@
             <el-button
               @click="handleImp"
               class="el-icon-folder-checked icon-cursor impBtn"
-              size="mini"
+
               title="导入"
               type="primary"
               v-if="lc_imp && lc_actpoint==='edit'"
@@ -44,7 +44,7 @@
             <el-button
               @click="handleUpload"
               class="el-icon-upload2 icon-cursor"
-              size="mini"
+
               title="上传"
               type="primary"
               v-if="lc_upload && lc_actpoint==='edit'"
@@ -64,10 +64,10 @@
             <span v-if="rowdata.createtime">--{{rowdata.createtime | dateformat}}</span>
           </el-col>
           <el-col :span="6">
-            <el-button @click="download(rowdata)" size="mini">
+            <el-button @click="download(rowdata)"  >
               <i class="el-icon-download icon-cursor">下载</i>
             </el-button>
-            <el-button @click="del(rowdata)" size="mini" v-if="lc_actpoint==='edit'">
+            <el-button @click="del(rowdata)"   v-if="lc_actpoint==='edit'">
               <i class="el-icon-delete icon-cursor">删除</i>
             </el-button>
           </el-col>
@@ -124,7 +124,7 @@
         <!-- <el-table-column label="项目共享资料" prop="label"></el-table-column> -->
         <el-table-column>
           <template slot="header">
-            <el-input placeholder="输入关键字搜索" size="mini" v-model="search" />
+            <el-input placeholder="输入关键字搜索"   v-model="search" />
           </template>
           <template slot-scope="scope">{{scope.row.label}}</template>
         </el-table-column>

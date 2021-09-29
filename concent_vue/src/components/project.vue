@@ -6,7 +6,7 @@
     top="10vh"
     :before-close="handleClose"
    >
-    <el-form :inline="true" :model="searchForm"  class="queryForm" label-width="70px" size="mini">
+    <el-form :inline="true" :model="searchForm"  class="queryForm" label-width="70px"  >
       <el-row>
         <el-col span="7">
           <el-form-item label="项目名称">

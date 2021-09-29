@@ -63,7 +63,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.inforName"
-                size="mini"/>
+                 />
             </div>
           </template>
           <template slot-scope="scope">
@@ -84,7 +84,7 @@
               filterable
               placeholder="请选择"
               @change="getTwo"
-              size="mini"
+
               v-model="searchform.enginTypeFirstId"
             >
               <el-option
@@ -111,7 +111,7 @@
               clearable
               filterable
               placeholder="请选择工程类别(一级)"
-              size="mini"
+
               v-model="searchform.enginTypeSecondId"
             >
               <el-option
@@ -137,7 +137,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.constructionOrg"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>
@@ -158,7 +158,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.noticeTypeId"
             >
               <el-option
@@ -192,7 +192,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.bidFlowStatus"
               >
                 <el-option
@@ -218,7 +218,7 @@
               <el-date-picker
               style=" width: 100%"
               v-model="searchform.endTime"
-              size="mini"
+
               value-format="timestamp"
               >
               </el-date-picker>
@@ -241,7 +241,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.createUserName"
-                size="mini"/>
+                 />
             </div>
           </template>
         </el-table-column>

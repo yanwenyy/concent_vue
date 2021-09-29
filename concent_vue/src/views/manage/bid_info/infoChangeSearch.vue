@@ -16,7 +16,7 @@
             filterable
             placeholder="请选择"
             @change="getTwo"
-            size="mini"
+
             v-model="searchform.enginTypeFirstId"
           >
             <el-option
@@ -35,7 +35,7 @@
             clearable
             filterable
             placeholder="请选择"
-            size="mini"
+
             v-model="searchform.enginTypeSecondId"
           >
             <el-option

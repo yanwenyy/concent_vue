@@ -146,7 +146,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.flowStatus"
               >
                 <el-option label="待登记" value="edit"></el-option>
@@ -159,7 +159,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>

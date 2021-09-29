@@ -52,7 +52,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractCode"
                     />
                   </el-form-item>
@@ -134,7 +134,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractBuiltArea"
                     />
                   </el-form-item>
@@ -174,7 +174,7 @@
                       disabled
                       clearable
                       placeholder="请输入"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractPeriod"
                     />
                   </el-form-item>
@@ -225,7 +225,7 @@
                       disabled
                       clearable
                       placeholder="请输入"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractType=='2'?'补充合同':'主合同'"
                     />
                   </el-form-item>
@@ -238,7 +238,7 @@
                       disabled
                       clearable
                       placeholder="请输入"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.constructionOrg"
                     />
                   </el-form-item>
@@ -277,7 +277,7 @@
                       disabled
                       clearable
                       placeholder="请输入"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.designOrg"
                     />
                   </el-form-item>
@@ -456,7 +456,7 @@
                       :disabled="true"
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.ourAmount"
                     >
                       <template slot="prepend">¥</template>
@@ -496,7 +496,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.valueAddedTax"
                     >
                       <template slot="prepend">¥</template>
@@ -513,7 +513,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.designTempPrice"
                     >
                       <template slot="prepend">¥</template>
@@ -527,7 +527,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.unAllocatedFee">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -541,7 +541,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.selfCash">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -555,7 +555,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.marketFirstName"
                     />
                   </el-form-item>
@@ -566,7 +566,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.marketSecondName"
                     />
                   </el-form-item>
@@ -577,7 +577,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.siteName"
                     />
                   </el-form-item>
@@ -588,7 +588,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.otherAssemblyType"
                     />
                   </el-form-item>
@@ -601,7 +601,7 @@
                     >
                       <el-input
                         disabled
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.otherAssemblyRate"
                       />
                     </el-form-item>
@@ -612,7 +612,7 @@
                      >
                        <el-input
                          disabled
-                         size="mini"
+
                          v-model="detailFormBefore.contractInfo.otherBuildingType"
                        />
                      </el-form-item>
@@ -623,7 +623,7 @@
                      >
                        <el-input
                          disabled
-                         size="mini"
+
                          v-model="detailFormBefore.contractInfo.otherBuildingStructureType"
                        />
                      </el-form-item>
@@ -636,18 +636,22 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractOrgName"/>
                   </el-form-item>
                   <el-form-item
                     label="承揽所属省市:"
 
                   >
-                    <el-input
+                    <el-select
                       disabled
                       clearable
-                      size="mini"
-                      v-model="detailFormBefore.contractInfo.contractProvinceName"/>
+                      filterable
+                      placeholder="请选择"
+                      v-model="detailFormBefore.contractInfo.contractProvinceName"
+                    >
+                      <el-option :key="index" :label="item.NAME" :value="item.CODE" v-for="(item,index) in ssList"></el-option>
+                    </el-select>
                   </el-form-item>
                   <el-form-item
                     label="起讫地点:"
@@ -656,7 +660,7 @@
                       disabled
                       clearable
                       placeholder="请输入"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.beginEndPlace"
                     />
                   </el-form-item>
@@ -667,7 +671,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.businessType"/>
                   </el-form-item>
 
@@ -678,7 +682,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.designQualityType"/>
                   </el-form-item>
                   <br>
@@ -738,7 +742,7 @@
                         type="textarea"
                         clearable
                         placeholder="请输入"
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.inforContent"
                       />
                     </el-form-item>
@@ -753,7 +757,7 @@
                         type="textarea"
                         clearable
                         placeholder="请输入"
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.remarks"
                       />
                     </el-form-item>
@@ -1046,7 +1050,7 @@
                       <!--}"-->
                       <!--label-width="0"-->
                       <!--&gt;-->
-                      <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'" size="mini" v-model="scope.row.inforName"></el-input>-->
+                      <!--<el-input max-length=50 clearable :disabled="p.actpoint==='look'"   v-model="scope.row.inforName"></el-input>-->
                       <!--</el-form-item>-->
                       <!--&lt;!&ndash; <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> &ndash;&gt;-->
                       <!--</template>-->
@@ -2184,7 +2188,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="detailform.contractInfo.belongEnterPrisesId"
                   >
                     <el-option
@@ -2541,6 +2545,7 @@
                   </el-select>
                 </el-form-item>
                 <el-form-item
+                  v-show="detailform.contractInfo.marketFirstName!=='军民融合' && emergingMarketTwo !== undefined"
                   label="新兴市场类别(二级):"
                   prop="contractInfo.marketSecondId"
                   :rules="detailform.contractInfo.marketFirstNameId&&emergingMarketTwo?{
@@ -2729,11 +2734,11 @@
                 </el-form-item>
                 <el-form-item
                   label="承揽所属省市:"
-                  prop="contractInfo.contractProvinceId"
+                  prop="contractInfo.contractProvinceName"
                   :rules="{
               required: true,
               message: '此项不能为空',
-              trigger: 'blur',
+              trigger: ['change','blur'],
             }"
                 >
                   <el-select
@@ -2742,7 +2747,7 @@
                     filterable
                     placeholder="请选择"
 
-                    v-model="detailform.contractInfo.contractProvinceId"
+                    v-model="detailform.contractInfo.contractProvinceName"
                     @change="
                   getName(
                     detailform.contractInfo.contractProvinceId,
@@ -2752,7 +2757,7 @@
                   )
                 "
                   >
-                    <el-option :key="index" :label="item.detailName" :value="item.id" v-for="(item,index) in ssList"></el-option>
+                    <el-option :key="index" :label="item.NAME" :value="item.CODE" v-for="(item,index) in ssList"></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item
@@ -3286,6 +3291,7 @@
                     width="80"
                   >
                     <template slot-scope="scope">
+                      <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
                       <el-link :underline="false" @click="handleRemove3(scope.row,scope.$index)" type="warning">删除</el-link>
                     </template>
                   </el-table-column>
@@ -3385,6 +3391,7 @@
                   >新增</el-button >
                 </p>
                 <el-table
+                  :row-class-name="tableRowClassName"
                   :data="detailform.contractInfoSectionList"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                   @selection-change="handleSelectionChange"
@@ -3925,7 +3932,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -4139,7 +4146,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -4323,7 +4330,7 @@
                           clearable
                           filterable
                           placeholder="请选择"
-                          size="mini"
+
                           v-model="scope.row.orgId"
                           @change="
                     getXtwName(
@@ -4376,7 +4383,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -4560,7 +4567,7 @@
                           clearable
                           filterable
                           placeholder="请选择"
-                          size="mini"
+
                           v-model="scope.row.orgId"
                           @change="
                     getXtwName(
@@ -4613,7 +4620,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -4827,7 +4834,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -5165,7 +5172,7 @@
             detailName:i.detailName,
             id:i.id
           }
-          this.ssList.push(_v)
+          // this.ssList.push(_v)
         })
       })
       //设计单位列表
@@ -5453,7 +5460,7 @@
             element.constructionOrgName = customer.customerName
           } else {
             let outside = this.jsdwList.find(item2=>item2.customerId===element.constructionOrgId)
-            element.constructionOrgName = outside.customerName
+            element.constructionOrgName = outside?outside.customerName:''
           }
           idList.push(element.constructionOrgId)
           nameList.push(element.constructionOrgName)
@@ -5960,6 +5967,9 @@
         }else if(data.type=="承揽所属机构"){
           this.detailform.contractInfo.contractOrgId=data.id;
           this.detailform.contractInfo.contractOrgName=data.name;
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:data.code},).then((res) => {
+            this.ssList = res.data.data
+          });
         }
         this.DwVisible=false;
       },
@@ -6009,50 +6019,92 @@
       },
       //项目名称查询回来的数据
       goAddDetail(data){
-        this.$http
-          .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
-          .then((res) => {
-          var datas=res.data.data;
-        this.detailform.searchProject=true;
-        var _con={};
-        this.getTwo(datas.topInfor.enginTypeFirstId);
-            this.getThree(datas.topInfor.enginTypeSecondId);
-        this.getTwoSC(datas.topInfor.marketFirstNameId);
-        for(var i in this.detailform.contractInfo){
-          // i!='isImport'
-          _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
-        }
-        for(var i in datas.topInfor){
-          // i!='isImport'
-          if(datas.topInfor[i]&&i!='uuid'){
-            _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
-          }
-        }
-        this.detailform.contractInfo=_con;
-        this.detailform.contractInfoSectionList=[];
-        for(var i in datas.bidInfoSectionBOList){
-          var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
-            bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
-          //参见单位把前期中标中的施工单位直接带过来
-          this.detailform.contractInfo.buildOrgNames=bidInfoSection.constructionUnitName;
-          this.detailform.contractInfo.buildOrgIds=bidInfoSection.constructionUnitId;
-          bidInfoSection.uuid='';
-          for(var k in bidInfoSection.bidInfoSectionOrgList){
-            bidInfoSection.bidInfoSectionOrgList[k].uuid='';
-          }
-          bidInfoSection.bidInfoSectionOrgList=bidInfoSectionOrgList;
-          this.detailform.contractInfoSectionList.push(bidInfoSection);
+        if(data.type=='1'){//项目名称查找回来的信息
+          this.$http
+            .post("/api/contract/topInfo/TopInfor/detail/entityInfoByIdForContract", {uuid :data.data.uuid})
+            .then((res) => {
+              var datas=res.data.data;
+              this.detailform.searchProject=true;
+              var _con={};
+              this.getTwo(datas.topInfor.enginTypeFirstId);
+              this.getThree(datas.topInfor.enginTypeSecondId);
+              this.getTwoSC(datas.topInfor.marketFirstNameId);
+              for(var i in this.detailform.contractInfo){
+                // i!='isImport'
+                _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+              }
+              for(var i in datas.topInfor){
+                // i!='isImport'
+                if(datas.topInfor[i]&&i!='uuid'){
+                  _con[i]=JSON.parse(JSON.stringify(datas.topInfor[i]));
+                }
+              }
+              this.detailform.contractInfo=_con;
+              this.detailform.contractInfoSectionList=[];
+              for(var i in datas.bidInfoSectionBOList){
+                var bidInfoSection=datas.bidInfoSectionBOList[i].bidInfoSection,
+                  bidInfoSectionOrgList=datas.bidInfoSectionBOList[i].bidInfoSectionOrgList;
+                //参见单位把前期中标中的施工单位直接带过来
+                this.detailform.contractInfo.buildOrgNames=bidInfoSection.constructionUnitName;
+                this.detailform.contractInfo.buildOrgIds=bidInfoSection.constructionUnitId;
+                bidInfoSection.uuid='';
+                for(var k in bidInfoSection.bidInfoSectionOrgList){
+                  bidInfoSection.bidInfoSectionOrgList[k].uuid='';
+                }
+                bidInfoSection.bidInfoSectionOrgList=bidInfoSectionOrgList;
+                this.detailform.contractInfoSectionList.push(bidInfoSection);
+              }
+
+              for(var i in datas.topInfoSiteList){
+                datas.topInfoSiteList[i].uuid='';
+                datas.topInfoSiteList[i].contractAmount='';
+              }
+              this.detailform.topInfoSiteList=datas.topInfoSiteList;
+              this.detailform.constructionOrgList=datas.constructionOrgList;
+            });
+          this.$forceUpdate();
+          this.infoCSVisible=false;
+        }else{//合同名称查找回来的信息
+          this.$http
+            .post("/api/contract/contract/ContractInfo/detail/entityInfo", {id :data.data.uuid})
+            .then((res) => {
+              var datas=res.data.data;
+              this.detailform.contractInfo.supplyContractId=data.data.uuid;
+              var _con={};
+              this.getTwo(datas.contractInfo.enginTypeFirstId);
+              this.getThree(datas.contractInfo.enginTypeSecondId);
+              this.getTwoSC(datas.contractInfo.marketFirstNameId);
+              this.getTwoXZ(datas.contractInfo.projectNatureFirstId);
+              for(var i in this.detailform.contractInfo){
+                // i!='isImport'
+                _con[i]=JSON.parse(JSON.stringify(this.detailform.contractInfo[i]));
+              }
+              for(var i in datas.contractInfo){
+                // i!='isImport'
+                if(datas.contractInfo[i]&&i!='contractType'&&i!='uuid'&&i!='contractAmount'&&i!='crccCash'&&i!='ourAmount'&&i!='outSystemAmount'&&i!='valueAddedTax'&&i!='designTempPrice'&&i!='unAllocatedFee'&&i!='selfCash'){
+                  _con[i]=JSON.parse(JSON.stringify(datas.contractInfo[i]));
+                }
+              }
+              this.detailform.contractInfo=_con;
+              this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
+              this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
+              this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
+              this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+              for(var i in datas.topInfoSiteList){
+                datas.topInfoSiteList[i].uuid='';
+              }
+              this.detailform.topInfoSiteList=datas.topInfoSiteList;
+              this.detailform.constructionOrgList=datas.constructionOrgList;
+              if (this.detailform.contractInfo.contractOrgName) {
+                this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+                  this.ssList = res.data.data
+                });
+              }
+            });
+          this.$forceUpdate();
+          this.infoCSVisible=false;
         }
 
-        for(var i in datas.topInfoSiteList){
-          datas.topInfoSiteList[i].uuid='';
-          datas.topInfoSiteList[i].contractAmount='';
-        }
-        this.detailform.topInfoSiteList=datas.topInfoSiteList;
-          this.detailform.constructionOrgList=datas.constructionOrgList;
-      });
-        this.$forceUpdate();
-        this.infoCSVisible=false;
       },
       //金额过滤
       getMoney(value){
@@ -6313,11 +6365,26 @@
         }
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2);
+            this.detailform.commonFilesList=this.detailform.fileList1.concat(this.detailform.fileList2).concat(this.detailform.fileList3);
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject')?{
               'afterContractInfoBO':this.detailform,
               'beforeContractInfoBO':this.detailFormBefore
             }:this.detailform;
+            console.log(this.detailform.fileList2)
+            if(this.detailform.topInfoSiteList.length==0){
+              this.$message.error("请至少选择一个项目地点");
+              return false;
+            }
+            var hasMain=false;
+            this.detailform.topInfoSiteList.forEach((item)=>{
+              if(item.isMain=='1'){
+                hasMain=true;
+              }
+            });
+            if(!hasMain){
+              this.$message.error("请选择一个主地点");
+              return false;
+            }
             this.$http
               .post(
                 url,
@@ -6411,6 +6478,11 @@
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");
         this.detailform.jzjglx=afterData.contractInfo.otherBuildingStructureTypeId&&afterData.contractInfo.otherBuildingStructureTypeId.split(",");
+        if (this.detailform.contractInfo.contractOrgName) {
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+            this.ssList = res.data.data
+          });
+        }
         this.detailFormBefore={
           commonFilesList: beforData.commonFilesList,
           contractInfo: beforData.contractInfo,
@@ -6492,6 +6564,11 @@
         }
         this.detailFormBefore.capitalName=datas.capitalName;
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
+        if (this.detailform.contractInfo.contractOrgName) {
+          this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
+            this.ssList = res.data.data
+          });
+        }
       });
       },
     }
@@ -6667,6 +6744,8 @@
   .el-table--border {
     min-height: auto !important;
   }
-
+  .hidden-row{
+    display: none;
+  }
 </style>
 

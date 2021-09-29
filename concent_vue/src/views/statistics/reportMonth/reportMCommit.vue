@@ -79,7 +79,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目简称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectOmit" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectOmit"  />
             </div>
           </template>
           <template slot-scope="scope">{{
@@ -97,7 +97,7 @@
           <template slot="header" slot-scope="scope">
             <span>项目名称</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.projectName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.projectName"  />
             </div>
           </template>
           <template slot-scope="scope">{{
@@ -139,7 +139,7 @@
           <!--<template slot="header" slot-scope="scope">-->
             <!--<span>工程合同额(万元)</span>-->
             <!--<div>-->
-              <!--<el-input style=" width: 100%" v-model="searchform.contractAmountEngine" size="mini"/>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.contractAmountEngine"  />-->
             <!--</div>-->
           <!--</template>-->
           <template slot-scope="scope">{{
@@ -157,7 +157,7 @@
           <template slot="header" slot-scope="scope">
             <span>施工产值本月</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.monthValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.monthValue"  />
             </div>
           </template>
           <template slot-scope="scope">
@@ -179,7 +179,7 @@
           <template slot="header" slot-scope="scope">
             <span>施工产值本年</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.yearValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.yearValue"  />
             </div>
           </template>
           <template slot-scope="scope">
@@ -201,7 +201,7 @@
           <template slot="header" slot-scope="scope">
             <span>施工产值开累</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.totalValue" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.totalValue"  />
             </div>
           </template>
           <template slot-scope="scope">
@@ -223,7 +223,7 @@
           <template slot="header" slot-scope="scope">
             <span>所属单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
             </div>
           </template>
           <template slot-scope="scope">{{
@@ -241,7 +241,7 @@
           <!--<template slot="header" slot-scope="scope">-->
             <!--<span>剩余工程合同额</span>-->
             <!--<div>-->
-              <!--<el-input style=" width: 100%" v-model="searchform.htquantity" size="mini"/>-->
+              <!--<el-input style=" width: 100%" v-model="searchform.htquantity"  />-->
             <!--</div>-->
           <!--</template>-->
           <template slot-scope="scope">{{

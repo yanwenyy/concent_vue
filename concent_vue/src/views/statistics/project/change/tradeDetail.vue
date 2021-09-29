@@ -98,7 +98,7 @@
                     v-for="(item, index) in fatherList"/>
                 </el-select>
               </el-form-item>
-            </el-row>             
+            </el-row>
             <el-row>
               <el-form-item
                 label="合同号:"
@@ -221,7 +221,7 @@
                 <template slot="append">(万元)</template>
               </el-input>
             </el-form-item>
-          </el-row>            
+          </el-row>
             <el-row>
               <!-- <el-form-item
                 label="合同所属板块:"
@@ -242,7 +242,7 @@
               </el-form-item> -->
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -257,7 +257,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -299,7 +299,7 @@
                 <el-input
                   :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
                   clearable
-                  placeholder="请输入" 
+                  placeholder="请输入"
                   @change="getOutputTax"
                   v-model="detailForm.project.valueAddedTax">
                   <template slot="prepend">¥</template>
@@ -375,15 +375,15 @@
                   required: true, message: '此项不能为空', trigger: ['blur','change']
                 }"
               >
-                <el-input 
-                  clearable 
+                <el-input
+                  clearable
                   disabled
-                  placeholder="请输入内容" 
+                  placeholder="请输入内容"
                   v-model="detailForm.project.companyName" class="input-with-select">
-                  <el-button 
-                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
-                    icon="el-icon-circle-plus-outline" 
-                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
+                  <el-button
+                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append"
+                    icon="el-icon-circle-plus-outline"
+                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)"
                     >
                   </el-button>
                 </el-input>
@@ -748,7 +748,7 @@
                   <template slot-scope="scope">
                     <el-form-item class="tabelForm" :prop="'project.topInfoSiteList.' + scope.$index + '.path'"  :rules="{required: true,message: '此项不能为空'}">
                       <el-input disabled placeholder="请输入内容" v-model="scope.row.path" class="input-with-select group-no-padding">
-                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus" 
+                        <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" icon="el-icon-circle-plus"
                         @click="selectPosition(),positionIndex=scope.$index"></el-button>
                       </el-input>
                     </el-form-item>
@@ -930,7 +930,7 @@
                         :disabled="p.actpoint === 'look'||p.actpoint=='task'||detailForm.project.contractInfoList!=''"
                         filterable
                         placeholder="请选择"
-                        size="mini"
+
                         v-model="scope.row.subjectMatterName"
                         @change="
                         getBdwdw(
@@ -1191,7 +1191,7 @@
                     v-for="(item, index) in fatherList"/>
                 </el-select>
               </el-form-item>
-            </el-row>              
+            </el-row>
             <el-row>
               <el-form-item
                 label="合同号:"
@@ -1279,7 +1279,7 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-            </el-row> 
+            </el-row>
             <el-row>
               <!-- <el-form-item
                 label="合同所属板块:"
@@ -1299,7 +1299,7 @@
               </el-form-item> -->
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -1314,7 +1314,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -1586,7 +1586,7 @@
                   inactive-value="1"
                 >
                 </el-switch>
-              </el-form-item>            
+              </el-form-item>
             </el-row>
             <el-row>
               <el-form-item
@@ -1910,8 +1910,8 @@
     </el-tabs>
     <el-dialog class="showContract" :visible.sync="showContract" :append-to-body="true">
       <el-tabs type="border-card">
-        <el-tab-pane 
-          v-for="(item, index) in type" 
+        <el-tab-pane
+          v-for="(item, index) in type"
           :key="index"
           label="关联字段">
           <el-form ref="form" label-width="80px">
@@ -2014,7 +2014,7 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        constructionOrgList: [], 
+        constructionOrgList: [],
         sjdwList: [],
         DwVisible:false,//选择单位弹框状态
         uploadVisible: false,
@@ -2156,7 +2156,7 @@
           }
         });
         return projectTypeList
-      },        
+      },
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
       },
@@ -2197,7 +2197,7 @@
       if (this.p.actpoint === 'add') {
         this.getAddDetail()
       }
-      
+
        //设计单位列表
       this.$http
         .post(
@@ -2247,8 +2247,8 @@
                     checkGroup:[],
                   },
                   contract:element
-                })                
-              })  
+                })
+              })
             } else {
               res.data.data.forEach((element) => {
                 element.checkGroup = element.checkField.split(",")
@@ -2613,8 +2613,8 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          }); 
-        });       
+          });
+        });
         //console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
@@ -2743,7 +2743,7 @@
             message: '必须有主项目地点',
             type: 'warning',
             showClose: true
-          });      
+          });
           return false;
         }
         this.getBuildName();

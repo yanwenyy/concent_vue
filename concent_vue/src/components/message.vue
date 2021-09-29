@@ -29,8 +29,8 @@
           </el-table-column>
           <el-table-column label="操作" show-overflow-tooltip width="120">
             <template slot-scope="scope">
-              <el-button @click="sure(scope.row)" size="mini" v-if="scope.row.isUsed === '0'">确认已读</el-button>
-              <el-button disabled size="mini" v-if="scope.row.isUsed === '1'">确认已读</el-button>
+              <el-button @click="sure(scope.row)"   v-if="scope.row.isUsed === '0'">确认已读</el-button>
+              <el-button disabled   v-if="scope.row.isUsed === '1'">确认已读</el-button>
             </template>
           </el-table-column>
         </el-table>

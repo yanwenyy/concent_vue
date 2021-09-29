@@ -52,7 +52,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractCode"
                     />
                   </el-form-item>
@@ -63,7 +63,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.constructionOrg"
                     />
                   </el-form-item>
@@ -89,7 +89,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.enginTypeFirstName"
                     />
                   </el-form-item>
@@ -99,7 +99,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.industryProduceNu"
                     />
                   </el-form-item>
@@ -280,7 +280,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.contractAmount"
                     >
                       <template slot="prepend">¥</template>
@@ -321,7 +321,7 @@
                       :disabled="true"
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.valueAddedTax"
                     >
                       <template slot="prepend">¥</template>
@@ -335,7 +335,7 @@
                       :disabled="true"
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.ourAmount"
                     >
                       <template slot="prepend">¥</template>
@@ -362,7 +362,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.unAllocatedFee">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -376,7 +376,7 @@
                     <el-input
                       disabled
                       clearable
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.selfCash">
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -406,7 +406,7 @@
                       :disabled="true"
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.extendAmount"
                     >
                       <template slot="prepend">¥</template>
@@ -419,7 +419,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.industryOverseasContract"
                     />
                   </el-form-item>
@@ -431,7 +431,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.marketFirstName"
                     />
                   </el-form-item>
@@ -442,7 +442,7 @@
                       disabled
                       clearable
                       placeholder=""
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.marketSecondName"
                     />
                   </el-form-item>
@@ -453,7 +453,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.siteName"
                     />
                   </el-form-item>
@@ -464,7 +464,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.otherAssemblyType"
                     />
                   </el-form-item>
@@ -477,7 +477,7 @@
                     >
                       <el-input
                         disabled
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.otherAssemblyRate"
                       />
                     </el-form-item>
@@ -488,7 +488,7 @@
                     >
                       <el-input
                         disabled
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.otherBuildingType"
                       />
                     </el-form-item>
@@ -499,7 +499,7 @@
                     >
                       <el-input
                         disabled
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.otherBuildingStructureType"
                       />
                     </el-form-item>
@@ -511,7 +511,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.businessType"
                     />
                   </el-form-item>
@@ -521,7 +521,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.qualityOrgNames"
                     />
                   </el-form-item>
@@ -532,7 +532,7 @@
                   >
                     <el-input
                       disabled
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.industryProductUse"
                     />
                   </el-form-item>
@@ -557,7 +557,7 @@
                   <!--&gt;-->
                     <!--<el-input-->
                       <!--disabled-->
-                      <!--size="mini"-->
+                      <!-- -->
                       <!--v-model="detailFormBefore.contractInfo.supplyPlace"-->
                     <!--/>-->
                   <!--</el-form-item>-->
@@ -618,7 +618,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.customerNatureId"
                     >
                       <el-option
@@ -652,7 +652,7 @@
                       clearable
                       filterable
                       placeholder="请选择"
-                      size="mini"
+
                       v-model="detailFormBefore.contractInfo.belongEnterPrisesId"
                     >
                       <el-option
@@ -690,7 +690,7 @@
                         type="textarea"
                         clearable
                         placeholder="请输入"
-                        size="mini"
+
                         v-model="detailFormBefore.contractInfo.remarks"
                       />
                     </el-form-item>
@@ -1534,7 +1534,7 @@
 
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     clearable
                     filterable
                     placeholder="请选择"
@@ -1825,7 +1825,7 @@
                     :disabled="true"
                     clearable
                     placeholder=""
-                    size="mini"
+
                     v-model="detailform.contractInfo.ourAmount"
                   >
                     <template slot="prepend">¥</template>
@@ -2009,7 +2009,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     clearable
                     filterable
@@ -2039,7 +2039,7 @@
                 >
                   <el-select
                     class="multiple-sel"
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     multiple
                     @change="getMultipleName(detailform.zplx,assemblyType,'otherAssemblyTypeId','otherAssemblyType')"
                     clearable
@@ -2087,7 +2087,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzlx,architecturalType,'otherBuildingTypeId','otherBuildingType')"
                       clearable
@@ -2117,7 +2117,7 @@
                   >
                     <el-select
                       class="multiple-sel"
-                      :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                      :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                       multiple
                       @change="getMultipleName(detailform.jzjglx,buildingStructure,'otherBuildingStructureTypeId','otherBuildingStructureType')"
                       clearable
@@ -2148,7 +2148,7 @@
 
                 >
                   <el-select
-                    :disabled="p.actpoint==='look'||p.actpoint == 'look'"
+                    :disabled="p.actpoint==='look'||p.actpoint == 'task'"
                     filterable
                     clearable
                     placeholder="请选择"
@@ -2317,7 +2317,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="detailform.contractInfo.customerNatureId"
                   >
                     <el-option
@@ -2356,7 +2356,7 @@
                     clearable
                     filterable
                     placeholder="请选择"
-                    size="mini"
+
                     v-model="detailform.contractInfo.belongEnterPrisesId"
                   >
                     <el-option
@@ -2693,7 +2693,7 @@
                 <el-table
                   :data="detailform.contractInfoProductInformtList"
                   :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
-
+                  :row-class-name="tableRowClassName"
                   @selection-change="handleSelectionChange"
                   align="center"
                   border
@@ -3141,7 +3141,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -3355,7 +3355,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -3539,7 +3539,7 @@
                           clearable
                           filterable
                           placeholder="请选择"
-                          size="mini"
+
                           v-model="scope.row.orgId"
                           @change="
                     getXtwName(
@@ -3592,7 +3592,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -3776,7 +3776,7 @@
                           clearable
                           filterable
                           placeholder="请选择"
-                          size="mini"
+
                           v-model="scope.row.orgId"
                           @change="
                     getXtwName(
@@ -3829,7 +3829,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -4043,7 +4043,7 @@
                             clearable
                             filterable
                             placeholder="请选择"
-                            size="mini"
+
                             v-model="scope.row.moduleId"
                             @change="
                     getBdName(
@@ -5040,20 +5040,20 @@
           this.$message.error(response.msg)
         }
       },
-      handleRemove2(file,index) {
-        this.$http
-          .post(
-            "/api/contract/topInfo/CommonFiles/list/delete",
-            {ids:[file.uuid]},
-          )
-          .then((res) => {
-          if (res.data.code === 200) {
-          this.detailform.fileList2.splice(index,1);
-        }
-
-      });
-        console.log(this.detailform.fileList1)
-      },
+      // handleRemove2(file,index) {
+      //   this.$http
+      //     .post(
+      //       "/api/contract/topInfo/CommonFiles/list/delete",
+      //       {ids:[file.uuid]},
+      //     )
+      //     .then((res) => {
+      //     if (res.data.code === 200) {
+      //     this.detailform.fileList2.splice(index,1);
+      //   }
+      //
+      // });
+      //   console.log(this.detailform.fileList1)
+      // },
       //上传附件
       handleChange2(response, file, fileList){
         if (response && response.code === 200) {

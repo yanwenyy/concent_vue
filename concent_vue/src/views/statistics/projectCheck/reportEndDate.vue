@@ -62,7 +62,7 @@
           <template slot="header" slot-scope="scope">
             <span>填报人</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.createUserName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.createUserName"  />
             </div>
           </template>
         </el-table-column>
@@ -76,7 +76,7 @@
           <template slot="header" slot-scope="scope">
             <span>填报单位</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
             </div>
           </template>
         </el-table-column>
@@ -90,7 +90,7 @@
           <template slot="header" slot-scope="scope">
             <span>限制对象</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.restrictedobjects" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.restrictedobjects"  />
             </div>
           </template>
         </el-table-column>
@@ -110,7 +110,7 @@
                 clearable
                 filterable
                 placeholder="请选择"
-                size="mini"
+
                 v-model="searchform.startStatus"
               >
                 <el-option
@@ -124,7 +124,7 @@
               <!--class="list-search-picker"-->
               <!--style=" width: 100%"-->
               <!--v-model="searchform.flowStatus"-->
-              <!--size="mini"-->
+              <!-- -->
               <!--/>-->
             </div>
           </template>
@@ -147,7 +147,7 @@
                 type="date"
                 format="dd"
                 value-format="dd"
-                placeholder="选择日" style=" width: 100%" size="mini">
+                placeholder="选择日" style=" width: 100%"  >
               </el-date-picker>
             </div>
           </template>
@@ -178,7 +178,7 @@
                 type="date"
                 format="dd"
                 value-format="dd"
-                placeholder="选择日" style=" width: 100%" size="mini">
+                placeholder="选择日" style=" width: 100%"  >
               </el-date-picker>
             </div>
           </template>
@@ -196,7 +196,7 @@
               <el-date-picker
                 style=" width: 100%"
                 v-model="searchform.createTime"
-                size="mini"
+
                 type="datetime"
                 value-format="timestamp"
               >

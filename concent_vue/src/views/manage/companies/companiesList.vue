@@ -54,7 +54,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.companyName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -74,7 +74,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.companyOmit"
-                size="mini"
+
               />
             </div>
           </template>
@@ -94,7 +94,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.socialCreditCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -113,7 +113,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.legalRepresentatice"
-                size="mini"
+
               />
             </div>
           </template>
@@ -132,7 +132,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.registerCapital"
-                size="mini"
+
               />
             </div>
           </template>
@@ -177,7 +177,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.enterpriseNatureName"
             >
               <el-option
@@ -203,7 +203,7 @@
               clearable
               filterable
               placeholder="请选择"
-              size="mini"
+
               v-model="searchform.companyLocationId"
             >
               <!-- <el-option
@@ -230,7 +230,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.companyLocationDetail"
-                size="mini"
+
               />
             </div>
           </template>
@@ -249,7 +249,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.linkWebsite"
-                size="mini"
+
               />
             </div>
           </template>
@@ -269,7 +269,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.superCompanyName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -288,7 +288,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.superSocialCreditCode"
-                size="mini"
+
               />
             </div>
           </template>
@@ -307,7 +307,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.superLinkWebsite"
-                size="mini"
+
               />
             </div>
           </template>
@@ -402,7 +402,7 @@
                   <el-select
                     clearable
                     placeholder="企业性质"
-                    size="mini"
+
                     :disabled="type === 'look'"
                     @change="
                 getName(

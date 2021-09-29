@@ -97,7 +97,7 @@
             <div>
               <el-input style=" width: 100%"
                         v-model="searchform.projectName"
-                        size="mini"/>
+                         />
             </div>
           </template>
         </el-table-column>
@@ -112,7 +112,7 @@
             <div>
               <el-input style=" width: 100%"
                         v-model="searchform.projectStatusName"
-                        size="mini"/>
+                         />
             </div>
           </template>
           <template slot="header"
@@ -121,7 +121,7 @@
             <div>
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
-                         size="mini"
+
                          v-model="searchform.projectStatusName"
               >
                 <el-option :key="index"
@@ -144,7 +144,7 @@
             <!--<div>-->
               <!--<el-input style=" width: 100%"-->
                         <!--v-model="searchform.contractAmountEngine"-->
-                        <!--size="mini"/>-->
+                        <!-- />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -160,7 +160,7 @@
             <!--<div>-->
               <!--<el-input style=" width: 100%"-->
                         <!--v-model="searchform.monthValue"-->
-                        <!--size="mini"/>-->
+                        <!-- />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -175,7 +175,7 @@
             <!--<div>-->
               <!--<el-input style=" width: 100%"-->
                         <!--v-model="searchform.yearValue"-->
-                        <!--size="mini"/>-->
+                        <!-- />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -190,7 +190,7 @@
             <!--<div>-->
               <!--<el-input style=" width: 100%"-->
                         <!--v-model="searchform.totalValue"-->
-                        <!--size="mini"/>-->
+                        <!-- />-->
             <!--</div>-->
           <!--</template>-->
         </el-table-column>
@@ -213,7 +213,7 @@
             <template slot="header" slot-scope="scope">
               <span>所属单位</span>
               <div>
-                <el-input style=" width: 100%" v-model="searchform.createOrgName" size="mini"/>
+                <el-input style=" width: 100%" v-model="searchform.createOrgName"  />
               </div>
             </template>
           </el-table-column>-->
@@ -227,7 +227,7 @@
           <template slot="header" slot-scope="scope">
             <span>填报类型</span>
             <div>
-              <el-input style=" width: 100%" v-model="searchform.monthReportType" size="mini"/>
+              <el-input style=" width: 100%" v-model="searchform.monthReportType"  />
             </div>
           </template>
           <template  slot-scope="scope">
@@ -249,7 +249,7 @@
             <div>
               <el-select class="list-search-picker" clearable filterable
                          placeholder="请选择"
-                         size="mini"
+
                          @clear="searchform.flowStatus=''"
                          v-model="searchform.flowStatus"
               >

@@ -17,7 +17,7 @@
             <!--filterable-->
             <!--placeholder="请选择"-->
             <!--@change="getTwo"-->
-            <!--size="mini"-->
+            <!-- -->
             <!--v-model="searchform.enginTypeFirstId"-->
           <!--&gt;-->
             <!--<el-option-->
@@ -35,7 +35,7 @@
             <!--clearable-->
             <!--filterable-->
             <!--placeholder="请选择"-->
-            <!--size="mini"-->
+            <!-- -->
             <!--v-model="searchform.enginTypeSecondId"-->
           <!--&gt;-->
             <!--<el-option-->

@@ -56,7 +56,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.standardName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -75,7 +75,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.nearName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -94,7 +94,7 @@
               <el-input
                 style=" width: 100%"
                 v-model="searchform.sortNo"
-                size="mini"
+
               />
             </div>
           </template>
@@ -116,7 +116,7 @@
           <el-input
             :disabled="lookType"
             v-model="form.standardName"
-            size="mini"
+
           />
         </el-form-item>
 
@@ -124,7 +124,7 @@
           <el-input
             :disabled="lookType"
             v-model="form.nearName"
-            size="mini"
+
           />
         </el-form-item>
 
@@ -133,7 +133,7 @@
             @input="form.sortNo=form.sortNo.replace(/^\.+|[^\d.]/g,'')"
             :disabled="lookType"
             v-model="form.sortNo"
-            size="mini"
+
           />
         </el-form-item>
       </el-form>

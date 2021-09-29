@@ -72,7 +72,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.name"
-                size="mini"
+
               />
             </div>
           </template>
@@ -92,7 +92,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.childName"
-                size="mini"
+
               />
             </div>
           </template>
@@ -112,7 +112,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.standrardId"
-                size="mini"
+
               />
             </div>
           </template>
@@ -132,7 +132,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.titanic"
-                size="mini"
+
               />
             </div>
           </template>
@@ -179,7 +179,7 @@
                 class="list-search-picker"
                 style=" width: 100%"
                 v-model="searchform.underCentralizedUnit"
-                size="mini"
+
               />
             </div>
           </template>
