@@ -308,6 +308,7 @@
             <el-form-item
               label="新兴市场(二级):"
               prop="topInfor.marketSecondId"
+              v-show="marketIsNull"
               :rules="detailform.topInfor.marketFirstNameId&&emergingMarketTwo?{
                 required: true,
                 message: '此项不能为空',
@@ -1210,6 +1211,7 @@
         },
         xqprojectType: [],//工程类别二级
         emergingMarketTwo:[],//新兴市场二级
+        marketIsNull:true, //新兴市场二级是否显示
         projectNatureTwo:[],//项目性质二级
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p)),
         sizeform: {projectScale: "", sectionName: ""},
@@ -1573,6 +1575,11 @@
               }
             }
           )
+          if(this.emergingMarketTwo !='' && this.emergingMarketTwo !=null){
+            this.marketIsNull = true;
+          }else{
+            this.marketIsNull = false;
+          }
         }
       },
       //项目性质二级
