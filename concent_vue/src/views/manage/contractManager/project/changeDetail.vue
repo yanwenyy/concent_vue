@@ -6329,8 +6329,12 @@
                       type: "success",
                     });
                     if (type=='save') {
-                      // this.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
-                      // this.detailform.contractInfo.uuid.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                      if(this.afterId==''||this.afterId==undefined||this.afterId==null){
+                        this.p.actpoint="eidt"
+                        this.id=res.data.data.beforeContractInfoBO.contractInfo.uuid;
+                        this.afterId=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                        this.p.uuid=res.data.data.afterContractInfoBO.changeRecordUuid;
+                      }
                       this.getDetail();
                     } else {
                       this.$router.back()

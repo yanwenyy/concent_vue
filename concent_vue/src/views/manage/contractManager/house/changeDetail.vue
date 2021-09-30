@@ -4722,6 +4722,20 @@
           this.$message.error("销售业绩列表不能为空");
           return false;
         }
+        if(this.detailform.topInfoSiteList.length==0){
+          this.$message.error("请至少选择一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject')?{
@@ -4741,8 +4755,12 @@
                 type: "success",
               });
               if (type=='save') {
-                // this.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
-                // this.detailform.contractInfo.uuid.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                if(this.afterId==''||this.afterId==undefined||this.afterId==null){
+                  this.p.actpoint="eidt"
+                  this.id=res.data.data.beforeContractInfoBO.contractInfo.uuid;
+                  this.afterId=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                  this.p.uuid=res.data.data.afterContractInfoBO.changeRecordUuid;
+                }
                 this.getDetail();
               } else {
                 this.$router.back()

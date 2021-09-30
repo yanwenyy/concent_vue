@@ -4,17 +4,17 @@
     <!-- <div class="inline-block" v-if="p.actpoint != 'look'"> -->
     <el-button class="detailbutton detail-back-tab save-btn" v-if="!p.type&&p.actpoint != 'look'&&p.actpoint != 'task'"
                type="primary"
-               @click="saveInfo('detailform')"
+               @click="saveInfo('detailform','save')"
     >保存</el-button>
 
     <el-button class="detailbutton detail-back-tab save-btn" v-if="p.type == 'fq'&&p.actpoint != 'look'&&p.actpoint != 'task'"
                type="primary"
-               @click="saveInfofq('detailform')"
+               @click="saveInfofq('detailform','save')"
     >保存</el-button>
 
     <el-button class="detailbutton detail-back-tab save-btn" v-if="p.type == 'end'&&p.actpoint != 'look'&&p.actpoint != 'task'"
                type="primary"
-               @click="saveInfoend('detailform')"
+               @click="saveInfoend('detailform','save')"
     >保存</el-button>
     <!-- </div> -->
 
@@ -1357,11 +1357,13 @@
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: ''
+          isMain: '',
+          sortNo:1,
         }];
         this.detailform.topInfoSectionList=[{
           sectionName: '',
           projectScale: '',
+          sortNo:1,
         }]
       }
 
@@ -1600,7 +1602,7 @@
                                   message:  `${type=='save'?'保存':'提交'}成功`,
                                     type: "success",
                                 });
-                              this.$router.back()
+                              this.back();
                             }
                         });
                 } else {
@@ -1611,7 +1613,7 @@
         },
 
       //跟踪接口
-      saveInfo(formName) {
+      saveInfo(formName,type) {
         // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
         //   this.$message.error("重大项目必须上传项目总结附件");
         // }
@@ -1651,10 +1653,13 @@
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$router.push({
-                    path: "/manage/proposal/track_list",
-                  });
-                  this.$refs[formName].resetFields();
+                  if (type=='save') {
+                    // this.detailform.topInfor.uuid = res.data.data.topInfor.uuid;
+                    // this.id= res.data.data.topInfor.uuid;
+                    this.getDetail();
+                  } else {
+                    this.back();
+                  }
                 }
               });
           } else {
@@ -1666,7 +1671,7 @@
 
 
 // 放弃跟踪接口
-            saveInfofq(formName) {
+            saveInfofq(formName,type) {
         // if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
         //   this.$message.error("重大项目必须上传项目总结附件");
         // }
@@ -1695,10 +1700,13 @@
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/proposal/track_list",
-                  });
+                  if (type=='save') {
+                    // this.detailform.topInfor.uuid = res.data.data.topInfor.uuid;
+                    // this.id= res.data.data.topInfor.uuid;
+                    this.getDetail();
+                  } else {
+                    this.back();
+                  }
                 }
               });
           } else {
@@ -1709,7 +1717,7 @@
       },
 
 // 结束跟踪接口
-            saveInfoend(formName) {
+            saveInfoend(formName,type) {
         if(this.detailform.topInfor.isMajorProject=='0'&&this.detailform.topInfoTrack_01==''){
           this.$message.error("重大项目必须上传项目总结附件");
         }
@@ -1738,10 +1746,13 @@
                     message: "保存成功",
                     type: "success",
                   });
-                  this.$refs[formName].resetFields();
-                  this.$router.push({
-                    path: "/manage/proposal/track_list",
-                  });
+                  if (type=='save') {
+                    // this.detailform.topInfor.uuid = res.data.data.topInfor.uuid;
+                    // this.id= res.data.data.topInfor.uuid;
+                    this.getDetail();
+                  } else {
+                    this.back();
+                  }
                 }
               });
           } else {
@@ -1800,13 +1811,15 @@
             ffid: '',
             path: '',
             contractAmount: '',
-            isMain: ''
+            isMain: '',
+            sortNo:this.detailform.topInfoSiteList.length+1,
           }
           this.detailform.topInfoSiteList.push(v);
         } else {
           v = {
             sectionName: '',
             projectScale: '',
+            sortNo:this.detailform.topInfoSectionList.length+1,
           }
           this.detailform.topInfoSectionList.push(v);
         }

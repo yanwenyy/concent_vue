@@ -1323,11 +1323,13 @@
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: '1'
+          isMain: '1',
+          sortNo:1,
         }];
         this.detailform.topInfoSectionList=[{
           sectionName: '',
           projectScale: '',
+          sortNo:1,
         }]
       }
       //设计单位列表
@@ -1702,7 +1704,9 @@
                           type: "success",
                         });
                         if (type=='save') {
-                          this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                          // this.detailform.topInfor.uuid = res.data.data.topInfor.uuid;
+                          this.id= res.data.data.topInfor.uuid;
+                          this.getDetail();
                         } else {
                           this.back();
                         }
@@ -1774,14 +1778,16 @@
             ffid: '',
             path: '',
             contractAmount: '',
-            isMain: ''
+            isMain: '',
+            sortNo:this.detailform.topInfoSiteList.length+1,
           };
           this.detailform.topInfoSiteList.push(v);
         } else {
           v = {
             sectionName: '',
             projectScale: '',
-          }
+            sortNo:this.detailform.topInfoSectionList.length+1,
+          };
           this.detailform.topInfoSectionList.push(v);
         }
       },

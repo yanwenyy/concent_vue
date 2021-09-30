@@ -27,7 +27,7 @@
         </el-form>
         <el-button @click="searchFromReset" type="info" plain style="color:black;background:none"><i class="el-icon-refresh-right"></i>重置</el-button>
         <el-button @click="getData" type="primary" plain><i class="el-icon-search"></i>查询</el-button>
-        <!--<el-button type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>-->
+        <el-button @click="exportdata" type="primary" plain><i class="el-icon-upload2"></i>导出</el-button>
       </div>
     </div>
     <div style="margin-top: 10px">
@@ -40,7 +40,7 @@
           'text-align': 'center',
           'background-color': 'whitesmoke',
         }"
-        @row-dblclick="rowshow"
+        @row-dblclick="rowshow2"
         @selection-change="handleSelectionChange"
         border
         highlight-current-row
@@ -75,7 +75,7 @@
                 filterable
                 placeholder="请选择"
 
-                v-model="searchFrom.flowStatus"
+                v-model="searchFrom.moduleId"
               >
                 <el-option label="工程承包" value="7f4fcba4255b43a8babf15afd6c04a53"></el-option>
                 <el-option label="勘察设计" value="f6823a41e9354b81a1512155a5565aeb"></el-option>
@@ -224,6 +224,47 @@
       ChangeSearch
     },
     methods: {
+      exportdata() {
+        this.searchFrom.size=1000000000;
+        this.$http
+          .post(
+            "/api/contract/contractInfoCut/list/loadPageData",
+            this.searchFrom
+          )
+          .then((res) => {
+            this.searchFrom.size=20;
+            var datas = res.data.data.records;
+            this.$exportXls.exportList({
+              thead:' <tr>\n' +
+              '<th>合同板块</th>\n' +
+              '<th>合同名称</th>\n' +
+              '<th>合同号</th>\n' +
+              '<th>核减原因</th>\n' +
+              '<th>核减类型</th>\n' +
+              '<th>核减单位</th>\n' +
+              '<th>核减人</th>\n' +
+              '<th>状态</th>\n' +
+              '<th>创建时间</th>\n' +
+              '<th>核减通过时间</th>\n' +
+              '</tr>',
+              jsonData:datas,
+              tdstr:['moduleName','contractName','contractCode',
+                'cutResion','reduceType','createOrgName','createUserName',
+                'flowStatus','createTime','approveTime'],
+              tdstrFuc:{
+                flowStatus:function (str) {
+                  return str==1?'草稿':str==2?'审核中':str==3?'审核通过':str==4?'审核退回':'待登记';
+                },
+                createTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+                approveTime:function (str) {
+                  return str?new Date(str).toLocaleString().replace(/:\d{1,2}$/,' '):'';
+                },
+              }
+            })
+          });
+      },
       // 增加
       add() {
         this.infoCSVisible = true;
@@ -296,8 +337,18 @@
         });
 
       },
-      // 查看
+      // 合同板块查看
       rowshow(row) {
+        let p = {actpoint: "look", instid : row.uuid};
+        // let p = {actpoint: "look", instid : row.contractInfoId};
+        var url=this.getUrl(row.moduleId);
+        this.$router.push({
+          path: './detail',
+          query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        });
+      },
+      //双击查看
+      rowshow2(row) {
         let p = {actpoint: "look", instid : row.contractInfoId};
         var url=this.getUrl(row.moduleId);
         this.$router.push({
@@ -341,8 +392,9 @@
       },
       searchFromReset() {
         // this.$refs["searchFrom"].resetFields();
-        this.searchFrom.contractName = "";
-        this.searchFrom.state = "";
+        this.searchFrom={ current: 1,
+          size: 20,
+          queryType:'2'}
         this.getData();
       },
       // 列表选项数据

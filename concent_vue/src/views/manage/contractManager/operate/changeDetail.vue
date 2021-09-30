@@ -3802,6 +3802,27 @@
         });
     },
     methods: {
+      //项目地点份额变动的时候
+      getPositionMoney(index,list){
+        if(list.length==1){
+          list[0].contractAmount=this.detailform.contractInfo.ourAmount
+        }else{
+          var money=0;
+          list.forEach((item,i)=>{
+            if(i>0){
+              money+=Number(item.contractAmount);
+            }
+          });
+          // console.log(this.detailform.contractInfo.ourAmount,money)
+          if(this.detailform.contractInfo.ourAmount-money>0){
+            list[0].contractAmount=this.detailform.contractInfo.ourAmount-money;
+          }else{
+            list[index].contractAmount='';
+            this.$message.error('项目地点份额之和不能大于初始我方份额');
+          }
+        }
+
+      },
       //判断附件大小
       beforeAvatarUpload(file) {
         var fileLimit=Number(this.fileLimit);
@@ -4869,6 +4890,20 @@
         //     return false;
         //   }
         // }
+        if(this.detailform.topInfoSiteList.length==0){
+          this.$message.error("请至少选择一个项目地点");
+          return false;
+        }
+        var hasMain=false;
+        this.detailform.topInfoSiteList.forEach((item)=>{
+          if(item.isMain=='1'){
+            hasMain=true;
+          }
+        });
+        if(!hasMain){
+          this.$message.error("请选择一个主地点");
+          return false;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             var datas=this.p.actpoint === "add"||(type!='save'&&this.detailform.contractInfo.flowStatus=='edit'||this.detailform.contractInfo.flowStatus=='reject')?{
@@ -4888,8 +4923,12 @@
                 type: "success",
               });
               if (type=='save') {
-                // this.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
-                // this.detailform.contractInfo.uuid.id=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                if(this.afterId==''||this.afterId==undefined||this.afterId==null){
+                  this.p.actpoint="eidt"
+                  this.id=res.data.data.beforeContractInfoBO.contractInfo.uuid;
+                  this.afterId=res.data.data.afterContractInfoBO.contractInfo.uuid;
+                  this.p.uuid=res.data.data.afterContractInfoBO.changeRecordUuid;
+                }
                 this.getDetail();
               } else {
                 this.$router.back()
