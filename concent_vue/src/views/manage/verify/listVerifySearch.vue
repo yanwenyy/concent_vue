@@ -380,6 +380,16 @@
                                  show-overflow-tooltip>
 
                 </el-table-column>
+                <el-table-column align="center"
+                  :resizable="false"
+                  label="操作"
+                  show-overflow-tooltip
+                  :width="80"
+                >
+                  <template slot-scope="scope">
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" >下载</el-link>
+                  </template>
+                </el-table-column>
 
               </el-table>
 
@@ -581,6 +591,10 @@
             }
           })
         });
+    },
+    // 附件下载
+    attachmentDownload(file){
+      this.$handleDownload(file)
     },
     // 查看
     rowshow(row) {

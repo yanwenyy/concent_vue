@@ -2422,9 +2422,10 @@ export default {
     },
 
     handleSelectionChange(val) {
-      val.forEach(function(item,index){
-        if(item.isTrack=='0'){
-          val.splice(index, 1);
+      var list = []
+      val.forEach(item=>{
+        if(item.isTrack=='1'){
+          list.push(item);
         }
       })
       this.multipleSelection = val
