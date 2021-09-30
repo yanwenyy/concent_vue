@@ -653,8 +653,7 @@
                               :width="150"
                             >
                               <template slot-scope="scope">
-                                <el-link :underline="false" @click="handleDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 33px;':'color: #409EFF;'">下载</el-link>
-                                <el-link  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
+                                <el-link :underline="false" @click="handleDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;':'color: #409EFF;'">下载</el-link>
                               </template>
                             </el-table-column>
 

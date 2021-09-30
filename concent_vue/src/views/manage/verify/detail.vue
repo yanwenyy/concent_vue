@@ -1399,13 +1399,10 @@ export default {
                     message:  `${type=='save'?'保存':'提交'}成功`,
                     type: "success",
                   });
-                    if (type=='save') {
-                      this.detailform.verify.uuid = res.data.data.verify.uuid
-                    } else {
-                      this.back();
-                    }
-                  if(type!='save'){
-                    this.$router.back();
+                  if (type=='save') {
+                    this.detailform.verify.uuid = res.data.data.verify.uuid
+                  } else {
+                    this.back();
                   }
                 }else{
                   this.$message.error(res.data.msg)
@@ -1435,17 +1432,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        if(item.verifySection.uuid!=''){
-          item.verifySection.isDelete='1';
-          // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
-          // console.log(this.detailform.verifySectionList)
-          this.verifySectionListSplit=list.splice(index, 1);
-          // list.splice(index, 1);
-          this.$set(this.detailform,this.detailform)
-        }else{
-          list.splice(index, 1);
-        }
-        // this.$set(this.detailform.verifySectionList,list);
+        list.splice(index, 1);
         this.$forceUpdate();
       }).catch(() => {
         this.$message({
