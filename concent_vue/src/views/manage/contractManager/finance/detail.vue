@@ -3274,7 +3274,7 @@ export default {
         if(type=='wlht'||type=='nlht' ){
           //铁建金额计算
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.insureIncome);
+            tj_money+=Number(item.contractAmount);
           });
           this.detailform.contractInfo.outSystemAmount=tj_money;
           var ourAmount=this.detailform.contractInfo.insureIncome-tj_money;
@@ -3286,11 +3286,11 @@ export default {
 
           }else{
             this.$message.error('铁建份额需要大于0');
-            list[index].insureIncome=''
+            list[index].contractAmount=''
           }
           //我方份额计算
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.insureIncome);
+            our_money+=Number(item.contractAmount);
           });
           var ourAmount2=this.detailform.contractInfo.crccCash-our_money;
           if(ourAmount2>0){
@@ -3301,27 +3301,27 @@ export default {
             // this.$set( this.detailform, "contractInfo.ourAmount", ourAmount2);
           }else{
             this.$message.error('我方份额需要大于0');
-            list[index].insureIncome=''
+            list[index].contractAmount=''
           }
         }else if(type=='nfb'||type=='jtnfb'|| type=='wfb'){
           var jtnfbTotal=0;
           //计算系统内分包和集团内分包的和
           this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.insureIncome);
+            our_money+=Number(item.contractAmount);
           });
           //计算系统外分包的和
           this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.insureIncome);
+            our_money+=Number(item.contractAmount);
           });
           //计算集团内分包的和
           this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.insureIncome);
-            jtnfbTotal+=Number(item.insureIncome);
+            our_money+=Number(item.contractAmount);
+            jtnfbTotal+=Number(item.contractAmount);
           });
           if(this.detailform.contractInfo.unAllocatedFee&&jtnfbTotal>this.detailform.contractInfo.insureIncome-(this.detailform.contractInfo.unAllocatedFee)){
             this.$message.error('集团内分包之和需要大于总金额-未分配金额');
             if(list){
-              list[index].insureIncome='';
+              list[index].contractAmount='';
               this.$forceUpdate();
             }else{
               this.detailform.contractInfo[name]='';
@@ -3338,14 +3338,14 @@ export default {
                 this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于初始我方份额');
               }
               if(list){
-                list[index].insureIncome='';
+                list[index].contractAmount='';
                 this.$forceUpdate();
               }else{
                 this.detailform.contractInfo[name]='';
                 this.$forceUpdate();
               }
             }else{
-              this.detailform.contractInfo.selfCash=zile;
+              this.detailform.contractInfo.selfCash=zile||0;
               //计算本企业建安已分配和本企业建安未分配
               if(this.detailform.contractInfo.isInSystemSub!='0'&&this.detailform.contractInfo.isOutSystemSub!='0'&&this.detailform.contractInfo.isInGroupSub!='0'){
                 //系统内分包和系统外分包和集团内分包都为否时,本企业建安已分配=建安和勘察设计费,本企业建安未分配等于0
@@ -3376,12 +3376,12 @@ export default {
           this.detailform.contractInfo.insureIncome=this.detailform.contractInfo.insureIncome.replace(/[^\-?\d.]/g,'','');
           //合同总金额输入计算我方份额和铁建金额
           this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
-            tj_money+=Number(item.insureIncome);
+            tj_money+=Number(item.contractAmount);
           });
           this.$forceUpdate();
           this.detailform.contractInfo.crccCash=this.detailform.contractInfo.insureIncome!=''?this.detailform.contractInfo.insureIncome-tj_money:'';
           this.detailform.contractInfoAttachBO.unionContractInfoAttachList.forEach((item)=>{
-            our_money+=Number(item.insureIncome);
+            our_money+=Number(item.contractAmount);
           });
           this.$forceUpdate();
           this.detailform.contractInfo.ourAmount=this.detailform.contractInfo.insureIncome!=''?this.detailform.contractInfo.crccCash-our_money:'';
