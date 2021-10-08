@@ -201,7 +201,7 @@
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount2'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-input :disabled="type === 'look'" type="text" v-model="scope.row.bidAmount">
                     <template slot="prepend">¥</template>
@@ -289,7 +289,7 @@
               align="center"
               label="投标价">
               <template slot-scope="scope">
-                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
+                <el-form-item class="tabelForm" :prop="'dataList2.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount2'>
                   <!--@input="scope.row.contractAmount=getMoney(scope.row.contractAmount)"-->
                   <el-input :disabled="type === 'look'" type="text" v-model="scope.row.bidAmount">
                     <template slot="prepend">¥</template>
@@ -341,6 +341,16 @@
         } else {
           callback()
         }
+      };
+      var validateMoney2 = (rule, value, callback) => {
+        // console.log(value)
+        if(value===''){
+          callback(new Error('不能为空'))
+        }else if (!isMoney(value)) {
+          callback(new Error('请输入数字'))
+        } else {
+          callback()
+        }
       }
       return {
         key: 0,
@@ -376,6 +386,9 @@
         rules:{
           contractAmount: [
             { required: true,validator: validateMoney, trigger: 'change' }
+          ],
+          contractAmount2: [
+            { required: true,validator: validateMoney2, trigger: 'change' }
           ]
         },//表单验证规则
       }
