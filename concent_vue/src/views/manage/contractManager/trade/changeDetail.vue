@@ -367,7 +367,7 @@
                     </el-input>
                   </el-form-item>
                   <el-form-item
-                    v-if="detailFormBefore.contractInfo.isInSystemUnion==='1'"
+                    v-if="detailFormBefore.contractInfo.isInSystemUnion!=='1'"
                     label="暂定金(万元)"
 
                   >
@@ -1895,7 +1895,7 @@
                   </el-input>
                 </el-form-item>
                 <el-form-item
-                  v-if="detailform.contractInfo.isInSystemUnion==='1'"
+                  v-if="detailform.contractInfo.isInSystemUnion!=='1'"
                   label="暂定金(万元)"
                   prop="contractInfo.designTempPrice"
                   :rules="rules.contractAmount"
@@ -2561,7 +2561,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <div v-if="detailform.contractInfo.isYearContract!=='0'">
+                <div v-show="detailform.contractInfo.isYearContract!=='0'">
                   <div>
                     <span>标的物信息: </span>
                     <el-button
@@ -2574,7 +2574,6 @@
                   </div>
 
                   <el-table
-                    :row-class-name="tableRowClassName"
                     :data="detailform.contractInfoSubjectMatterList"
                     :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                     @selection-change="handleSelectionChange"
@@ -2607,6 +2606,8 @@
                           class="tabelForm-dete"
                           v-model="scope.row.subjectMatterYear"
                           type="year"
+                          format="yyyy"
+                          value-format="yyyy"
                           placeholder="选择年">
                         </el-date-picker>
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -2629,6 +2630,7 @@
                           v-model="scope.row.subjectMatterMonth"
                           type="month"
                           format="MM"
+                          value-format="MM"
                           placeholder="选择月">
                         </el-date-picker>
                         <!-- <span @click="scope.row.showinput = true" v-if="!scope.row.showinput">{{scope.row.part}}</span> -->
@@ -2649,6 +2651,9 @@
                             class="input-el-input-group"
                             :disabled="p.actpoint === 'look'||p.actpoint=='task'"
                             clearable
+                            @clear="clearBdw( scope.row.subjectMatterName,
+                      detailform.contractInfoSubjectMatterList,
+                      scope.$index)"
                             filterable
                             placeholder="请选择"
 
@@ -4326,6 +4331,30 @@
         });
     },
     methods: {
+      //null转空字符串
+      nullToStr(data) {
+        // console.log('1111111',data)
+        for (let x in data) {
+          // if (data[x] === null&&x !='topInfoTrack_01'){
+          if (data[x] === null){
+            // 如果是null 把直接内容转为 ''
+            data[x] = "";
+          } else {
+            if (Array.isArray(data[x])) {
+              // 是数组遍历数组 递归继续处理
+              data[x] = data[x].map((z) => {
+                return this.nullToStr(z);
+              });
+            }
+            if (typeof data[x] === "object") {
+              // 是json 递归继续处理
+              data[x] = this.nullToStr(data[x]);
+            }
+          }
+        }
+        //  console.log('2222222',data)
+        return data;
+      },
       //项目地点份额变动的时候
       getPositionMoney(index,list){
         if(list.length==1){
@@ -5503,19 +5532,19 @@
           commonFilesList1: fileList1,
           commonFilesList2: fileList2,
           contractInfo: datas.contractInfo,
-          contractInfoAttachBO: datas.contractInfoAttachBO,
-          contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList,
-          topInfoSiteList:datas.topInfoSiteList,
-          contractInfoHouseSalesList:datas.contractInfoHouseSalesList,
+          contractInfoAttachBO: datas.contractInfoAttachBO||[],
+          contractInfoSubjectMatterList: datas.contractInfoSubjectMatterList||[],
+          topInfoSiteList:datas.topInfoSiteList||[],
+          contractInfoHouseSalesList:datas.contractInfoHouseSalesList||[],
           zplx:[],//装配类型
           jzlx:[],//建筑类型
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
         }
-        this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",");
-        this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",");
-        this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",");
-        this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",");
+        this.detailform.cdmc=datas.contractInfo.siteNameId&&datas.contractInfo.siteNameId.split(",")||[];
+        this.detailform.zplx=datas.contractInfo.otherAssemblyTypeId&&datas.contractInfo.otherAssemblyTypeId.split(",")||[];
+        this.detailform.jzlx=datas.contractInfo.otherBuildingTypeId&&datas.contractInfo.otherBuildingTypeId.split(",")||[];
+        this.detailform.jzjglx=datas.contractInfo.otherBuildingStructureTypeId&&datas.contractInfo.otherBuildingStructureTypeId.split(",")||[];
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
