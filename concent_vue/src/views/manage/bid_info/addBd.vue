@@ -621,8 +621,13 @@ import { isMoney } from '@/utils/validate'
         detailForm: {
           bidInfoSection:{
             participatingUnitsName:'',
+            participatingUnitsId:'',
             openBidPlaceName:'',
-            biddingPriceLimit:''
+            biddingPriceLimit:'',
+            jananInvestment:'',
+            investmentReckon:'',
+            orgId:'',
+            orgName:'',
           },
           verifySection:{},
           bidInfoSectionOrgList:[],
