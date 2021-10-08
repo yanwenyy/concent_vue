@@ -1982,7 +1982,7 @@
                   label="客户性质:"
                   prop="contractInfo.customerNatureId"
                   :rules="{
-               required: true, message: '此项不能为空', trigger: 'blur'
+               required: true, message: '此项不能为空', trigger: ['blur','change']
             }"
 
                 >
@@ -4888,7 +4888,7 @@
           this.detailform.contractInfoHouseSalesList.forEach((item)=>{
             syMoney+=Number(item.contractAmount)
           });
-          if(ddMoney!=syMoney){
+          if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
             this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
             return false;
           }

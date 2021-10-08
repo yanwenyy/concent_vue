@@ -1529,7 +1529,7 @@
                   :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: 'blur',
+                trigger: ['blur','change'],
               }"
 
                 >
@@ -2306,7 +2306,7 @@
                   label="客户性质:"
                   prop="contractInfo.customerNatureId"
                   :rules="{
-               required: true, message: '此项不能为空', trigger: 'blur'
+               required: true, message: '此项不能为空', trigger: ['blur','change']
             }"
 
                 >
@@ -5442,7 +5442,7 @@
         this.detailform.contractInfoProductInformtList.forEach((item)=>{
           cpxxMoney+=Number(item.productTotalPrice);
         });
-        if(cpxxMoney!=Number(this.detailform.contractInfo.contractAmount)){
+        if(cpxxMoney!=0&&Number(this.detailform.contractInfo.contractAmount)!=0&&cpxxMoney!=Number(this.detailform.contractInfo.contractAmount)){
           this.$message.error("产品信息列表总和需要等于合同总金额");
           return false;
         }

@@ -2898,8 +2898,9 @@ export default {
           constructionOrgId:'',
           isSystemPurchaseIndustry:'1',
           isOpenBid:'1',
-          contractAmount:''
-
+          contractAmount:'',
+          extendAmount:'',
+          industryOverseasContract:'',
         },
         commonFilesList1: [],
         commonFilesList2: [],

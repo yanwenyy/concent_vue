@@ -4875,7 +4875,7 @@
           this.detailform.contractInfoHouseSalesList.forEach((item)=>{
             syMoney+=Number(item.monthSales)
           });
-          if(ddMoney!=syMoney){
+          if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
             this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
             return false;
           }

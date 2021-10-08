@@ -9094,6 +9094,9 @@ export default {
           id=='193b4d4003d04899a1d09c8d5f7877fe'){
           this.detailform.contractInfo.isImport='0';
           this.isImportChangeVal = true;
+        }else{
+          this.detailform.contractInfo.isImport='1';
+          this.isImportChangeVal = false;
         }
         this.projectDomainType.find(
           (item) => {
