@@ -76,13 +76,13 @@
           </el-input> -->
         </el-form-item>
         <el-form-item label="投资估算:" class="list-item not-error" prop="bidInfoSection.investmentReckon" :rules="rules.contractAmount2">
-          <el-input v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'">
+          <el-input @input="onInput()" v-model="detailForm.bidInfoSection.investmentReckon" placeholder="投资估算" clearable :disabled="type === 'look'" >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
         </el-form-item>
           <el-form-item label="其中建安投资:" class="list-item not-error" prop="bidInfoSection.jananInvestment" :rules="rules.contractAmount2">
-          <el-input v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
+          <el-input @input="onInput()" v-model="detailForm.bidInfoSection.jananInvestment" placeholder="其中建安投资" clearable :disabled="type === 'look'" >
                 <template slot="prepend">¥</template>
                 <template slot="append">(万元)</template>
           </el-input>
@@ -620,6 +620,7 @@ import { isMoney } from '@/utils/validate'
         DwVisible:false,//选择单位弹框状态
         detailForm: {
           bidInfoSection:{
+            sectionName:'',
             participatingUnitsName:'',
             participatingUnitsId:'',
             openBidPlaceName:'',
@@ -693,6 +694,9 @@ import { isMoney } from '@/utils/validate'
           list[index].orgName=this.sjdwList.find(
             (item) => item.uuid == id).companyName;
         }
+      },
+      onInput(){
+        this.$forceUpdate();
       },
       //获取标段名称
       getName2(id, list, name,code) {
