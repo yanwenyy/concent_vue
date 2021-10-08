@@ -1806,10 +1806,10 @@
                   prop="contractInfo.enginTypeFirstId"
                   class="inline-formitem form-item-six"
                   :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 >
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
@@ -1871,10 +1871,10 @@
                   prop="contractInfo.enginTypeSecondId"
                   class="inline-formitem"
                   :rules="{
-              required: true,
-              message: '此项不能为空',
-              trigger: 'blur',
-            }"
+                    required: true,
+                    message: '此项不能为空',
+                    trigger: 'blur',
+                  }"
                 >
                   <el-select
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"

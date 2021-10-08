@@ -1573,7 +1573,11 @@ export default {
                     type: "success",
                   });
                   this.$refs[formName].resetFields();
-                  this.$router.back();
+                  if (type=='save') {
+
+                  } else {
+                    this.$router.back();
+                  }
                 }
               });
           } else {
