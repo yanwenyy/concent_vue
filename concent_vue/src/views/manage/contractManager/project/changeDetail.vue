@@ -6316,6 +6316,22 @@
                 this.$message.error("请选择一个主地点");
                 return false;
               }
+              if(this.detailform.fileList1.length==0&&this.detailform.fileList2.length==0){
+                this.$message.error("中标通知书和合同附件必须传一个");
+                return false;
+              }
+              if(this.detailform.fileList3.length<2&&this.detailform.contractInfo.isImport=='0'){
+                this.$message.error("工程量清单和劳材机两个文件必须都要上传");
+                return false;
+              }
+              if(this.detailform.contractInfo.isImport=='0'&&this.detailform.fileList3.length==0){
+                this.$message.error("导入清单为是的时候，工程量清单和劳材机两个文件必须都要上传");
+                return false;
+              }
+              if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.fileList4.length==0){
+                this.$message.error("请上传招标公告文件");
+                return false;
+              }
               this.$http
                 .post(
                   url,
