@@ -1559,7 +1559,6 @@ export default {
           this.$message.error("请添加开标金额");
           return false
         }
-        return false
         var url='';
         if(type=='save'){
           url="/api/contract/topInfo/BidInfo/detail/saveOrUpdateOpenBid"
