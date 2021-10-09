@@ -3628,6 +3628,10 @@
             this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
             return false;
           }
+          if(syMoney!=this.detailform.contractInfo.contractAmount){
+            this.$message.error("合同总金额应等于年度合同收益列表中本月收益之和");
+            return false;
+          }
         }
         this.$refs[formName].validate((valid) => {
           if (valid) {
