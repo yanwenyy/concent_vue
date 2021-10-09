@@ -421,7 +421,7 @@
             align="center"
             label="开标价"
             width="475"
-            v-if="ifkb=='kbxq'"
+            v-if="ifkb=='kbxq'||type == 'look'"
             >
              <template slot-scope="scope">
                 <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
@@ -528,11 +528,10 @@
             align="center"
             label="开标价"
             width="475"
-            v-if="ifkb=='kbxq'"
+            v-if="ifkb=='kbxq'||type == 'look'"
           >
             <template slot-scope="scope">
               <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
-                <!--<el-input type="text" v-model="scope.row.riskFee" :disabled="type === 'look'&&ifkb!='kbxq'">-->
                 <el-input type="text" v-model="scope.row.bidAmount" :disabled="type === 'look'&&ifkb!='kbxq'">
                   <template slot="prepend">¥</template>
                   <template slot="append">(万元)</template>

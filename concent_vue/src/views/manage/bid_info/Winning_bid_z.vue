@@ -803,7 +803,6 @@ export default {
       }
     }
     return {
-      Authorization:sessionStorage.getItem("token"),
       xqprojectType:[],//工程二级列表
       companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
