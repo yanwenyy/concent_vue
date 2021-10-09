@@ -1548,6 +1548,18 @@ export default {
 
     },
       saveInfo(formName,type) {
+        // 校验开标金额
+        let isSave = true
+        this.detailform.bidInfoSectionList.forEach((element) => {
+          if (element.bidInfoSection.openBidAmount == null) {
+            isSave = false
+          }
+        })
+        if (!isSave) {
+          this.$message.error("请添加开标金额");
+          return false
+        }
+        return false
         var url='';
         if(type=='save'){
           url="/api/contract/topInfo/BidInfo/detail/saveOrUpdateOpenBid"
