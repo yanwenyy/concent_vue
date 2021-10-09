@@ -878,7 +878,7 @@
               <p>
               <span >客户名称: </span>
               <el-button
-                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 class="detatil-flie-btn"
                 @click="constructioAdd()"
                 type="primary"

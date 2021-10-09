@@ -1492,12 +1492,12 @@
 
 
 
-                <el-table-column
-                  :width="55"
-                  align="center"
-                  label="序号"
-                  show-overflow-tooltip
-                  type="index"></el-table-column>
+                <!--<el-table-column-->
+                  <!--:width="55"-->
+                  <!--align="center"-->
+                  <!--label="序号"-->
+                  <!--show-overflow-tooltip-->
+                  <!--type="index"></el-table-column>-->
                 <el-table-column width="150"  class="listTabel" :resizable="false" label="产品类型" prop="productId" show-overflow-tooltip>
                   <template slot-scope="scope">
                     <el-form-item

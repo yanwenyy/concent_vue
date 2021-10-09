@@ -427,12 +427,8 @@
                     label="合同总金额(万元):"
                   >
                     <el-input
-                      :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
-                      @input="getOurAmount(),getOurAmount('','','nfb')"
-                      clearable
-                      placeholder=""
-
-                      v-model="detailform.contractInfo.contractAmount"
+                      disabled
+                      v-model="detailFormBefore.contractInfo.contractAmount"
                     >
                       <template slot="prepend">¥</template>
                       <template slot="append">(万元)</template>
@@ -759,6 +755,21 @@
                         placeholder="请输入"
 
                         v-model="detailFormBefore.contractInfo.remarks"
+                      />
+                    </el-form-item>
+                  </div>
+                  <div>
+                    <el-form-item
+                      class="neirong"
+                      label="变更原因:"
+                      style="width: 33%"
+                    >
+                      <el-input
+                        type="textarea"
+                        clearable
+                        placeholder="请输入"
+
+                        v-model="detailform.contractInfo.changeReason"
                       />
                     </el-form-item>
                   </div>
@@ -1176,7 +1187,7 @@
                       prop="inforName"
                     >
                       <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <span>{{scope.row.path}}</span>
                         <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                       </template>
                     </el-table-column>
@@ -3401,13 +3412,13 @@
                   ref="table"
                   style="width: 100%;height: auto;"
                 >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
+                  <!--<el-table-column-->
+                    <!--:width="80"-->
+                    <!--align="center"-->
+                    <!--label="序号"-->
+                    <!--show-overflow-tooltip-->
+                    <!--type="index"-->
+                  <!--&gt;</el-table-column>-->
                   <el-table-column align="center" :width="200" :resizable="false" label="标段名称" prop="sectionName" show-overflow-tooltip>
                     <!--<template slot-scope="scope">-->
                     <!--<el-form-item-->

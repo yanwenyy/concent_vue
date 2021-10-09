@@ -942,7 +942,7 @@
                       prop="inforName"
                     >
                       <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
+                        <span>{{scope.row.path}}</span>
                         <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
                       </template>
                     </el-table-column>
@@ -2393,6 +2393,21 @@
                     />
                   </el-form-item>
                 </div>
+                <div>
+                  <el-form-item
+                    class="neirong"
+                    label="变更原因:"
+                    style="width: 33%"
+                  >
+                    <el-input
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+
+                      v-model="detailform.contractInfo.changeReason"
+                    />
+                  </el-form-item>
+                </div>
                 <p><span >证明文件: </span>
                   <!--<el-button-->
                     <!--v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
@@ -2583,13 +2598,13 @@
                     ref="table"
                     style="width: 100%;height: auto;"
                   >
-                    <el-table-column
-                      :width="55"
-                      align="center"
-                      label="序号"
-                      show-overflow-tooltip
-                      type="index"
-                    ></el-table-column>
+                    <!--<el-table-column-->
+                      <!--:width="55"-->
+                      <!--align="center"-->
+                      <!--label="序号"-->
+                      <!--show-overflow-tooltip-->
+                      <!--type="index"-->
+                    <!--&gt;</el-table-column>-->
                     <el-table-column
                       v-if="detailform.contractInfo.isYearContract==='0'"
                       class="listTabel"

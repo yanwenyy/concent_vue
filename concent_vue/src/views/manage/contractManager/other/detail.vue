@@ -882,7 +882,7 @@
               <p>
               <span >客户名称: </span>
               <el-button
-                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'&&!p.pushId"
+                v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
                 class="detatil-flie-btn"
                 @click="constructioAdd()"
                 type="primary"
@@ -2486,6 +2486,7 @@
         }
       }
       return {
+        yqList:[],
         Authorization:sessionStorage.getItem("token"),//上传组件token
         companyMulStatus:false,//设计单位等多选列表状态
         sjdwList:[],
@@ -3602,19 +3603,19 @@
             return false;
           }
         }
-        // if(this.detailform.contractInfo.isYearContract=='0'){
-        //   var ddMoney=0,syMoney=0;
-        //   this.detailform.topInfoSiteList.forEach((item)=>{
-        //     ddMoney+=Number(item.contractAmount)
-        //   });
-        //   this.detailform.contractInfoHouseSalesList.forEach((item)=>{
-        //     syMoney+=Number(item.monthSales)
-        //   });
-        //   if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
-        //     this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
-        //     return false;
-        //   }
-        // }
+        if(this.detailform.contractInfo.isYearContract=='0'){
+          var ddMoney=0,syMoney=0;
+          this.detailform.topInfoSiteList.forEach((item)=>{
+            ddMoney+=Number(item.contractAmount)
+          });
+          this.detailform.contractInfoHouseSalesList.forEach((item)=>{
+            syMoney+=Number(item.monthSales)
+          });
+          if(ddMoney!=0&&syMoney!=0&&ddMoney!=syMoney){
+            this.$message.error("项目地点金额之和应等于年度合同收益列表中本月收益之和");
+            return false;
+          }
+        }
         if(this.detailform.contractInfo.isClientele!='1'&&this.constructionOrgList==[]){
           this.$message.error("客户名称不能为空");
           return false;

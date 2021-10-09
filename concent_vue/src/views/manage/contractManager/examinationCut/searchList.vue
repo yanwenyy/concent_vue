@@ -139,17 +139,17 @@
           show-overflow-tooltip
         >
         </el-table-column>
-        <el-table-column
-          :width="150"
-          align="center"
-          label="状态"
-          prop="flowStatus"
-          show-overflow-tooltip
-        >
-          <template slot-scope="scope">
-             {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}
-          </template>
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--:width="150"-->
+          <!--align="center"-->
+          <!--label="状态"-->
+          <!--prop="flowStatus"-->
+          <!--show-overflow-tooltip-->
+        <!--&gt;-->
+          <!--<template slot-scope="scope">-->
+            <!-- {{scope.row.flowStatus=='edit'?'草稿':scope.row.flowStatus=='check'?'审核中':scope.row.flowStatus=='pass'?'审核通过':scope.row.flowStatus=='reject'?'审核退回':''}}-->
+          <!--</template>-->
+        <!--</el-table-column>-->
         <el-table-column
           :width="150"
           align="center"

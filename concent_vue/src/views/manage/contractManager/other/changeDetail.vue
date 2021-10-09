@@ -3764,7 +3764,7 @@
       if (this.p.actpoint === "edit"||this.p.actpoint === "look"||this.p.actpoint === "task") {
         this.getDetail();
       }
-      if(this.p.actpoint === "add"||this.id){
+      if(this.p.actpoint === "add"){
         this.getAddDetail()
       }
       this.$store.dispatch("getPubCustomers", {});
@@ -4991,6 +4991,7 @@
           jzjglx:[],//建筑结构类型
           cdmc:[],//场地名称
         };
+        console.log(fileList1)
         this.detailform.cdmc=afterData.contractInfo.siteNameId&&afterData.contractInfo.siteNameId.split(",");
         this.detailform.zplx=afterData.contractInfo.otherAssemblyTypeId&&afterData.contractInfo.otherAssemblyTypeId.split(",");
         this.detailform.jzlx=afterData.contractInfo.otherBuildingTypeId&&afterData.contractInfo.otherBuildingTypeId.split(",");

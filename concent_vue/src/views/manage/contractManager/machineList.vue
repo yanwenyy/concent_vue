@@ -10,6 +10,7 @@
       "
     >
       <el-tree
+        :key="key"
         :props="props"
         lazy
         ref="tree"
@@ -205,6 +206,7 @@ export default {
   name: "proposal-list-look",
   data() {
     return {
+      key:0,
       currentRowIndex:'',
       props: {
         label: "vname",
@@ -401,6 +403,7 @@ export default {
               this.$refs.tree.store._getAllNodes()[i].expanded = false;
             }
             this.loadNode(this.node, this.resolve);
+            this.key = Symbol(new Date().toString());
           }
           //this.getData();
         });
@@ -614,7 +617,7 @@ export default {
         ]);
       }
       setTimeout(() => {
-        //console.log(node);
+        console.log(node);
         this.$http
           .post("/api/contract/ContractInfoQuantityMachine/wood/loadTreeData", {
             pid: node.data.uuid,

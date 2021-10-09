@@ -75,7 +75,7 @@
           align="center"
           label="审核通过时间">
           <template slot-scope="scope">{{
-            scope.row.createTime | dateformat
+            scope.row.approvalTime | dateformat
             }}</template>
         </el-table-column>
         <el-table-column

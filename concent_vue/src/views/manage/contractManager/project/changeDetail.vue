@@ -3741,13 +3741,13 @@
                   ref="table"
                   style="width: 100%;height: auto;"
                 >
-                  <el-table-column
-                    :width="80"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"
-                  ></el-table-column>
+                  <!--<el-table-column-->
+                    <!--:width="80"-->
+                    <!--align="center"-->
+                    <!--label="序号"-->
+                    <!--show-overflow-tooltip-->
+                    <!--type="index"-->
+                  <!--&gt;</el-table-column>-->
                   <el-table-column align="center" :width="200" :resizable="false" label="标段名称" prop="sectionName" show-overflow-tooltip>
                     <!--<template slot-scope="scope">-->
                     <!--<el-form-item-->
