@@ -110,7 +110,7 @@
           align="center"
           label="投标进度">
           <template slot-scope="scope">
-            {{scope.row.bidFlowStatus==3?'开标审核通过':'投标审核通过'}}
+            {{scope.row.bidFlowStatus=='pass'?'开标审核通过':'投标审核通过'}}
           </template>
         </el-table-column>
         <!--<el-table-column-->
