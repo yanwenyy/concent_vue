@@ -1468,7 +1468,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <p style="overflow: hidden">
+              <p style="overflow: hidden" v-if="detailform.contractInfo.isYearContract == '1'">
                 <span >产品信息: </span>
                 <el-button
                   v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
@@ -1477,8 +1477,8 @@
                   type="primary"
                 >新增</el-button>
               </p>
-
               <el-table
+                v-if="detailform.contractInfo.isYearContract == '1'"
                 :data="detailform.contractInfoProductInformtList"
                 :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
 
@@ -1642,6 +1642,7 @@
                   </template>
                 </el-table-column>
               </el-table>
+
               <p  class="detail-title"  v-if="detailform.contractInfo.isYearContract=='0'" style="overflow: hidden；margin-right: 30px">
                 <span>销售业绩:</span>
                 <el-button
@@ -1675,7 +1676,112 @@
                   show-overflow-tooltip
                   type="index"
                 ></el-table-column>
+                <el-table-column width="150"  class="listTabel" :resizable="false" label="产品类型" prop="productId" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-form-item
+                      class="tabelForm"
+                      :prop="'contractInfoHouseSalesList.'+scope.$index+'.productTypeId'"
+                      :rules="{
+                        required: true, message: '此项不能为空', trigger: 'blur'
+                      }"
+                      label-width="0"
+                    >
+                      <el-select
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        @change="getcpxx(scope.row.productTypeId,detailform.contractInfoHouseSalesList,scope.$index)"
+                        v-model="scope.row.productTypeId"
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.productTypeName"
+                          :value="item.productTypeId"
+                          v-for="(item, index) in cplxList"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </template>
+                </el-table-column>
+                <el-table-column width="150"  class="listTabel" :resizable="false" label="产品名称" prop="productId" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-form-item
+                      class="tabelForm"
+                      :prop="'contractInfoHouseSalesList.'+scope.$index+'.productId'"
+                      :rules="{
+                        required: true, message: '此项不能为空', trigger: 'blur'
+                      }"
+                      label-width="0"
+                    >
+                      <el-select
+                        :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                        clearable
+                        filterable
+                        placeholder="请选择"
+                        @change="getNameTable(
+                          scope.row.productId,
+                          scope.row.cpxxList,
+                          'productName_contractInfoHouseSalesList',
+                          scope.$index
+                        )"
+                        v-model="scope.row.productId"
+                      >
+                        <el-option
+                          :key="index"
+                          :label="item.vname"
+                          :value="item.id"
+                          v-for="(item, index) in scope.row.cpxxList"
+                        ></el-option>
+                      </el-select>
+                    </el-form-item>
+                  </template>
+                </el-table-column>
 
+                <el-table-column width="150" :resizable="false" label="规格型号" prop="specificationAndModel" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    {{scope.row.specificationAndModel}}
+                  </template>
+                </el-table-column>
+
+                <el-table-column width="150" :resizable="false" label="产品数量" prop="productQuantity" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-form-item
+                      class="tabelForm"
+                      :prop="'contractInfoHouseSalesList.'+scope.$index+'.productQuantity'"
+                      :rules="{
+                        required: true, message: '此项不能为空', trigger: 'blur'
+                      }"
+                      label-width="0"
+                      <el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint==='task'" @input="scope.row.productQuantity = scope.row.productQuantity.replace(/[^\-?\d.]/g,'','')" v-model="scope.row.productQuantity"></el-input>
+                    </el-form-item>
+                  </template>
+                </el-table-column>
+                <el-table-column algin="center" :resizable="false" label="产品单位" prop="productUnit" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-form-item
+                      class="tabelForm"
+                      label-width="0"
+                    >
+                      {{scope.row.productUnit}}
+                    </el-form-item>
+                  </template>
+                </el-table-column>
+                <el-table-column width="400" :resizable="false" label="总价(万元)" prop="productTotalPrice" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-form-item
+                      class="tabelForm"
+                      :prop="'contractInfoHouseSalesList.'+scope.$index+'.productTotalPrice'"
+                      :rules="rules.contractAmount"
+                      label-width="0"
+                    >
+                      <el-input max-length=50 clearable :disabled="p.actpoint==='look'||p.actpoint==='task'" v-model="scope.row.productTotalPrice">
+                        <template slot="prepend">¥</template>
+                        <template slot="append">(万元)</template>
+                      </el-input>
+                    </el-form-item>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   class="listTabel"
                   :resizable="false"
@@ -3134,7 +3240,14 @@ export default {
         yearSales:'',
         yearIncome:'',
         description:'',
-        isFinish:''
+        isFinish:'',
+        sortNo:this.detailform.contractInfoHouseSalesList.length+1,
+        productName:'',
+        productId:'',
+        specificationAndModel:'',
+        productQuantity:'',
+        productUnit:'',
+        productTotalPrice	:'',
       };
       this.detailform.contractInfoHouseSalesList.push(v);
     },
@@ -3565,15 +3678,27 @@ export default {
     getNameTable(id,list,name,index){
       if(id){
         this.$forceUpdate()
-        this.detailform.contractInfoProductInformtList[index].productName= list.find(
-          (item) => item.id == id
-      ).vname;
-        this.detailform.contractInfoProductInformtList[index].productUnit= list.find(
-          (item) => item.id == id
-      ).vmeasurename;
-        this.detailform.contractInfoProductInformtList[index].specificationAndModel= list.find(
-          (item) => item.id == id
-        ).specificationAndModel;
+        if (name == "productName_contractInfoHouseSalesList") {
+          this.detailform.contractInfoHouseSalesList[index].productName= list.find(
+            (item) => item.id == id
+          ).vname;
+          this.detailform.contractInfoHouseSalesList[index].productUnit= list.find(
+            (item) => item.id == id
+          ).vmeasurename;
+          this.detailform.contractInfoHouseSalesList[index].specificationAndModel= list.find(
+            (item) => item.id == id
+          ).specificationAndModel;
+        } else {
+          this.detailform.contractInfoProductInformtList[index].productName= list.find(
+            (item) => item.id == id
+          ).vname;
+          this.detailform.contractInfoProductInformtList[index].productUnit= list.find(
+            (item) => item.id == id
+          ).vmeasurename;
+          this.detailform.contractInfoProductInformtList[index].specificationAndModel= list.find(
+            (item) => item.id == id
+          ).specificationAndModel;
+        }
       }
     },
     //新增附属合同

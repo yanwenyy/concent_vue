@@ -1710,6 +1710,7 @@ export default {
         tableList.push(item.bidInfoSection.sectionId)
       });
       bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionId)==-1);
+      // 已经选择的改为空
       bdList.forEach((element, index) => {
         this.detailform.bidInfoSectionList.forEach((item) => {
           if (element.uuid == item.bidInfoSection.sectionId) {
@@ -1717,8 +1718,16 @@ export default {
           }
         })
       })
+      // 去掉已经选择的
       for(var i = 0 ;i<bdList.length;i++) {
         if(bdList[i] =="" || bdList[i] == null || typeof(bdList[i]) == "undefined") {
+          bdList.splice(i,1);
+          i= i-1;
+        }
+      }
+      // 去掉放弃跟踪的
+      for(var i = 0 ;i<bdList.length;i++) {
+        if(bdList[i].istrack == "0" ) {
           bdList.splice(i,1);
           i= i-1;
         }
