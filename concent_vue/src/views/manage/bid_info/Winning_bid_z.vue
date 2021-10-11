@@ -359,7 +359,7 @@
                     <el-button :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('施工单位',zbForm.bidInfoSection.constructionUnitId,false)" ></el-button>
                   </el-input>
                 </el-form-item>
-                <el-form-item v-if="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
+                <el-form-item v-show="isBidRates=='0'" label="投标费率(百分比):" class="list-item" prop="bidInfoSection.tenderRate"  :rules="rules.contractAmount">
                   <el-input
                     v-model="zbForm.bidInfoSection.tenderRate"
                     clearable
@@ -377,7 +377,7 @@
                   <el-input v-model="zbForm.bidInfoSection.deputyProjectManager	" placeholder="项目副经理" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
                 </el-form-item>
 
-                <el-form-item v-if="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
+                <el-form-item v-show="isBidRates=='1'" label="风险费(万元):" class="list-item"  prop="bidInfoSection.riskFee"  :rules="rules.contractAmount">
                   <el-input
                     v-model="zbForm.bidInfoSection.riskFee"
                     clearable
@@ -397,7 +397,7 @@
                   <el-input v-model="zbForm.bidInfoSection.personInChargeOfSafety" placeholder="安全负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
                 </el-form-item>
 
-                <el-form-item v-if="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
+                <el-form-item v-show="isBidRates=='1'" label="安全费(万元):" class="list-item"  prop="bidInfoSection.safetyCost"  :rules="rules.contractAmount">
                   <el-input
                     v-model="zbForm.bidInfoSection.safetyCost"
                     clearable
@@ -418,7 +418,7 @@
                   <el-input v-model="zbForm.bidInfoSection.costOwner" placeholder="成本负责人" clearable :disabled="zbForm.bidInfoSection.noticeTypeName!='竞争性谈判'||zbType=='look'"></el-input>
                 </el-form-item>
 
-                <el-form-item v-if="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+                <el-form-item v-show="isBidRates=='1'" label="投标限价(万元):" class="list-item" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
                   <el-input
                     v-model="zbForm.bidInfoSection.biddingPriceLimit"
                     clearable
@@ -517,7 +517,7 @@
                               trigger: 'blur',
                             }">
                 <template>
-                  <el-radio-group @change="zbForm.bidInfoSection.isOutBidOrg='1'" class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
+                  <el-radio-group @change="changeWinBd" class="detail-radio-group" v-model="zbForm.bidInfoSection.isWinBid"  :disabled="zbType=='look'">
                     <el-radio  label="1" value="1">中标</el-radio>
                     <el-radio  label="2" value="2">废标</el-radio>
                     <el-radio  label="3" value="3">流标</el-radio>
@@ -534,7 +534,7 @@
                 <!-- </el-select> -->
 
               </el-form-item>
-              <el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
+              <el-form-item label="系统内施工单位:" class="list-item" v-show="zbForm.bidInfoSection.isWinBid=='1'"
                               prop="bidInfoSection.constructionUnitName"
                               :rules="{
                                 required: true,
@@ -545,7 +545,7 @@
                   <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.constructionUnitId)" ></el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
+              <el-form-item label="中标单位:" class="list-item" v-show="zbForm.bidInfoSection.isWinBid=='1'"
                             prop="bidInfoSection.inBidOrgName"
                             :rules="rules.bidName">
                 <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBidOrgName" class="input-with-select" :disabled="zbType=='look'">
@@ -557,7 +557,7 @@
                 label="中标公示网站:"
                 prop="bidInfoSection.bidNoticeWebsite"
                 :rules="rules.bidNoticeWebsite"
-                v-if="zbForm.bidInfoSection.isWinBid=='1'"
+                v-show="zbForm.bidInfoSection.isWinBid=='1'"
               >
                 <el-input
                   :disabled="zbType === 'look'"
@@ -570,7 +570,7 @@
               <el-form-item
                 label="是否系统外单位中标:"
                 class="inline-formitem formItem"
-                v-if="zbForm.bidInfoSection.isWinBid=='4'">
+                v-show="zbForm.bidInfoSection.isWinBid=='4'">
                 <el-switch
                   class="inline-formitem-switch"
                   v-model="zbForm.bidInfoSection.isOutBidOrg"
@@ -585,7 +585,7 @@
 
               <el-form-item
                 class="list-item"
-                v-if="zbForm.bidInfoSection.isOutBidOrg === '0'"
+                v-show="zbForm.bidInfoSection.isOutBidOrg === '0'"
                 label="系统外中标单位:"
               >
                 <!--<el-input-->
@@ -600,13 +600,13 @@
                   v-model="zbForm.bidInfoSection.outBidOrg"
                   :title="zbForm.bidInfoSection.outBidOrg"
                 >
-                  <el-button v-if="zbType != 'look'" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(zbForm.bidInfoSection.outBidOrgId,zbForm.bidInfoSection.outBidOrg,'/api/contract/Companies/detail/findCompanies','系统外中标单位')"></el-button>
+                  <el-button v-show="zbType != 'look'" slot="append" icon="el-icon-circle-plus-outline" @click="openComMul(zbForm.bidInfoSection.outBidOrgId,zbForm.bidInfoSection.outBidOrg,'/api/contract/Companies/detail/findCompanies','系统外中标单位')"></el-button>
                 </el-input>
               </el-form-item>
 
               <el-form-item
                 label="系统外中标金额"
-                v-if="zbForm.bidInfoSection.isOutBidOrg==='0'"
+                v-show="zbForm.bidInfoSection.isOutBidOrg==='0'"
                 class="list-item"
                 prop="bidInfoSection.outOrgBidMoney"
                 :rules="rules.contractAmount"
@@ -622,7 +622,7 @@
               <el-form-item
                 width="100%"
                 class="list-item_textarea"
-                v-if="zbForm.bidInfoSection.isWinBid=='4'"
+                v-show="zbForm.bidInfoSection.isWinBid=='4'"
                 label="未中标原因:"
                 prop="bidInfoSection.notBidReason"
                 :rules="{
@@ -643,7 +643,7 @@
 
               <el-form-item
                 label="中标价(万元)"
-                v-if="zbForm.bidInfoSection.isWinBid==='1'"
+                v-show="zbForm.bidInfoSection.isWinBid==='1'"
                 class="list-item"
                 prop="bidInfoSection.winBidPrice"
                 :rules="rules.contractAmount"
@@ -659,7 +659,7 @@
               <el-form-item
                 label="中标时间"
                 class="list-item"
-                v-if="zbForm.bidInfoSection.isWinBid==='1'">
+                v-show="zbForm.bidInfoSection.isWinBid==='1'">
                 <el-date-picker
                   :disabled="zbType=='look'"
                   width="100%"
@@ -670,7 +670,7 @@
                 </el-date-picker>
               </el-form-item>
             </el-form>
-            <el-form v-if="zbForm.bidInfoSection.isWinBid==='1'">
+            <el-form v-show="zbForm.bidInfoSection.isWinBid==='1'">
               <p ><span >文件公示: </span>
                 <!-- <el-upload
                   v-show="zbType=='add'"
@@ -959,6 +959,27 @@ export default {
       }
       this.$forceUpdate();
     },
+    // 中标状态改变
+    changeWinBd(val) {
+      this.zbForm.bidInfoSection.isOutBidOrg='1' 
+      console.info(val)
+      console.info(this.zbForm.bidInfoSection)
+      if (val == '1') {
+        this.zbForm.bidInfoSection.isOutBidOrg = ''
+        this.zbForm.bidInfoSection.notBidReason = ''
+        this.zbForm.bidInfoSection.outBidOrg = []
+        this.zbForm.bidInfoSection.outOrgBidMoney = ''
+      } else if (val == '4') {
+        this.zbForm.bidInfoSection.constructionUnitName = ''
+        this.zbForm.bidInfoSection.inBidOrgName = ''
+        this.zbForm.bidInfoSection.bidNoticeWebsite = ''
+        this.zbForm.bidInfoSection.winBidPrice = ''
+        this.zbForm.bidInfoSection.bidTime = ''
+        this.zbForm.bidInfo_03.forEach ((element, index)=>{
+          this.handleRemove(element,index)
+        })
+      }
+    },
     //获取项目地点的值
       getPositionTreeFind(data) {
         this.treeStatasFind = false;
@@ -1209,7 +1230,7 @@ export default {
     },
     // 保存
     saveInfo(formName) {
-      if (this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '') {
+      if (this.zbForm.bidInfoSection.isWinBid == 1(this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '')) {
         this.$message({
           showClose: true,
           message: '请填写必填项！',
