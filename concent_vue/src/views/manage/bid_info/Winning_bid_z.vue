@@ -464,6 +464,7 @@
                           :header-cell-style="{'text-align': 'center','background-color': 'whitesmoke',}"
                           style="width: 100%;">
                   <el-table-column
+                    :height="30"
                     type="index"
                     header-align="center"
                     align="center"
@@ -471,7 +472,7 @@
                     label="序号">
                   </el-table-column>
                   <el-table-column
-
+                    :height="30"
                     prop="orgName"
                     show-overflow-tooltip
                     label="其他投标单位(系统内)">
@@ -1382,6 +1383,9 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.el-table__row td {
+  padding: 9px 0px !important;
+}
 .queryForm .el-input-group {
   margin-top: 5px;
   width: 230px;
