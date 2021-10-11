@@ -5638,6 +5638,7 @@
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
+        this.detailFormBefore.commonFilesList=fileList1.concat(fileList2);
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
        console.log(this.detailform)
       });
