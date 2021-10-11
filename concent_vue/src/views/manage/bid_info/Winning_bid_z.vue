@@ -1230,7 +1230,7 @@ export default {
     },
     // 保存
     saveInfo(formName) {
-      if (this.zbForm.bidInfoSection.isWinBid == 1(this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '')) {
+      if (this.zbForm.bidInfoSection.isWinBid == '1'&&(this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '')) {
         this.$message({
           showClose: true,
           message: '请填写必填项！',
