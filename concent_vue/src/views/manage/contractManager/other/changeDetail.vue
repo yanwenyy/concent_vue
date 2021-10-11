@@ -640,12 +640,12 @@
                     :resizable="false"
                     label="项目地点"
                     align="center"
-                    prop="inforName"
+                    prop="path"
                   >
-                    <template slot-scope="scope">
-                      <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                      <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                    </template>
+                    <!--<template slot-scope="scope">-->
+                      <!--<i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>-->
+                      <!--&lt;!&ndash;<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>&ndash;&gt;-->
+                    <!--</template>-->
                   </el-table-column>
 
                   <el-table-column
@@ -2047,6 +2047,27 @@
                       placeholder="请输入"
 
                       v-model="detailform.contractInfo.bidNoticeWebsite"
+                    />
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
+                    class="neirong"
+                    label="变更原因:"
+                    style="width: 33%"
+                    prop="contractInfo.changeReason"
+                    :rules="{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'blur',
+                      }"
+                  >
+                    <el-input
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      v-model="detailform.contractInfo.changeReason"
                     />
                   </el-form-item>
                 </div>
@@ -3626,6 +3647,7 @@
         }
       }
       return {
+        yqList:[],
         Authorization:sessionStorage.getItem("token"),
         changeRecordUuid:"",
         constructionOrgList: [],

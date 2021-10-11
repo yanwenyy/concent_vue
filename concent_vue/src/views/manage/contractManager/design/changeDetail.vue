@@ -763,6 +763,13 @@
                       class="neirong"
                       label="变更原因:"
                       style="width: 33%"
+                      prop="contractInfo.changeReason"
+                      :rules="{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'blur',
+                      }"
+                    >
                     >
                       <el-input
                         type="textarea"

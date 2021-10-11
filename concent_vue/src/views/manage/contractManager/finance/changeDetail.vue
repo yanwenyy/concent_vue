@@ -586,12 +586,12 @@
                       :resizable="false"
                       label="项目地点"
                       align="center"
-                      prop="inforName"
+                      prop="path"
                     >
-                      <template slot-scope="scope">
-                        <i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>
-                        <!--<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>-->
-                      </template>
+                      <!--<template slot-scope="scope">-->
+                        <!--<i class="el-icon-circle-plus"  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'" @click="selectPosition(),positionIndex=scope.$index"></i><span>{{scope.row.path}}</span>-->
+                        <!--&lt;!&ndash;<el-button v-show="p.actpoint != 'look'" @click="selectPosition(),positionIndex=scope.$index">选择</el-button>&ndash;&gt;-->
+                      <!--</template>-->
                     </el-table-column>
 
                     <el-table-column
@@ -2052,6 +2052,27 @@
                       placeholder="请输入"
 
                       v-model="detailform.contractInfo.bidNoticeWebsite"
+                    />
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
+                    class="neirong"
+                    label="变更原因:"
+                    style="width: 33%"
+                    prop="contractInfo.changeReason"
+                    :rules="{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'blur',
+                      }"
+                  >
+                    <el-input
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+                      :disabled="p.actpoint === 'look'||p.actpoint=='task'"
+                      v-model="detailform.contractInfo.changeReason"
                     />
                   </el-form-item>
                 </div>
@@ -4651,14 +4672,22 @@
         } else if (_data.fullDetailName.indexOf("境外") != -1) {
           country = '02';
         }
+        var ifRepeat=false;
         this.detailform.topInfoSiteList.forEach((item, index) => {
-          if (index == this.positionIndex) {
-          // item.detailName = _data.detailName;
-          item.country = country;
-          item.ffid = _data.fullDetailCode;
-          item.path = _data.fullDetailName;
-        }
-      });
+          if(item.ffid!=_data.fullDetailCode&&!ifRepeat){
+            if (index == this.positionIndex) {
+              // item.detailName = _data.detailName;
+              item.country = country;
+              item.ffid = _data.fullDetailCode;
+              item.path = _data.fullDetailName;
+              item.placeId=_data.id;
+              this.checkTopInfoSiteList();
+            }
+          }else{
+            this.$message.error("项目地点不能重复");
+            ifRepeat=true;
+          }
+        });
         this.key = this.key + 1;
       },
       //选择项目地点
