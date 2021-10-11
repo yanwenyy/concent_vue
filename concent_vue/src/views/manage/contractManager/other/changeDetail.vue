@@ -4883,7 +4883,7 @@
       saveInfo(formName,type) {
         this.detailform.srcId=this.id;
         this.detailform.changeRecordUuid = this.changeRecordUuid;
-        this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2)
+        this.detailform.commonFilesList=this.detailform.commonFilesList1.concat(this.detailform.commonFilesList2);
         var url='';
         if(type=='save'){
           url=`/api/contract/contract/ContractInfo/detail/${this.p.actpoint === "add"?'saveChangeRecord':'updateChangeRecord'}`;
@@ -5076,6 +5076,7 @@
         for(var i in this.detailform){
           this.detailFormBefore[i]=JSON.parse(JSON.stringify(this.detailform[i]));
         }
+        this.detailFormBefore.commonFilesList=fileList1.concat(fileList2);
         this.detailform.contractInfo.changeOurAmount = this.detailform.contractInfo.ourAmount;
        console.log(this.detailform)
       });
