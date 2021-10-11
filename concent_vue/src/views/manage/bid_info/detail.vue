@@ -1898,7 +1898,7 @@ export default {
                   type: "success",
                 });
                 if (type=='save') {
-                  this.detailform.bidInfo.uuid = res.data.data.bidInfo.uuid;
+                  this.detailform.bidInfo = res.data.data.bidInfo;
                 } else {
                   this.$router.back()
                 }
