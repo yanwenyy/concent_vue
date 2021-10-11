@@ -1745,7 +1745,8 @@ export default {
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,
               bidInfoSectionList: datas.bidInfoSectionList,
               topInforBO: this.nullToStr(datas.topInforBO),
-              bidInfo_02:datas.bidInfo_02||[],
+              // 获取投标的附件
+              bidInfo_02:[...datas.bidInfo_01,...datas.bidInfo_02]||[],
             }
             this.ifYq();
             //内部联合体回显
