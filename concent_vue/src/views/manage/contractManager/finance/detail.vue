@@ -2558,7 +2558,8 @@ export default {
             constructionNatureId:'',  // 单位性质
             belongEnterPrises:"",   // 所属央企
             belongEnterPrisesId:"",   // 所属央企
-            isBelongEnterPrises:false, // 是否央企
+            isBelongEnterPrises:false, // 是否央企,
+            sortNo:1
           }
         ],
         contractInfoHouseSalesList:[],
@@ -2577,7 +2578,9 @@ export default {
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: '1'}],
+          isMain: '1',
+          sortNo:1,
+        }],
       },
       emergingMarketTwo:[],
       yesOrNo:[
@@ -2677,7 +2680,8 @@ export default {
         constructionNature:'',  // 单位性质
         constructionNatureId:'',  // 单位性质
         belongEnterPrises:"" ,  // 所属央企
-        belongEnterPrisesId:""   // 所属央企
+        belongEnterPrisesId:"",   // 所属央企
+        sortNo:this.detailform.constructionOrgList.length+1,
       }
       this.detailform.constructionOrgList.push(v);
     },
@@ -2874,7 +2878,8 @@ export default {
           ffid: '',
           path: '',
           contractAmount: '',
-          isMain: ''
+          isMain: '',
+          sortNo:this.detailform.topInfoSiteList.length+1,
         }
         this.detailform.topInfoSiteList.push(v);
       } else {

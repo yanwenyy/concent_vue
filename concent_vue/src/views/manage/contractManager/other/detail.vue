@@ -2535,6 +2535,7 @@
               belongEnterPrises:"",   // 所属央企
               belongEnterPrisesId:"",   // 所属央企
               isBelongEnterPrises:false, // 是否央企
+              sortNo:1
             }
           ],
           topInfoSiteList:[{
@@ -2543,7 +2544,8 @@
             path: '',
             contractAmount: '',
             isMain: '1',
-            placeId:''
+            placeId:'',
+            sortNo:1
           }],
           zplx:[],//装配类型
           jzlx:[],//建筑类型
@@ -2638,20 +2640,21 @@
     constructionDel(index,item,list,type) {
       list.splice(index, 1);
     },
-    // 建设单位新增
-    constructioAdd() {
-      var v = {};
-      v = {
-        isClientele: "0",  // 是否客户
-        constructionOrgId:'',  // 建设单位
-        constructionOrgName:'',
-        constructionNature:'',  // 单位性质
-        constructionNatureId:'',  // 单位性质
-        belongEnterPrises:"" ,  // 所属央企
-        belongEnterPrisesId:""   // 所属央企
-      }
-      this.detailform.constructionOrgList.push(v);
-    },
+      // 建设单位新增
+      constructioAdd() {
+        var v = {};
+        v = {
+          isClientele: "0",  // 是否客户
+          constructionOrgId:'',  // 建设单位
+          constructionOrgName:'',
+          constructionNature:'',  // 单位性质
+          constructionNatureId:'',  // 单位性质
+          belongEnterPrises:"" ,  // 所属央企
+          belongEnterPrisesId:"" ,  // 所属央企
+          sortNo:this.detailform.constructionOrgList.length+1,
+        }
+        this.detailform.constructionOrgList.push(v);
+      },
       // 附件下载
       attachmentDownload(file){
         this.$handleDownload(file)
@@ -3022,7 +3025,8 @@
             ffid: '',
             path: '',
             contractAmount: '',
-            isMain: ''
+            isMain: '',
+            sortNo:this.detailform.topInfoSiteList.length+1,
           }
           this.detailform.topInfoSiteList.push(v);
         } else {

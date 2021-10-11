@@ -2311,7 +2311,8 @@ export default {
           path: '',
           contractAmount: '',
           isMain: '1',
-          placeId:''
+          placeId:'',
+          sortNo:1
         }],
         commonFilesList1: [],
         commonFilesList2: [],
@@ -2540,7 +2541,8 @@ export default {
           path: '',
           contractAmount: '',
           isMain: '',
-          placeId:''
+          placeId:'',
+          sortNo:this.detailform.topInfoSiteList.length+1,
         }
         this.detailform.topInfoSiteList.push(v);
       } else {

@@ -4679,7 +4679,8 @@
             ffid: '',
             path: '',
             contractAmount: '',
-            isMain: ''
+            isMain: '',
+            sortNo:this.detailform.topInfoSiteList.length+1,
           }
           this.detailform.topInfoSiteList.push(v);
         } else {
