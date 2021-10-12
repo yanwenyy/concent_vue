@@ -1939,7 +1939,7 @@
               </el-table-column>
               <el-table-column
                 :resizable="false"
-              v-if="detailform.bidInfo.bidFlowStatus === '3'"
+                v-if="detailform.bidInfo.bidFlowStatus === 'pass'"
                 label="开标金额"
                 prop="bidInfoSection.openBidAmount"
                 show-overflow-tooltip
@@ -2553,14 +2553,14 @@ export default {
         return false
       }
       this.$nextTick(() => {
-        this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index);
+        this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index,this.detailform.bidInfo.bidFlowStatus);
       })
     },
     //查看标段弹框
     lookBd(row){
        this.BDCSVisible = true;
       this.$nextTick(() => {
-        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,'look',row);
+        this.$refs.infoBD.init(this.detailform.topInforBO.topInfoSectionList,this.detailform.bidInfo.isBidRates,'look',row,'',this.detailform.bidInfo.bidFlowStatus);
       })
     },
     //获取新增的标段

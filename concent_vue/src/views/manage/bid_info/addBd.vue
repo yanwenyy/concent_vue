@@ -421,7 +421,7 @@
             align="center"
             label="开标价"
             width="475"
-            v-if="ifkb=='kbxq'||type == 'look'"
+            v-if="ifkb=='kbxq'||ifkb == 'pass'"
             >
              <template slot-scope="scope">
                 <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
@@ -528,7 +528,7 @@
             align="center"
             label="开标价"
             width="475"
-            v-if="ifkb=='kbxq'||type == 'look'"
+            v-if="ifkb=='kbxq'||ifkb == 'pass'"
           >
             <template slot-scope="scope">
               <el-form-item class="tabelForm bd-table-item not-error" :prop="'dataList.' + scope.$index + '.bidAmount'" :rules='rules.contractAmount'>
@@ -822,6 +822,7 @@ import { isMoney } from '@/utils/validate'
         this.bdName=list||[];
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
+        console.info(ifkb)
         if(type=='edit'||type=='look'||type=="eidtnew"){
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {
