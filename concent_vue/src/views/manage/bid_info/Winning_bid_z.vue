@@ -958,19 +958,17 @@ export default {
     // 中标状态改变
     changeWinBd(val) {
       this.zbForm.bidInfoSection.isOutBidOrg='1'
-      console.info(val)
-      console.info(this.zbForm.bidInfoSection)
       if (val == '1') {
-        this.zbForm.bidInfoSection.isOutBidOrg = ''
-        this.zbForm.bidInfoSection.notBidReason = ''
-        this.zbForm.bidInfoSection.outBidOrg = []
-        this.zbForm.bidInfoSection.outOrgBidMoney = ''
+        this.zbForm.bidInfoSection.isOutBidOrg = null
+        this.zbForm.bidInfoSection.notBidReason = null
+        this.zbForm.bidInfoSection.outBidOrg = null
+        this.zbForm.bidInfoSection.outOrgBidMoney = null
       } else if (val == '4') {
-        this.zbForm.bidInfoSection.constructionUnitName = ''
-        this.zbForm.bidInfoSection.inBidOrgName = ''
-        this.zbForm.bidInfoSection.bidNoticeWebsite = ''
-        this.zbForm.bidInfoSection.winBidPrice = ''
-        this.zbForm.bidInfoSection.bidTime = ''
+        this.zbForm.bidInfoSection.constructionUnitName = null
+        this.zbForm.bidInfoSection.inBidOrgName = null
+        this.zbForm.bidInfoSection.bidNoticeWebsite = null
+        this.zbForm.bidInfoSection.winBidPrice = null
+        this.zbForm.bidInfoSection.bidTime = null
         this.zbForm.bidInfo_03.forEach ((element, index)=>{
           this.handleRemove(element,index)
         })
