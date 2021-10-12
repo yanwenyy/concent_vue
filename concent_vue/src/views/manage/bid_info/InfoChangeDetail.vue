@@ -2663,7 +2663,7 @@ export default {
       this.detailform.srcId = this.id;
       var url='';
         if(type=='save'){
-          url=`/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"? "saveChangeRecord": "updateChangeRecord"}`
+          url=`/api/contract/topInfo/BidInfo/detail/${this.p.actpoint === "add"&&!this.detailform.changeRecordUuid? "saveChangeRecord": "updateChangeRecord"}`
         }else{
           url="/api/contract/topInfo/BidInfo/changeProcess/start"
         }
@@ -2687,7 +2687,18 @@ export default {
                   type: "success",
                 });
                 // this.$refs[formName].resetFields();
-                this.$router.back();
+                if (type=='save') {
+                  this.afterId = res.data.data.afterBidInfoBO.bidInfo.uuid
+                  if (this.p.task) {
+                    this.p.instid = res.data.data.afterBidInfoBO.changeRecordUuid
+                  } else {
+                    this.p.uuid = res.data.data.afterBidInfoBO.changeRecordUuid
+                  }
+                  this.id = res.data.data.beforeBidInfoBO.bidInfo.uuid 
+                  this.getDetail()
+                }else {
+                  this.$router.back();
+                }
               }
             });
         } else {
