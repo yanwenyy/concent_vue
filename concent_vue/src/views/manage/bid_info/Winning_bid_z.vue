@@ -1385,7 +1385,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.el-table__row td {
+.detailTable td {
   padding: 9px 0px !important;
 }
 .queryForm .el-input-group {
