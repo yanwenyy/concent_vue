@@ -441,7 +441,7 @@
             align="center"
             width="100"
             :disabled="type === 'look'||type=='eidtnew'"
-            v-if="!(type === 'look'||type=='eidtnew')"
+            v-if="!(type === 'look')"
           >
             <template slot-scope="scope" >
               <el-link :underline="false" @click="del(scope.$index,'inside')" type="warning" :disabled="type === 'look'">删除</el-link>
@@ -547,7 +547,7 @@
             align="center"
             width="100"
             :disabled="type === 'look'||type=='eidtnew'"
-            v-if="!(type === 'look'||type=='eidtnew')"
+            v-if="!(type === 'look')"
           >
             <template slot-scope="scope">
               <el-link :underline="false" @click="del(scope.$index,'outside')" type="warning" :disabled="type === 'look'">删除</el-link>
@@ -822,7 +822,7 @@ import { isMoney } from '@/utils/validate'
         this.bdName=list||[];
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
-        console.info(ifkb)
+        console.info(type)
         if(type=='edit'||type=='look'||type=="eidtnew"){
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {
