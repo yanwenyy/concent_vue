@@ -367,8 +367,8 @@ export default {
       this.getTableData(data);
       //this.getData(node,this.resolve)
     },
-    loadNode(node, resolve) {
-      this.getData(node, resolve);
+    loadNode(node, resolve,ifRefresh) {
+      this.getData(node, resolve,ifRefresh);
     },
     verifyResultEdit() {
       if (this.multipleSelection.length > 0) {
@@ -402,7 +402,7 @@ export default {
             ) {
               this.$refs.tree.store._getAllNodes()[i].expanded = false;
             }
-            this.loadNode(this.node, this.resolve);
+            this.loadNode(this.node, this.resolve,true);
             this.key = Symbol(new Date().toString());
           }
           //this.getData();
@@ -590,25 +590,27 @@ export default {
     },
     searchformReset() {
       // this.$refs['searchform'].resetFields()
-      for (let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++) {
-        this.$refs.tree.store._getAllNodes()[i].expanded = false;
-      }
-      this.getData(this.node, this.resolve);
+      // for (let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++) {
+      //   this.$refs.tree.store._getAllNodes()[i].expanded = false;
+      // }
+      this.loadNode(this.node, this.resolve,true);
+      this.key = Symbol(new Date().toString());
     },
     // 列表选项数据
     handleSelectionChange(val) {
       //alert(JSON.stringify(val))
       this.multipleSelection = val;
     },
-    getTableData(val) {
+    getTableData(val,ifRefresh) {
       this.$http
         .post("/api/contract/ContractInfoQuantityMachine/wood/loadPageData",
-          {pId:val.uuid})
+          {pId:ifRefresh?"0":val.uuid})
         .then((res) => {
           this.page = res.data.data;
         });
     },
-    getData(node, resolve) {
+    getData(node, resolve,ifRefresh) {
+      // console.log(ifRefresh)
       this.node = node;
       this.resolve = resolve;
       if (node.level === 0) {
@@ -617,15 +619,15 @@ export default {
         ]);
       }
       setTimeout(() => {
-        console.log(node);
+        // console.log(node);
         this.$http
           .post("/api/contract/ContractInfoQuantityMachine/wood/loadTreeData", {
-            pid: node.data.uuid,
+            pid: ifRefresh?"0":node.data.uuid,
           })
           .then((res) => {
             node.data.current=this.searchform.current;
             node.data.size=this.searchform.size;
-            this.getTableData(node.data);
+            this.getTableData(node.data,ifRefresh);
             //this.page = res.data.data
             this.parentid = node.data.uuid;
             this.vcode=node.data.vcode;

@@ -18,7 +18,7 @@
             prop="orgName"
           >
             <el-input clearable disabled placeholder="请输入内容" v-model="detailform.orgName" class="input-with-select">
-              <!--<el-button v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addZhb" ></el-button>-->
+              <el-button v-if="p.actpoint =='add'" slot="append" icon="el-icon-circle-plus-outline" @click="addZhb" ></el-button>
             </el-input>
             <!--<el-select-->
               <!--:disabled="p.actpoint === 'look'||p.actpoint=='task'"-->
@@ -39,11 +39,21 @@
           <el-form-item
             label="管辖省市:"
           >
-            <el-input
-              disabled
+            <el-select
+              :disabled="p.actpoint === 'look'||p.actpoint=='task'"
               clearable
+              filterable
+              placeholder="请选择"
 
-              v-model="detailform.governingProvinceName"/>
+              v-model="detailform.governingProvinceName"
+            >
+              <el-option :key="index" :label="item.NAME" :value="item.NAME" v-for="(item,index) in ssList"></el-option>
+            </el-select>
+            <!--<el-input-->
+              <!--disabled-->
+              <!--clearable-->
+
+              <!--v-model="detailform.governingProvinceName"/>-->
           </el-form-item>
           <el-form-item
             label="指挥长姓名:"
@@ -102,11 +112,12 @@
         </el-form>
       </div>
     </el-card>
+    <list-search v-if="infoCSVisible" ref="infoCS" @refreshDataList="goAddDetail"></list-search>
   </div>
 </template>
 
 <script>
-
+  import ListSearch from './listSearch'
   export default {
     // name: "详情",
     data() {
@@ -131,11 +142,13 @@
         }
       }
       return {
+        infoCSVisible:false,
         searchform: {
           current: 1,
           size: 20,
           orgCode:''
         },
+        ssList:[],
         zhbList:[],
         detailform: {
           orgName:'',
@@ -162,12 +175,16 @@
       };
     },
     components: {
-
+      ListSearch
     },
     computed: {
 
     },
     mounted() {
+      //所属省市
+      this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion").then((res) => {
+        this.ssList = res.data.data
+      });
       // this.getDetail();
       if(this.p.actpoint=='addZhb'||this.p.actpoint=='eidt'||this.p.actpoint=='look'){
         var msg=this.p.msg;
@@ -186,15 +203,29 @@
         this.$forceUpdate();
         // console.log(this.detailform)
       }
+
     },
     methods: {
+      //获取指挥部信息
+      goAddDetail(data){
+        this.detailform.orgName=data.orgName;
+        this.detailform.principalName=data.principalName;
+        this.detailform.principalContactNumber=data.principalContactNumber;
+        this.detailform.principalGrade=data.principalGrade;
+      },
       //选择指挥部
-      addZhb(){
-        let p = {actpoint: "add"};
-        this.$router.push({
-          path: "../listOld/",
-          query: {p: this.$utils.encrypt(JSON.stringify(p))},
-        });
+      addZhb() {
+        // let p = {actpoint: "add"};
+        // this.$router.push({
+        //   path: "../listOld/",
+        //   query: {p: this.$utils.encrypt(JSON.stringify(p))},
+        // });
+
+
+        this.infoCSVisible = true;
+        this.$nextTick(() => {
+          this.$refs.infoCS.init();
+        })
       },
       //获取指挥部信息
       getMsg(id){

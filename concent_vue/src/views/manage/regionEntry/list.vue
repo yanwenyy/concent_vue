@@ -48,14 +48,6 @@
           prop="orgName"
         >
         </el-table-column>
-
-        <el-table-column
-          :resizable="false"
-          label="管辖省市"
-          prop="governingProvinceName"
-          align="center"
-        >
-        </el-table-column>
         <el-table-column
           label="指挥长"
         >
@@ -83,6 +75,13 @@
             show-overflow-tooltip
           >
           </el-table-column>
+        </el-table-column>
+        <el-table-column
+          :resizable="false"
+          label="管辖省市"
+          prop="governingProvinceName"
+          align="center"
+        >
         </el-table-column>
         <el-table-column
           label="省市负责人"
@@ -216,7 +215,8 @@
       add(){
         let p = {actpoint: "add"};
         this.$router.push({
-          path: "./listOld/",
+          // path: "./listOld/",
+          path: "./detail/",
           query: {p: this.$utils.encrypt(JSON.stringify(p))},
         });
       },
