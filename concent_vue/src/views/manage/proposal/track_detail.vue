@@ -1656,6 +1656,7 @@
                   if (type=='save') {
                     // this.detailform.topInfor.uuid = res.data.data.topInfor.uuid;
                     // this.id= res.data.data.topInfor.uuid;
+                    this.p.actpoint = 'edit'
                     this.getDetail();
                   } else {
                     this.back();

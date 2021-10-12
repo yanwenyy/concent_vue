@@ -118,11 +118,14 @@
           show-overflow-tooltip>
         </el-table-column>
         <el-table-column
-          prop="emissionStand"
+          prop="planBidTime"
           header-align="center"
           align="center"
           label="截止日期"
           show-overflow-tooltip>
+          <template slot-scope="scope">{{
+            scope.row.planBidTime | dateformat
+            }}</template>
         </el-table-column>
         <!--<el-table-column-->
         <!--fixed="right"-->
