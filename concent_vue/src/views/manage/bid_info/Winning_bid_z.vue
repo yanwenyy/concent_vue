@@ -939,18 +939,13 @@ export default {
         });
       }
       if (file.response && file.response.code === 200) {
-        this.$message({
-          message: '上传成功',
-          type: 'success',
-          duration: 1000,
-          onClose: () => {
-            file.response.data.progressFlag='stop';
-            tableList.forEach((item,index)=>{
-              if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
-                tableList[index]=file.response.data;
-                this.$set(tableList,index,tableList[index])
-              }
-            })
+        file.response.data.progressFlag='stop';
+        tableList.forEach((item,index)=>{
+          if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+            tableList[index]=file.response.data;
+            // console.log(index,'==>',tableList[index])
+            this.$set(tableList,index,tableList[index])
+            // console.log(tableList[index])
           }
         })
       }else if(file.response && file.response.code !== 200){
@@ -962,7 +957,7 @@ export default {
     },
     // 中标状态改变
     changeWinBd(val) {
-      this.zbForm.bidInfoSection.isOutBidOrg='1' 
+      this.zbForm.bidInfoSection.isOutBidOrg='1'
       console.info(val)
       console.info(this.zbForm.bidInfoSection)
       if (val == '1') {
