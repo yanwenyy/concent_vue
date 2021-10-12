@@ -2,7 +2,7 @@
   <div>
     <div style="width: 100%;overflow: hidden;">
       <el-button-group style="float: left">
-        <el-button type="primary" @click="addk" plain :disabled="bidFlowStatus=='check'||bidFlowStatus=='pass'||bidFlowStatus=='edit' "><i class="el-icon-document-checked"></i>开标登记</el-button>
+        <el-button type="primary" @click="addk" plain :disabled="bidFlowStatus=='check'||bidFlowStatus=='pass'||bidFlowStatus=='edit'||bidFlowStatus=='reject'"><i class="el-icon-document-checked"></i>开标登记</el-button>
         <!--<el-button @click="add" :disabled="flowStatus!=null"  plain type="primary"><i class="el-icon-plus"></i>登记</el-button>-->
         <el-button @click="totop" :disabled="bidFlowStatus=='check'||bidFlowStatus=='pass'" plain type="primary"><i class="el-icon-edit"></i>修改</el-button>
 
