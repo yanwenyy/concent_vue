@@ -1600,7 +1600,7 @@
               :class="detailform.bidInfo.innerOrgName!=detailFormBefore.bidInfo.innerOrgName?'changeRed':''"
               :disabled="p.actpoint === 'look'|| detailform.bidInfo.isCoalitionBid === '1' ||detailform.bidInfo.isCoalitionBid ==''||p.actpoint=='task'">
                 <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('内部联合体单位',detailform.bidInfo.innerOrgId)"
-                 v-if="p.actpoint != 'look'&& detailform.bidInfo.isCoalitionBid != '1' && detailform.bidInfo.isCoalitionBid != ''"
+                 v-if="p.actpoint!='task'&&p.actpoint != 'look'&& detailform.bidInfo.isCoalitionBid != '1' && detailform.bidInfo.isCoalitionBid != ''"
                 ></el-button>
               </el-input>
             </el-form-item>
