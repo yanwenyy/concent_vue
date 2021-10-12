@@ -478,7 +478,7 @@ export default {
     attachmentDownload(file){
       this.$handleDownload(file)
     },
-      
+
     //判断附件大小
     beforeAvatarUpload(file) {
       var fileLimit=Number(this.fileLimit);
@@ -534,21 +534,30 @@ export default {
 
       }
       if (file.response && file.response.code === 200) {
-        this.$message({
-          message: '上传成功',
-          type: 'success',
-          duration: 1000,
-          onClose: () => {
-            file.response.data.progressFlag='stop';
-            tableList.forEach((item,index)=>{
-              if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
-                tableList[index]=file.response.data;
-                this.$set(tableList,index,tableList[index])
-              }
-            })
-
+        file.response.data.progressFlag='stop';
+        tableList.forEach((item,index)=>{
+          if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+            tableList[index]=file.response.data;
+            // console.log(index,'==>',tableList[index])
+            this.$set(tableList,index,tableList[index])
+            // console.log(tableList[index])
           }
         })
+        // this.$message({
+        //   message: '上传成功',
+        //   type: 'success',
+        //   duration: 1000,
+        //   onClose: () => {
+        //     file.response.data.progressFlag='stop';
+        //     tableList.forEach((item,index)=>{
+        //       if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+        //         tableList[index]=file.response.data;
+        //         this.$set(tableList,index,tableList[index])
+        //       }
+        //     })
+        //
+        //   }
+        // })
       }else if(file.response && file.response.code !== 200){
         // tableList[len-1].progressFlag = 'fail';
         file.response.data.progressFlag='fail';

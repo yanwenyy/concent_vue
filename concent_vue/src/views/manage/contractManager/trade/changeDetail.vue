@@ -4766,24 +4766,13 @@
         }
         if (file.response && file.response.code === 200) {
           // console.log(tableList.length)
-          this.$message({
-            message: '上传成功',
-            type: 'success',
-            duration: 1000,
-            onClose: () => {
-              // const len=tableList.length;
-
-              file.response.data.progressFlag='stop';
-              tableList.forEach((item,index)=>{
-                if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
-                  tableList[index]=file.response.data;
-                  // console.log(index,'==>',tableList[index])
-                  this.$set(tableList,index,tableList[index])
-                  // console.log(tableList[index])
-                }
-              })
-              // tableList[len-1]=file.response.data;
-
+          file.response.data.progressFlag='stop';
+          tableList.forEach((item,index)=>{
+            if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+              tableList[index]=file.response.data;
+              // console.log(index,'==>',tableList[index])
+              this.$set(tableList,index,tableList[index])
+              // console.log(tableList[index])
             }
           })
         }else if(file.response && file.response.code !== 200){
