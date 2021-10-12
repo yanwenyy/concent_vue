@@ -362,8 +362,8 @@
       goAddDetail(data){
         // console.log(data);
         let p = {from:'', actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
-        if (data.flowStatus === "3") {
-          if (data.bidFlowStatus === "3") {
+        if (data.flowStatus === "pass") {
+          if (data.bidFlowStatus === "pass") {
             p = {from:'kblist', actpoint: "add",instid:data.topInfoOrgId,uuid:data.uuid};
           }
         }
