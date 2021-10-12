@@ -535,18 +535,14 @@
                 <!-- </el-select> -->
 
               </el-form-item>
-              <el-form-item label="系统内施工单位:" class="list-item" v-show="zbForm.bidInfoSection.isWinBid=='1'"
+              <el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
                               prop="bidInfoSection.constructionUnitName"
-                              :rules="{
-                                required: true,
-                                message: '此项不能为空',
-                                trigger: 'change',
-                              }">
+                              :rules="rules.unitName">
                 <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbType=='look'">
                   <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.constructionUnitId)" ></el-button>
                 </el-input>
               </el-form-item>
-              <el-form-item label="中标单位:" class="list-item" v-show="zbForm.bidInfoSection.isWinBid=='1'"
+              <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
                             prop="bidInfoSection.inBidOrgName"
                             :rules="rules.bidName">
                 <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBidOrgName" class="input-with-select" :disabled="zbType=='look'">
@@ -619,19 +615,15 @@
                   <template slot="append">(万元)</template>
                 </el-input>
               </el-form-item>
-
+              
               <el-form-item
                 width="100%"
                 class="list-item_textarea"
-                v-show="zbForm.bidInfoSection.isWinBid=='4'"
+                v-if="zbForm.bidInfoSection.isWinBid=='4'"
                 label="未中标原因:"
                 prop="bidInfoSection.notBidReason"
-                :rules="{
-                  required: true,
-                  message: '此项不能为空',
-                  trigger: 'change',
-                }"
               >
+                <span style="color:#F56C6C;position: absolute;top: -33px;left: -9px;">*</span>
                 <el-input
                   type="textarea"
 
@@ -803,6 +795,13 @@ export default {
         callback()
       }
     }
+    var valiUnitName= (rule, value, callback) => {
+      if (this.zbForm.bidInfoSection.constructionUnitName == '') {
+        callback(new Error('不能为空'))
+      } else {
+        callback()
+      }
+    }
     return {
       xqprojectType:[],//工程二级列表
       companyMulStatus:false,//设计单位等多选列表状态
@@ -875,6 +874,9 @@ export default {
         ],
         bidName:[
           { required: true,validator: validateName, trigger: 'change' }
+        ],
+        unitName:[
+          { required: true,validator: valiUnitName, trigger: 'change' }
         ]
       }, //表单验证规则
     };
@@ -1225,6 +1227,13 @@ export default {
     // 保存
     saveInfo(formName) {
       if (this.zbForm.bidInfoSection.isWinBid == '1'&&(this.zbForm.bidInfoSection.inBidOrgName == ''|| this.zbForm.bidInfoSection.constructionUnitName == ''|| this.zbForm.bidInfoSection.bidNoticeWebsite == ''|| this.zbForm.bidInfoSection.winBidPrice == '')) {
+        this.$message({
+          showClose: true,
+          message: '请填写必填项！',
+          type: 'warning'
+        });
+        return false
+      } else if (this.zbForm.bidInfoSection.isWinBid == '4'&&this.zbForm.bidInfoSection.notBidReason == '') {
         this.$message({
           showClose: true,
           message: '请填写必填项！',
