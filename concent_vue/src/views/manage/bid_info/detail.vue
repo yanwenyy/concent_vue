@@ -1716,7 +1716,7 @@ export default {
       }
       // 去掉放弃跟踪的
       for(var i = 0 ;i<bdList.length;i++) {
-        if(bdList[i].istrack == "0" ) {
+        if(bdList[i].isTrack == "0" ) {
           bdList.splice(i,1);
           i= i-1;
         }
