@@ -1574,7 +1574,7 @@ export default {
                   });
                   this.$refs[formName].resetFields();
                   if (type=='save') {
-
+                    this.getDetail()
                   } else {
                     this.$router.back();
                   }
