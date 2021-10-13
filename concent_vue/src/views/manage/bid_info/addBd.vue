@@ -784,16 +784,20 @@ import { isMoney } from '@/utils/validate'
       sub() {
         var bidInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
         this.detailForm.bidInfoSectionOrgList=bidInfoSectionOrgList;
-
          this.detailForm.type=this.type;
-
-
         if(this.type=='edit'){
           this.detailForm.index=this.index;
-
+        }
+        if(this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null) {
+          this.$message({
+            showClose: true,
+            message: '请填写投标限价！',
+            type: 'error'
+          });
+          return false
         }
         this.$refs.detailForm.validate((valid) => {
-          console.log(this.detailForm)
+          // console.log(this.detailForm)
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
