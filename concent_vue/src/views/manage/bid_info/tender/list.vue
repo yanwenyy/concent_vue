@@ -162,8 +162,7 @@
           show-overflow-tooltip
         > 
           <template slot-scope="scope">
-            <span class="blue pointer" @click="rowshowBid(scope.row)" v-if="scope.row.isWinBid != '1'" >未中标</span>
-            <span class="blue pointer" @click="rowshowBid(scope.row)" v-if="scope.row.isWinBid == '1'" >中标</span>
+            <span class="blue pointer" @click="rowshowBid(scope.row)"> {{scope.row.isWinBid==1?'中标':scope.row.isWinBid==2?'废标':scope.row.isWinBid==3?'流标':scope.row.isWinBid==4?'未中标':'待操作'}}</span>
           </template>
         </el-table-column>
         <el-table-column
