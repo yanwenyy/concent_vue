@@ -1728,7 +1728,7 @@ export default {
           .then((res) => {
             var datas=res.data.data;
             datas.bidInfo=this.nullToStr(datas.bidInfo);
-            // cons ole.log(datas.bidInfo)
+            // console.log(datas.bidInfo)
             this.detailform={
               bidInfo:datas.bidInfo,
               bidInfoInnerOrgList: datas.bidInfoInnerOrgList,

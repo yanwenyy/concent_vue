@@ -1832,6 +1832,9 @@ export default {
       }
     },
     saveInfo(formName,type) {
+      // 逾期原因赋值给开标
+      this.detailform.kboverdueReaso =  this.detailform.overdueReason
+      
       if(this.detailform.bidInfo.innerOrgId == undefined){
         this.detailform.bidInfo.innerOrgId = ''
       }
