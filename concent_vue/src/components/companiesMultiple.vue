@@ -340,4 +340,7 @@
   .tags-div >>>.el-tag{
     margin: 0 5px 10px 0;
   }
+  >>>.el-table__header-wrapper  .el-checkbox{
+  display:none
+  }
 </style>
