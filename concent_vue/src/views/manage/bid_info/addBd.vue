@@ -141,7 +141,7 @@
           </template>
         </el-form-item>
         <el-form-item
-          v-if="ifkb=='kbxq'"
+          v-if="ifkb=='kbxq'||ifkb=='pass'"
           label="开标金额(万元):"
           class="list-item"
           prop="bidInfoSection.openBidAmount"
@@ -827,7 +827,8 @@ import { isMoney } from '@/utils/validate'
         this.bdName=list||[];
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
-        console.info(type)
+        console.info(type,'type')
+        console.info(ifkb,'ifkb')
         if(type=='edit'||type=='look'||type=="eidtnew"){
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {
