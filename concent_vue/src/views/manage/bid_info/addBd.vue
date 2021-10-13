@@ -17,7 +17,7 @@
                       :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: ['change','blur'],
+                trigger: ['blur'],
               }">
           <el-input v-show="type!='add'" v-model="detailForm.bidInfoSection.sectionName" disabled></el-input>
           <el-select
@@ -162,7 +162,7 @@
                       :rules="{
                 required: true,
                 message: '此项不能为空',
-                trigger: ['change','blur'],
+                trigger: ['blur'],
               }">
           <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
@@ -224,7 +224,8 @@
                 <template slot="append">(万元)</template>
               </el-input>
         </el-form-item>
-        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit"  :rules="rules.contractAmount">
+        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit">
+          <span style="color:#F56C6C;position: absolute;top: -31px;left: -9px;">*</span>
           <el-input
               v-model="detailForm.bidInfoSection.biddingPriceLimit"
               clearable
@@ -788,7 +789,7 @@ import { isMoney } from '@/utils/validate'
         if(this.type=='edit'){
           this.detailForm.index=this.index;
         }
-        if(this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null) {
+        if((this.type=='add'||this.type=='eidtnew')&&(this.isBidRates=='1'||this.isBidRates=='')&&(this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null)) {
           this.$message({
             showClose: true,
             message: '请填写投标限价！',
