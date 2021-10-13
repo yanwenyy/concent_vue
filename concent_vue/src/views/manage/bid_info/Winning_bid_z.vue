@@ -538,14 +538,14 @@
               <el-form-item label="系统内施工单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
                               prop="bidInfoSection.constructionUnitName"
                               :rules="rules.unitName">
-                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" :disabled="zbType=='look'">
+                <el-input placeholder="请输入内容" v-model="zbForm.bidInfoSection.constructionUnitName" class="input-with-select" disabled >
                   <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('系统内施工单位',zbForm.bidInfoSection.constructionUnitId)" ></el-button>
                 </el-input>
               </el-form-item>
               <el-form-item label="中标单位:" class="list-item" v-if="zbForm.bidInfoSection.isWinBid=='1'"
                             prop="bidInfoSection.inBidOrgName"
                             :rules="rules.bidName">
-                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBidOrgName" class="input-with-select" :disabled="zbType=='look'">
+                <el-input  placeholder="请输入内容" v-model="zbForm.bidInfoSection.inBidOrgName" class="input-with-select" disabled >
                   <el-button :disabled="zbType=='look'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('中标单位',zbForm.bidInfoSection.inBidOrgId)" ></el-button>
                 </el-input>
               </el-form-item>
