@@ -250,6 +250,7 @@
         width="30%"
        >
         <div>
+        <div style="position: absolute;z-index: 999;background-color: #fff;left: 44px;top: 52px;width: 90%;height: 43px;line-height: 43px;">统计项</div>
         <el-tree
             :key="tjxKey"
             :props="props"
@@ -412,10 +413,9 @@ export default {
       //设置统计项汇总指标
       setTjx(obj,node,data){
         this.itemform.sumTarget=obj.uuid;
-        this.itemform.sumTargetName=obj.vname;
+        this.itemform.sumTargetName=String(obj.vname);
        /* this.itemform.vparentid=obj.vparentid;*/
         this.tjx = false
-
       },
     //获取下拉框id和name的公共方法
     getName(id, list, name) {
@@ -533,6 +533,10 @@ export default {
         this.itemform.vjldw = ''
         this.itemform.vjldwName = ''
       }
+      if (this.itemform.sumTargetName == '统计项') {
+        delete this.itemform.sumTargetName;
+        delete this.itemform.sumTarget;
+      }
       this.$http
         .post(
           "/api/statistics/bp/BpTjx/detail/save",
@@ -546,16 +550,12 @@ export default {
               message: "保存成功",
               type: "success",
             });
-            for (
-              let i = 0;
-              i < this.$refs.tree.store._getAllNodes().length;
-              i++
-            ) {
+            for ( let i = 0; i < this.$refs.tree.store._getAllNodes().length; i++ ) {
               this.$refs.tree.store._getAllNodes()[i].expanded = false;
             }
             this.loadNode(this.node, this.resolve);
+            this.getData1(this.node, this.resolve)
           }
-          //this.getData();
         });
     },
     selectFile() {
@@ -747,7 +747,7 @@ export default {
       this.resolve = resolve;
       if (node.level === 0) {
         return resolve([
-          { vname: "统计项", uuid: "",},
+          { vname: "统计项", uuid: "",disabled :true},
         ]);
       }
       setTimeout(() => {
@@ -760,10 +760,8 @@ export default {
             node.data.current=this.searchform.current;
             node.data.size=this.searchform.size;
             this.getTableData(node.data);
-            //this.page = res.data.data
             this.parentid = node.data.uuid;
             const data = [];
-            //console.log(res.data.data);
             var itemDatas = res.data.data;
             itemDatas.forEach((item) => {
               if (item.vleaf == "1") {
@@ -774,20 +772,9 @@ export default {
               data.push(item);
             });
             this.itemList = data;
-            // this.itemList = res.data.data;
-            // this.itemList.forEach((item)=>{
-            //   console.log(item);
-            //   if(item.vleaf=="1")
-            //   {
-            //     item.icon='el-icon-document';
-            //   }else
-            //   {
-            //     item.icon='el-icon-folder';
-            //
-            //   }
-            //   data.push(item);
-            // });
             resolve(data);
+            // node.loaded = false;
+            // node.expand();
           });
       });
     },
