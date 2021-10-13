@@ -1779,20 +1779,30 @@
                 {useJson: true}
               )
               .then((res) => {
-              if (res.data.code === 200) {
-              this.$message({
-                message:  `${type=='save'?'保存':'提交'}成功`,
-                type: "success",
-              });
-              if(type!='save'){
-                this.$router.back();
-              }
-            }
-          });
+                if (res.data.code === 200) {
+                  this.$message({
+                    message:  `${type=='save'?'保存':'提交'}成功`,
+                    type: "success",
+                  });
+                  if(type=='save'){
+                    this.p.actpoint = 'edit'
+                    this.afterId = res.data.data.afterTopInforBO.topInfoOrg.uuid
+                    if (this.p.task) {
+                      this.p.instid = res.data.data.afterTopInforBO.changeRecordUuid
+                    } else {
+                      this.p.uuid = res.data.data.afterTopInforBO.changeRecordUuid
+                    }
+                    this.id = res.data.data.beforeTopInforBO.topInfoOrg.uuid 
+                    this.getDetail()
+                  }else{
+                    this.$router.back();
+                  }
+                }
+            });
           } else {
             this.$message.error("请添加必填项");
-        return false;
-      }
+            return false;
+          }
       });
       },
       pageGo() {
