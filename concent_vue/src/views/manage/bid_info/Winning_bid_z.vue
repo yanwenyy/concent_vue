@@ -1233,7 +1233,7 @@ export default {
           type: 'warning'
         });
         return false
-      } else if (this.zbForm.bidInfoSection.isWinBid == '4'&&this.zbForm.bidInfoSection.notBidReason == '') {
+      } else if (this.zbForm.bidInfoSection.isWinBid == '4'&&(this.zbForm.bidInfoSection.notBidReason == ''||this.zbForm.bidInfoSection.notBidReason == null)) {
         this.$message({
           showClose: true,
           message: '请填写必填项！',
