@@ -318,7 +318,7 @@ export default {
                   'name': '投标信息查询',
                   'path': '/manage/bid_info/tender/list',
                   'component': '/manage/bid_info/tender/list',
-                  'iconCls': 'el-icon-edit',
+                  'iconCls': 'el-icon-search',
                   'menushow': true,
                   'leaf': true,
                   'defaultpage': true
