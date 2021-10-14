@@ -3220,7 +3220,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -3306,7 +3306,7 @@
                     label="操作"
                     show-overflow-tooltip
                     v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -3391,7 +3391,7 @@
                     fixed="right"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
