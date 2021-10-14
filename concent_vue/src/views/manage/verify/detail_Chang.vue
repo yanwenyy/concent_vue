@@ -1567,40 +1567,31 @@
 
                 </el-table-column>
                 <el-table-column
-
                   :resizable="false"
                   label="参与投标单位"
                   align="center"
                   prop="verifySectionOrgNameType01"
                   show-overflow-tooltip
-                  v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
                   width="500">
-
-          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
-            :disabled="p.actpoint === 'look'||p.actpoint === 'task'">
-            <span  >
-              {{scope.row.verifySectionOrgNameType01}}
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column
-
-          :resizable="false"
-          label="编标拟配合单位"
-          align="center"
-          prop="verifySectionOrgNameType02"
-          show-overflow-tooltip
-          v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
-          width="500">
-
-          <template slot-scope="scope" v-show="p.actpoint != 'look'&&p.actpoint !== 'task'"
-            :disabled="p.actpoint === 'look'||p.actpoint === 'task'">
-
-            <span  >
-              {{scope.row.verifySectionOrgNameType02}}
-            </span>
-          </template>
-        </el-table-column>
+                  <template slot-scope="scope">
+                    <span>
+                      {{scope.row.verifySectionOrgNameType01}}
+                    </span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  :resizable="false"
+                  label="编标拟配合单位"
+                  align="center"
+                  prop="verifySectionOrgNameType02"
+                  show-overflow-tooltip
+                  width="500">
+                  <template slot-scope="scope" >
+                    <span  >
+                      {{scope.row.verifySectionOrgNameType02}}
+                    </span>
+                  </template>
+                </el-table-column>
         <el-table-column
 
           :resizable="false"
@@ -2118,7 +2109,7 @@ export default {
       // this.key = this.key + 1;
     },
     selectOrg1(row, column, cell, event){
-      if (this.p.actpoint === 'look') {
+      if (this.p.actpoint === 'look' || this.p.actpoint === 'task') {
         return false
       }
       if(column.label==="参与投标单位")
