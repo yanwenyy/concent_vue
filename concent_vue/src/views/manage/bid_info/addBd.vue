@@ -789,13 +789,24 @@ import { isMoney } from '@/utils/validate'
         if(this.type=='edit'){
           this.detailForm.index=this.index;
         }
-        if((this.type=='add'||this.type=='eidtnew')&&(this.isBidRates=='1'||this.isBidRates=='')&&(this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null)) {
-          this.$message({
-            showClose: true,
-            message: '请填写投标限价！',
-            type: 'error'
-          });
-          return false
+        if((this.type=='add'||this.type=='eidtnew')&&(this.isBidRates=='1'||this.isBidRates=='')) {
+          // detailForm.bidInfoSection.bidPrice
+          if (this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null) {
+            this.$message({
+              showClose: true,
+              message: '请填写投标限价！',
+              type: 'error'
+            });
+            return false            
+          } else if (this.detailForm.bidInfoSection.bidPrice == ''|| this.detailForm.bidInfoSection.bidPrice == null) {
+            this.$message({
+              showClose: true,
+              message: '请填写投标价！',
+              type: 'error'
+            });
+            return false   
+          }
+
         }
         this.$refs.detailForm.validate((valid) => {
           // console.log(this.detailForm)

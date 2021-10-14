@@ -603,7 +603,7 @@
 
               <el-form-item 
                 label="系统外中标金额"
-                v-show="zbForm.bidInfoSection.isOutBidOrg==='0'"
+                v-if="zbForm.bidInfoSection.isOutBidOrg==='0'"
                 class="list-item"
                 prop="bidInfoSection.outOrgBidMoney"
                 :rules="rules.contractAmount"
