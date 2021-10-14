@@ -803,6 +803,7 @@ export default {
       }
     }
     return {
+      changeWinBdVal:'',
       xqprojectType:[],//工程二级列表
       companyMulStatus:false,//设计单位等多选列表状态
       treeStatas:false,
@@ -966,11 +967,14 @@ export default {
         this.zbForm.bidInfoSection.outBidOrg = null
         this.zbForm.bidInfoSection.outOrgBidMoney = null
       } else if (val == '4') {
+        this.changeWinBdVal = '4'
         this.zbForm.bidInfoSection.constructionUnitName = null
         this.zbForm.bidInfoSection.inBidOrgName = null
         this.zbForm.bidInfoSection.bidNoticeWebsite = null
         this.zbForm.bidInfoSection.winBidPrice = null
         this.zbForm.bidInfoSection.bidTime = null
+        this.zbForm.bidInfoSection.participatingUnitsId = null
+        this.zbForm.bidInfoSection.orgId = null
         this.zbForm.bidInfo_03.forEach ((element, index)=>{
           this.handleRemove(element,index)
         })
@@ -1058,10 +1062,14 @@ export default {
 
       //打开单位弹框
       addDw(type,list){
-          this.DwVisible = true;
-          this.$nextTick(() => {
-              this.$refs.infoDw.init(type,list);
-          })
+        console.info(list)
+        if (this.changeWinBdVal == '4') {
+          list = null
+        }
+        this.DwVisible = true;
+        this.$nextTick(() => {
+            this.$refs.infoDw.init(type,list);
+        })
       },
       //获取单位的值
       getDwInfo(data){
@@ -1093,6 +1101,7 @@ export default {
       },
     //打开中标弹框
     setZB(isBidRates, list) {
+      this.changeWinBdVal = '1'
       if (
         this.multipleSelection.length !== 1 ||
         this.multipleSelection.length > 1
