@@ -45,7 +45,7 @@
           <el-form-item label="参与投标单位:" class="list-item"
            prop="bidInfoSection.participatingUnitsName"
           >
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" :disabled="type === 'look'">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.participatingUnitsName" class="input-with-select" disabled>
             <el-button slot="append" icon="el-icon-circle-plus-outline" @click="addDw('参与投标单位',detailForm.bidInfoSection.participatingUnitsId)" ></el-button>
           </el-input>
           <!-- <el-input
@@ -60,7 +60,7 @@
           </el-input> -->
         </el-form-item>
         <el-form-item label="编标拟配合单位:" class="list-item">
-          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" :disabled="type === 'look'||type=='eidtnew'">
+          <el-input  placeholder="请输入内容" v-model="detailForm.bidInfoSection.orgName" class="input-with-select" disabled>
             <el-button v-if="type != 'look'&&type != 'eidtnew'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('编标拟配合单位',detailForm.bidInfoSection.orgId)" ></el-button>
           </el-input>
           <!-- <el-input
