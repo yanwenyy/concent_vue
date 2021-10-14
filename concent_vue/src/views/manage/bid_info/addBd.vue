@@ -224,8 +224,8 @@
                 <template slot="append">(万元)</template>
               </el-input>
         </el-form-item>
-        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit">
-          <span style="color:#F56C6C;position: absolute;top: -31px;left: -9px;">*</span>
+        <el-form-item label="投标限价(万元):" class="list-item" v-if="isBidRates=='1'||isBidRates==''" :class="type!='eidtnew'?'not-error':''" prop="bidInfoSection.biddingPriceLimit" :rules="rules.contractAmount">
+          <span style="color:#F56C6C;position: absolute;top: -31px;left: 0px;">*</span>
           <el-input
               v-model="detailForm.bidInfoSection.biddingPriceLimit"
               clearable
