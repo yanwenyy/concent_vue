@@ -2797,7 +2797,7 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -2881,7 +2881,7 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -2904,6 +2904,7 @@
                     :data="detailform.contractInfoSubjectMatterList"
                     :header-cell-style="{'text-align' : 'center','background-color' : 'rgba(246,248,252,1)','color':'rgba(0,0,0,1)'}"
                     @selection-change="handleSelectionChange"
+                    :row-class-name="tableRowClassName"
                     align="center"
                     border
                     class="detailTable"

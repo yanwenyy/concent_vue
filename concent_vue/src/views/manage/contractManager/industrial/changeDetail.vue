@@ -2606,7 +2606,7 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                     <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -2690,7 +2690,7 @@
                     :resizable="false"
                     label="操作"
                     show-overflow-tooltip
-                    width="80"
+                    width="100"
                   >
                     <template slot-scope="scope">
                       <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
@@ -2722,12 +2722,12 @@
 
 
 
-                  <el-table-column
-                    :width="55"
-                    align="center"
-                    label="序号"
-                    show-overflow-tooltip
-                    type="index"></el-table-column>
+                  <!--<el-table-column-->
+                    <!--:width="55"-->
+                    <!--align="center"-->
+                    <!--label="序号"-->
+                    <!--show-overflow-tooltip-->
+                    <!--type="index"></el-table-column>-->
                   <el-table-column width="150"  class="listTabel" :resizable="false" label="产品类型" prop="productId" show-overflow-tooltip>
                     <template slot-scope="scope">
                       <el-form-item
