@@ -167,7 +167,7 @@
           <el-input v-model="detailForm.bidInfoSection.openBidPlaceName"
           placeholder="开标地点"
           clearable
-          :disabled="type === 'look'||type=='eidtnew'"
+          disabled
           @clear="searchform.openBidPlaceId=''"
           >
           <el-button
