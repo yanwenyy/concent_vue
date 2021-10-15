@@ -7,7 +7,7 @@
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
     <!--   <el-button @click="saveInfo('detailform')" class="detailbutton">提交</el-button>-->
     <el-tabs type="border-card" >
-      <el-tab-pane label="开标结果登记">
+      <el-tab-pane label="开标信息登记">
         <div class="detailBox">
           <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
           <el-form

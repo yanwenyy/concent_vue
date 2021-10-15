@@ -28,7 +28,7 @@
           >通过</el-button>
 
     <el-tabs type="border-card" >
-      <el-tab-pane label="资审管理详情">
+      <el-tab-pane label="资格预审登记">
       <div class="detailBox">
        <el-divider content-position="left" class="detailDivider">项目前期信息</el-divider>
     <el-form
