@@ -271,7 +271,7 @@ export default {
             )
             .then((res) => {
               if (res.data.code === 200) {
-                if (res.data.data.isCheck == "1") {
+                if (res.data.data.isCheck == "0") {
                   this.$confirm('此产品已经存在, 是否继续添加?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
