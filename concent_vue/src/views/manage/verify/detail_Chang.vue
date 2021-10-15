@@ -1574,7 +1574,7 @@
                   show-overflow-tooltip
                   width="500">
                   <template slot-scope="scope">
-                    <span>
+                    <span :style="{'color':(scope.row.verifySectionOrgNameType01!=detailformBefore.verifySectionList[scope.$index].verifySectionOrgNameType01?'red':'black')}">
                       {{scope.row.verifySectionOrgNameType01}}
                     </span>
                   </template>
@@ -1587,7 +1587,7 @@
                   show-overflow-tooltip
                   width="500">
                   <template slot-scope="scope" >
-                    <span  >
+                    <span :style="{'color':(scope.row.verifySectionOrgNameType02!=detailformBefore.verifySectionList[scope.$index].verifySectionOrgNameType02?'red':'black')}">
                       {{scope.row.verifySectionOrgNameType02}}
                     </span>
                   </template>
@@ -1603,9 +1603,9 @@
 
           <template slot-scope="scope" >
           <el-input
+            :class="scope.row.verifySection.investmentReckon!=detailformBefore.verifySectionList[scope.$index].verifySection.investmentReckon?'changeRed':''"
             :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
             placeholder=""
-
             v-model="scope.row.verifySection.investmentReckon"
           >
           <template slot="prepend">¥</template>
@@ -1625,6 +1625,7 @@
 
           <template slot-scope="scope" >
            <el-input
+            :class="scope.row.verifySection.jananInvestment!=detailformBefore.verifySectionList[scope.$index].verifySection.jananInvestment?'changeRed':''"
              :disabled="p.actpoint === 'look'||p.actpoint === 'task'"
              placeholder=""
 
@@ -2280,17 +2281,19 @@ export default {
             message: '必须保留一个标段'
           });
         }else{
-          if(item.verifySection.uuid!=''){
-            item.verifySection.isDelete='1';
-            // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
-            // console.log(this.detailform.verifySectionList)
-            this.verifySectionListSplit=list.splice(index, 1);
-            // list.splice(index, 1);
-            this.$set(this.detailformAfter,this.detailformAfter)
-          }else{
-            list.splice(index, 1);
-          }
-          // this.$set(this.detailform.verifySectionList,list);
+          // if(item.verifySection.uuid!=''){
+          //   item.verifySection.isDelete='1';
+          //   // this.detailform.verifySectionList=list.filter((item)=> item.verifySection.isDelete!='1')
+          //   // console.log(this.detailform.verifySectionList)
+          //   this.verifySectionListSplit=list.splice(index, 1);
+          //   // list.splice(index, 1);
+          //   this.$set(this.detailformAfter,this.detailformAfter)
+          // }else{
+          //   list.splice(index, 1);
+          // }
+          // // this.$set(this.detailform.verifySectionList,list);
+          
+          list.splice(index, 1);
           this.$forceUpdate();
         }
       }).catch(() => {
@@ -2307,10 +2310,8 @@ export default {
     addSection()
     {
       this.dialogTopInfoSection = false;
+        console.info(this.multipleSelection)
       this.multipleSelection.forEach((item, index) => {
-        console.log(item.uuid)
-        console.log(index)
-
         var vsl = {
           sectionId: item.uuid,
           verifyId:this.detailformAfter.verify.uuid,
@@ -2758,7 +2759,7 @@ export default {
     }
 
 
-  .changeRed >>>input,.changeRed >>>select,.changeRed >>>textarea,.changeRed{
+  .changeRed >>>input,.changeRed >>>select,.changeRed >>>textarea,.changeRed >>>span,.changeRed{
     color:red!important;
   }
 </style>

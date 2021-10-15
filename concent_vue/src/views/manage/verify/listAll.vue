@@ -609,7 +609,7 @@ export default {
     },
     add() {
       console.log(JSON.stringify(this.multipleSelection));
-      if(this.multipleSelection.length==0)
+      if(this.multipleSelection[0].uuid != "" && this.multipleSelection[0].uuid != null)
       {
         this.$message.info("请选择未登记资审信息的项目进行资审登记！");
         return;
