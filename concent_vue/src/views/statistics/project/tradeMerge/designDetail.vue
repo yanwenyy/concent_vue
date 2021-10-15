@@ -4,8 +4,8 @@
   <div style="position: relative">
     <el-button @click="back" class="detail-back-tab">返回</el-button>
     <el-tabs type="border-card">
-      <el-tab-pane 
-        v-for="(item, index) in detailForm.project" 
+      <el-tab-pane
+        v-for="(item, index) in detailForm.project"
         :label="index == 0?'勘察设计项目(主)':index == detailForm.project.length-1?'勘察设计项目(合并后)':'勘察设计项目(辅)'"
         :key="index"
       >
@@ -144,8 +144,8 @@
               prop="project.companyBuiltName"
               style="width: 32.5%">
               <el-input clearable disabled
-                placeholder="请输入内容" 
-                v-model="item.companyBuiltName" 
+                placeholder="请输入内容"
+                v-model="item.companyBuiltName"
                 class="input-with-select">
                 <el-button  v-if="p.actpoint !== 'look'&&p.actpoint!='task'" slot="append" icon="el-icon-circle-plus-outline" @click="addDw('承建单位',item.companyBuiltId,false)" ></el-button>
               </el-input>
@@ -352,7 +352,7 @@
             <el-form-item
               label="项目板块:"
               prop="project.projectModuleId"
-              style="width: 32.5%"> 
+              style="width: 32.5%">
               <el-select
                 disabled
                 clearable
@@ -396,7 +396,7 @@
                     clearable
                     placeholder="请选择设计单位"
                     v-model="item.companyDesign">
-                    <el-button slot="append" icon="el-icon-circle-plus-outline"  
+                    <el-button slot="append" icon="el-icon-circle-plus-outline"
                       :disabled="p.actpoint === 'look'||p.actpoint === 'task'||item.contractInfoList!=''"
                     @click="openComMul(item.companyDesignId,item.companyDesign,'/api/contract/Companies/detail/findCompanies','设计单位')"></el-button>
                   </el-input>
@@ -769,7 +769,7 @@
             </el-form-item> -->
             <el-form-item
               v-show="item.contractInfoList!=''"
-              label="合同总金额(万元):" 
+              label="合同总金额(万元):"
               prop="project.contractAmountTotal"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
@@ -784,7 +784,7 @@
             </el-form-item>
             <el-form-item
               v-show="item.contractInfoList == ''"
-              label="合同金额(万元):" 
+              label="合同金额(万元):"
               prop="project.contractMoney"
               :rules="rules.project.isMoney"
               style="width: 32.5%">
@@ -1061,13 +1061,25 @@
           <!--附件-->
           <p>
             <span>相关附件: </span>
-            <el-button
+            <el-upload
+              :headers="{'Authorization':Authorization}"
               v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-              size="small"
-              type="primary"
-              @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
-              点击上传
-            </el-button>
+              class="upload-demo detailUpload detatil-flie-btn"
+              :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
+              :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailForm.project.commonFilesList)}"
+              :show-file-list="false"
+              :before-upload="beforeAvatarUpload"
+              multiple
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+            <!--<el-button-->
+              <!--v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
+              <!--size="small"-->
+              <!--type="primary"-->
+              <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">-->
+              <!--点击上传-->
+            <!--</el-button>-->
           </p>
           <el-table
             :data="item.commonFilesList"
@@ -1099,7 +1111,13 @@
                              show-overflow-tooltip>
 
             </el-table-column>
-
+            <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+              <template slot-scope="scope">
+                <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+              </template>
+            </el-table-column>
             <el-table-column
               align="center"
               :resizable="false"
@@ -1107,9 +1125,10 @@
               label="操作"
               show-overflow-tooltip
               v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
-              width="80"
+              width="100"
             >
               <template slot-scope="scope">
+                <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
                 <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
               </template>
             </el-table-column>
@@ -1320,7 +1339,7 @@
         p: JSON.parse(this.$utils.decrypt(this.$route.query.p))
       }
     },
-    
+
     computed: {
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
@@ -1569,8 +1588,8 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          }); 
-        });       
+          });
+        });
         // console.log(this.detailForm.project.commonFilesList)
       },
       // 打开附件上传的组件
@@ -1789,7 +1808,7 @@
             showClose: true
           });
           return false
-        }        
+        }
         var url='';
         if(type=='save'){
           url="/api/statistics/StatisticsProject/list/saveProject"
@@ -2021,14 +2040,14 @@
         ],
         projectTypeId:'',
         fatherProjectId:''
-      }      
+      }
       for (let i = 0; i< this.p.dataInfor.length; i++) {
         this.detailForm.project.push(item)
       }
       let res = {data:{data:{}}}
       res.data.data = this.p.dataInfor
       this.detailForm.project = res.data.data
-      for (let i = 0; i< this.p.dataInfor.length; i++) { 
+      for (let i = 0; i< this.p.dataInfor.length; i++) {
         this.getProjectFather()
         if (res.data.data[i].contractInfoList == null) {
           this.detailForm.project[i].contractInfoList = []
