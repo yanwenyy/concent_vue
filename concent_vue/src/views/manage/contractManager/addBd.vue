@@ -46,7 +46,7 @@
             </el-input>
           </el-form-item>
           <el-form-item label="投标费率(百分比):" class="list-item">
-            <el-input  :disabled="type === 'look'" v-model="detailForm.tenderRate" placeholder="投标费率(百分比)" clearable></el-input>
+            <el-input  :disabled="type === 'look'" v-model="detailForm.tenderRate" @input="detailForm.tenderRate=detailForm.tenderRate.replace(/^\.+|[^\d.]/g,'')" placeholder="投标费率(百分比)" clearable></el-input>
           </el-form-item>
           <el-form-item label="开标地点:" class="list-item">
             <el-input  :disabled="type === 'look'" v-model="detailForm.openBidPlaceName" placeholder="开标地点" clearable>
@@ -102,7 +102,7 @@
             <!-- <el-input v-model="detailForm.bidInfoSection.tenderSecurity" placeholder="投标保证金(万元)" clearable></el-input> -->
           </el-form-item>
           <el-form-item label="参与投标单位:" class="list-item">
-            <el-input  :disabled="type === 'look'" v-model="detailForm.participatingUnitsName" placeholder="参与投标单位" clearable>
+            <el-input  disabled v-model="detailForm.participatingUnitsName" placeholder="参与投标单位" clearable>
               <el-button v-if="type!='look'" slot="append" icon="el-icon-search" @click="addDw('参与投标单位',detailForm.participatingUnitsId)"></el-button>
             </el-input>
           </el-form-item>
@@ -361,7 +361,8 @@
         detailForm: {
           dataList: [],
           dataList2: [],
-          isDelete: "0"
+          isDelete: "0",
+          openBidPlaceName:''
         },
         type:'',
         index:'',
@@ -530,7 +531,7 @@
         this.visible = true;
         this.type=type;
         if(type!='add'){
-          this.detailForm=detail;
+          this.detailForm=JSON.parse(JSON.stringify(detail));
           this.detailForm.dataList=[];
           this.detailForm.dataList2=[];
           // this.selectSjdw=[];
