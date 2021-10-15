@@ -374,7 +374,6 @@ export default {
       formLabelWidth:'120px',
       dialogFormVisible: false,
       look:false,
-      productData:{},
       form: {
         vmeasurename: '',
         venabled: '',
@@ -488,7 +487,6 @@ export default {
     add() {
       this.look=false;
       this.form={};
-      this.productData = {},
       this.dialogFormVisible=true;
     },
     // 修改
@@ -500,7 +498,6 @@ export default {
         this.look=false;
         var row=this.multipleSelection[0];
         this.form=row;
-        this.productData=row;
         this.form.productId = row.productId
         this.dialogFormVisible=true;
       },
@@ -608,7 +605,7 @@ export default {
         let item = list.find(
           (item) => item.id == id
         );
-        this.productData = item
+        this.form = item
       }
     }
   },
