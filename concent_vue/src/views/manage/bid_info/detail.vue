@@ -1692,7 +1692,6 @@ export default {
     },
     //打开标段弹框
     openBd(type, detail, index) {
-      console.info("type",type)
       this.BDCSVisible = true;
       var tableList=[],bdList=[];
       this.detailform.bidInfoSectionList.forEach((item)=>{
@@ -1721,14 +1720,16 @@ export default {
           i= i-1;
         }
       }
+      detail = detail?JSON.parse(JSON.stringify(detail)):detail
       this.$nextTick(() => {
+        console.info(detail)
         this.$refs.infoBD.init(
           bdList,
           this.detailform.bidInfo.isBidRates,
           type,
           detail,
           index,
-          this.p.from=='kblist'?'kbxq':''
+          this.p.from=='kblist'?'kbxq':'',
         );
       });
     },
@@ -1745,7 +1746,6 @@ export default {
     },
     //获取新增的标段
     getBdInfo(data) {
-      // console.log(data);
       if (data.type == "add") {
         this.detailform.bidInfoSectionList.push(data);
       } else if (data.type == "edit") {
@@ -1891,6 +1891,7 @@ export default {
                 });
                 if (type=='save') {
                   this.detailform.bidInfo = res.data.data.bidInfo;
+                  this.detailform.bidInfoSectionList = res.data.data.bidInfoSectionList;
                 } else {
                   this.$router.back()
                 }

@@ -598,7 +598,7 @@ import { isMoney } from '@/utils/validate'
         }
         var validateMoney = (rule, value, callback) => {
         // console.log(this.type)
-        if((this.type=='add'||this.type=='eidtnew')&&value===''){
+        if((this.type=='add'||this.type=='eidtnew'||this.type=='edit')&&value===''){
           callback(new Error('不能为空'))
         }else if (value!=''&&value!=null&&!isMoney(value)) {
           callback(new Error('请输入数字'))
@@ -717,10 +717,10 @@ import { isMoney } from '@/utils/validate'
         }
       },
     close(){
-        this.$refs['detailForm'].clearValidate();
+        // this.$refs['detailForm'].clearValidate();
         this.visible = false;
         // 回传参与投标单位
-        console.info(this.detailForm.bidInfoSection.participatingUnitsName)
+        // console.info(this.detailForm.bidInfoSection.participatingUnitsName)
       },
     //打开单位弹框
     addDw(type,list,ifChek,index,tableList){
@@ -789,7 +789,7 @@ import { isMoney } from '@/utils/validate'
         if(this.type=='edit'){
           this.detailForm.index=this.index;
         }
-        if((this.type=='add'||this.type=='eidtnew')&&(this.isBidRates=='1'||this.isBidRates=='')) {
+        if((this.type=='add'||this.type=='eidtnew'||this.type=='edit')&&(this.isBidRates=='1'||this.isBidRates=='')) {
           // detailForm.bidInfoSection.bidPrice
           if (this.detailForm.bidInfoSection.biddingPriceLimit == '' ||this.detailForm.bidInfoSection.biddingPriceLimit == null) {
             this.$message({
