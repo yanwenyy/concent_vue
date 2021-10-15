@@ -1833,7 +1833,7 @@ export default {
     },
     saveInfo(formName,type) {
       // 逾期原因赋值给开标
-      this.detailform.kboverdueReason =  this.detailform.overdueReason
+      this.detailform.kbOverdueReason =  this.detailform.overdueReason
       
       if(this.detailform.bidInfo.innerOrgId == undefined){
         this.detailform.bidInfo.innerOrgId = ''

@@ -8,7 +8,7 @@
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>-->
     <!--<el-button v-show="p.actpoint == 'task'&&p.task.edit==true" @click="operation('recall')" class="detailbutton" type="danger">撤销</el-button>-->
     <el-tabs type="border-card" >
-      <el-tab-pane label="信息管理详情">
+      <el-tab-pane label="项目信息登记">
         <div class="detailBox">
           <el-form
             :inline="false"
