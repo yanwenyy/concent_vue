@@ -1839,6 +1839,7 @@
                   label="是否导入清单"
                 >
                   <el-switch
+                    @change="isImportChange"
                     :disabled="p.actpoint === 'look'||p.actpoint=='task'||p.pushId"
                     class="inline-formitem-switch"
                     v-model="p.pushId?'1':detailform.contractInfo.isImport"
@@ -5051,6 +5052,7 @@
         }
       }
       return {
+        isImportChangeVal:false,
         Authorization:sessionStorage.getItem("token"),
         constructionOrgList: [],
         yqList:[],
@@ -6066,6 +6068,17 @@
         this.detailform.contractInfo.enginTypeSecondId='';
         this.xqprojectType=[];
         if(id!=''){
+          if(id=='17ff5c08d36b41ea8f2dc2e9d3029cac'||
+            id=='0f16c387f17b402db45c4de58e1cf8b4'||
+            id=='f6f5188458ab4c5ba1e0bc12a9a4188b'||
+            id=='24ebba9f2f3447579d0086209aff6ecd'||
+            id=='193b4d4003d04899a1d09c8d5f7877fe'){
+            this.detailform.contractInfo.isImport='0';
+            this.isImportChangeVal = true;
+          }else{
+            this.detailform.contractInfo.isImport='1';
+            this.isImportChangeVal = false;
+          }
           this.projectDomainType.find(
             (item) => {
             if (item.id == id) {
@@ -6274,6 +6287,15 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
+      // 是否导入清单
+      isImportChange(val) {
+        console.info(val)
+        if(val == "1") {
+          this.isImportChangeVal = false
+        }else {
+          this.isImportChangeVal = true
+        }
+      },
       saveInfo(formName,type) {
         this.detailform.srcId=this.id;
         var url='';
@@ -6326,6 +6348,22 @@
               }
               if(this.detailform.contractInfo.isOpenBid=='1'&&this.detailform.fileList4.length==0){
                 this.$message.error("请上传招标公告文件");
+                return false;
+              }
+              if(this.detailform.contractInfo.startTime>this.detailform.contractInfo.endTime){
+                this.$message.error("合同竣工日期必须大于合同开工日期");
+                return false;
+              }
+              if(this.detailform.contractInfo.isInSystemSub=='0'&&this.detailform.contractInfoAttachBO.innerContractInfoAttachList.length=='0'){
+                this.$message.error("系统内分包单位列表不能为空");
+                return false;
+              }
+              if(this.detailform.contractInfo.isInGroupSub=='0'&&this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.length=='0'){
+                this.$message.error("集团内分包单位列表不能为空");
+                return false;
+              }
+              if(this.detailform.contractInfo.valueAddedTax<=0){
+                this.$message.error("增值税需要大于0");
                 return false;
               }
               this.$http
