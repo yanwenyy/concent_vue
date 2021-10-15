@@ -301,6 +301,9 @@ export default {
         },{
           value: "3",
           label: '仅合同'
+        },{
+          value: "4",
+          label: '禁用'
         },
       ],
       props: {
@@ -787,6 +790,12 @@ export default {
       this.$http
         .post("/api/statistics/bp/BpTjx/list/loadPageData", req)
         .then((res) => {
+          res.data.data.records.forEach((element) => {
+            if (element.valtername == '实物工程量') {
+              res.data.data.records = []
+              res.data.data.records.push(element)
+            }
+          })
           this.page = res.data.data;
         });
     },
@@ -805,6 +814,12 @@ export default {
             parentid: node.data.uuid,
           })
           .then((res) => {
+            res.data.data.forEach((element) => {
+              if (element.valtername == '实物工程量') {
+                res.data.data = []
+                res.data.data.push(element)
+              }
+            })
             node.data.current=this.searchform.current;
             node.data.size=this.searchform.size;
             this.getTableData(node.data);
