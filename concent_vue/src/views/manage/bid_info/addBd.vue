@@ -93,7 +93,6 @@
                  <el-select
                 clearable
                 placeholder="评标办法"
-
                 :disabled="type === 'look'"
                 @change="
                 getName(
@@ -119,7 +118,6 @@
             <el-select
               clearable
               placeholder="评标办法"
-
               :disabled="type === 'look'&&ifkb!='kbxq'"
               @change="
                 getName(
@@ -689,7 +687,7 @@ import { isMoney } from '@/utils/validate'
     methods: {
       //获取标段名字
       getBdName(id, list, index) {
-        console.log(id,list,index)
+        // console.log(id,list,index)
         if(id){
           this.$forceUpdate()
           list[index].orgName=this.sjdwList.find(
@@ -732,7 +730,7 @@ import { isMoney } from '@/utils/validate'
     },
     //获取单位的值
     getDwInfo(data){
-      console.log(data);
+      // console.log(data);
       var id=[],name=[];
       if(data&&data.type!="其他投标单位(系统内)"){
         data.forEach((item)=>{
@@ -758,7 +756,7 @@ import { isMoney } from '@/utils/validate'
     //获取项目地点的值
     getPositionTree(data) {
       this.treeStatas = false;
-      console.log(data)
+      // console.log(data)
       this.detailForm.bidInfoSection.openBidPlaceId = data.fullDetailCode;
       this.detailForm.bidInfoSection.openBidPlaceName = data.fullDetailName;
       this.key = this.key + 1;
@@ -787,7 +785,7 @@ import { isMoney } from '@/utils/validate'
         var bidInfoSectionOrgList=this.detailForm.dataList.concat(this.detailForm.dataList2);
         this.detailForm.bidInfoSectionOrgList=bidInfoSectionOrgList;
          this.detailForm.type=this.type;
-        if(this.type=='edit'){
+        if(this.type=='edit'||this.type=='eidtnew'){
           this.detailForm.index=this.index;
         }
         if((this.type=='add'||this.type=='eidtnew'||this.type=='edit')&&(this.isBidRates=='1'||this.isBidRates=='')) {
@@ -810,12 +808,12 @@ import { isMoney } from '@/utils/validate'
 
         }
         this.$refs.detailForm.validate((valid) => {
-          // console.log(this.detailForm)
+          console.log(this.detailForm)
           if (valid) {
             this.visible = false;
             this.$emit('refreshBD', this.detailForm);
             // 回传参与投标单位
-            console.info(this.detailForm.bidInfoSection.participatingUnitsName)
+            // console.info(this.detailForm.bidInfoSection.participatingUnitsName)
             this.$message({
               showClose: true,
               message: '保存成功！',
@@ -839,8 +837,8 @@ import { isMoney } from '@/utils/validate'
         this.bdName=list||[];
         this.isBidRates=isBidRates;
         this.ifkb=ifkb;
-        console.info(type,'type')
-        console.info(ifkb,'ifkb')
+        // console.info(type,'type')
+        // console.info(ifkb,'ifkb')
         if(type=='edit'||type=='look'||type=="eidtnew"){
           detail.bidInfoSectionOrgList.forEach((item, index) => {
           if (item.orgType == '1') {

@@ -1408,6 +1408,7 @@ export default {
       });
       // bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
       bdList=this.detailform.topInforBO.topInfoSectionList;
+      detail = detail?JSON.parse(JSON.stringify(detail)):detail
       this.$nextTick(() => {
         this.$refs.infoBD.init(bdList,this.detailform.bidInfo.isBidRates,type,detail,index,'kbxq');
       })
@@ -1421,6 +1422,7 @@ export default {
         this.detailform.bidInfoSectionList[data.index]=data;
       }else if(data.type=='eidtnew'){
         this.detailform.bidInfoSectionList[0].bidInfoSectionOrgList=data.bidInfoSectionOrgList;
+        this.detailform.bidInfoSectionList[data.index].bidInfoSection=data.bidInfoSection;
       }
       console.log(this.detailform.bidInfoSectionList)
       this.BDCSVisible=false;
