@@ -393,7 +393,7 @@ export default {
       this.multipleSelection = val
     },
     getData() {
-      console.log(JSON.stringify(this.searchform));
+      // console.log(JSON.stringify(this.searchform));
       this.$http
         .post(
           '/api/contract/archives/ArchivesInfo/list/loadPageDataByStatistics',
@@ -405,7 +405,7 @@ export default {
     },
 
   },
-  created() {
+  mounted() {
     this.getData()
   }
 }
