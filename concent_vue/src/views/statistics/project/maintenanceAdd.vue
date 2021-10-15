@@ -218,9 +218,10 @@
               prop="project.contractAmountInitial"
               :rules="rules.project.isMustMoney"
               style="width: 32.5%">
+              <!--@change="getCount"-->
               <el-input
                 :disabled="p.actpoint === 'look'||p.actpoint === 'task'||detailForm.project.contractInfoList!=''"
-                @change="getCount"
+
                 clearable
                 placeholder="请输入"
                 v-model="detailForm.project.contractAmountInitial">
@@ -647,6 +648,7 @@
               width="100"
             >
               <template slot-scope="scope">
+                <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
                 <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
               </template>
             </el-table-column>

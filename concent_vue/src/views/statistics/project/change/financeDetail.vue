@@ -98,7 +98,7 @@
                     v-for="(item, index) in fatherList"/>
                 </el-select>
               </el-form-item>
-            </el-row>             
+            </el-row>
             <el-row>
               <el-form-item
                 label="合同号:"
@@ -244,7 +244,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -259,7 +259,7 @@
               </el-form-item>
               <el-form-item
                 v-show="detailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -362,15 +362,15 @@
                   required: true, message: '此项不能为空', trigger: ['blur','change']
                 }"
               >
-                <el-input 
-                  clearable 
-                  disabled 
-                  placeholder="请输入内容" 
+                <el-input
+                  clearable
+                  disabled
+                  placeholder="请输入内容"
                   v-model="detailForm.project.companyName" class="input-with-select">
-                  <el-button 
-                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append" 
-                    icon="el-icon-circle-plus-outline" 
-                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)" 
+                  <el-button
+                    v-if="p.actpoint !== 'look'&&p.actpoint!='task'&&detailForm.project.contractInfoList==''" slot="append"
+                    icon="el-icon-circle-plus-outline"
+                    @click="addDw('签约单位(使用资质单位)',detailForm.project.companyId)"
                     >
                   </el-button>
                 </el-input>
@@ -737,13 +737,25 @@
             <!--附件-->
               <p>
                 <span>相关附件: </span>
-                <el-button
+                <el-upload
+                  :headers="{'Authorization':Authorization}"
                   v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"
-                  size="small"
-                  type="primary"
-                  @click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">
-                  点击上传
-                </el-button>
+                  class="upload-demo detailUpload detatil-flie-btn"
+                  :action="'/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile'"
+                  :on-change="( file, fileList)=>{uploadPorgress( file, fileList,detailForm.project.commonFilesList)}"
+                  :show-file-list="false"
+                  :before-upload="beforeAvatarUpload"
+                  multiple
+                >
+                  <el-button size="small" type="primary">点击上传</el-button>
+                </el-upload>
+                <!--<el-button-->
+                  <!--v-show="p.actpoint !== 'look'&&p.actpoint !== 'task'"-->
+                  <!--size="small"-->
+                  <!--type="primary"-->
+                  <!--@click="openFileUp('/api/contract/topInfo/CommonFiles/contractInfo/02/uploadFile','commonFilesList')">-->
+                  <!--点击上传-->
+                <!--</el-button>-->
               </p>
               <el-table
                 :data="detailForm.project.commonFilesList"
@@ -775,17 +787,24 @@
                                 show-overflow-tooltip>
 
                 </el-table-column>
-
+                <el-table-column align="center" width="200" :resizable="false" label="上传进度" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <el-progress v-if="scope.row.progressFlag=='start'" :percentage="scope.row.loadProgress||0"></el-progress>
+                    <el-progress  v-if="scope.row.progressFlag=='fail'" :percentage="100" status="warning"></el-progress>
+                    <span v-if="scope.row.progressFlag=='stop'||scope.row.progressFlag==null">已上传</span>
+                  </template>
+                </el-table-column>
                 <el-table-column
                   align="center"
                   :resizable="false"
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'&&p.actpoint !== 'task'"
-                  width="80"
+                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
+                  width="100"
                 >
                   <template slot-scope="scope">
+                    <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
                     <el-link :underline="false" @click="handleRemove(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
@@ -864,7 +883,7 @@
                     v-if="p.actpoint !== 'task'"
                     width="150">
                     <template slot-scope="scope">
-                      <el-link 
+                      <el-link
                         :underline="false"
                         @click="removeContract(scope.$index,scope.row)"
                         type="warning">删除
@@ -954,7 +973,7 @@
                     v-for="(item, index) in fatherList"/>
                 </el-select>
               </el-form-item>
-            </el-row>              
+            </el-row>
             <el-row>
               <el-form-item
                 label="合同号:"
@@ -1071,7 +1090,7 @@
               </el-form-item>
               <el-form-item
                 v-show="showDetailForm.project.contractInfoList!=''"
-                label="合同总金额(万元):" 
+                label="合同总金额(万元):"
                 prop="project.contractAmountTotal"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -1086,7 +1105,7 @@
               </el-form-item>
               <el-form-item
                 v-show="showDetailForm.project.contractInfoList == ''"
-                label="合同金额(万元):" 
+                label="合同金额(万元):"
                 prop="project.contractMoney"
                 :rules="rules.project.isMoney"
                 style="width: 32.5%">
@@ -1486,8 +1505,8 @@
     </el-tabs>
     <el-dialog class="showContract" :visible.sync="showContract" :append-to-body="true">
       <el-tabs type="border-card">
-        <el-tab-pane 
-          v-for="(item, index) in type" 
+        <el-tab-pane
+          v-for="(item, index) in type"
           :key="index"
           label="关联字段">
           <el-form ref="form" label-width="80px">
@@ -1577,6 +1596,7 @@
         }
       }
       return {
+        Authorization:sessionStorage.getItem("token"),
         key:0,
         fatherList:[],
         uuid: null,
@@ -1584,7 +1604,7 @@
         treeStatas: false,
         emergingMarketTwo: [],
         bizTypeCodeTwo: [],
-        constructionOrgList: [], 
+        constructionOrgList: [],
         sjdwList: [],
         uploadVisible:false,
         contractStatas:false,//关联合同状态
@@ -1710,7 +1730,7 @@
           }
         });
         return projectTypeList
-      },        
+      },
       pubCustomers() {//客户名称
         return this.$store.state.pubCustomers;
       },
@@ -1769,6 +1789,109 @@
         });
     },
     methods: {
+      // 附件下载
+      attachmentDownload(file){
+        this.$handleDownload(file)
+      },
+      //判断附件大小
+      beforeAvatarUpload(file) {
+        var fileLimit=Number(this.fileLimit);
+        const isJPG = file.type === 'image/jpeg';
+        const isLt100M = file.size / 1024 / 1024 < fileLimit;
+
+        // if (!isJPG) {
+        //   this.$message.error('上传头像图片只能是 JPG 格式!');
+        // }
+        if (!isLt100M) {
+          this.$message.error('上传文件大小不能超过 '+fileLimit+'MB!');
+        }
+        // return isJPG && isLt2M;
+        return isLt100M;
+      },
+      //上传附件显示进度条
+      uploadPorgress(file, fileList,tableList){
+        // console.log(event, file, fileList,tableList);
+        // console.log(fileList)
+        const len=tableList.length;
+        if (file.status === 'ready') {
+          file.fileName=file.name;
+          file.fileSize=file.size;
+          // file.fileType=file.type;
+          file.progressFlag = 'start'; // 显示进度条
+
+          file.loadProgress=0;
+
+          tableList.push(file);
+          var that=this;
+          tableList.forEach((item,index)=>{
+
+            const interval = setInterval(() => {
+              if (item&&item.loadProgress >= 90) {
+                item.loadProgress = 90;
+                if(file.response&&item.fileName==file.response.data.fileName&&file.response.data.progressFlag=='stop'){
+                  tableList[index]=file.response.data;
+                  // console.log(index,'==>',tableList[index])
+                  that.$set(tableList,index,tableList[index])
+                  // console.log(tableList[index])
+                }
+
+                clearInterval(interval);
+                return
+              }
+              if(item.progressFlag == 'start'){
+                item.loadProgress += 20;//进度条进度
+                // that.$set(tableList[len],tableList[len])
+                that.$set(tableList,index,tableList[index])
+                // console.log(tableList[len].loadProgress)
+
+              }
+              if(file.response&&file.response.data.progressFlag=='fail'){
+                tableList[index].progressFlag='fail';
+                this.$set(tableList,tableList)
+              }
+            }, 600);
+          });
+
+        }
+        if (file.response && file.response.code === 200) {
+          file.response.data.progressFlag='stop';
+          tableList.forEach((item,index)=>{
+            if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+              tableList[index]=file.response.data;
+              // console.log(index,'==>',tableList[index])
+              this.$set(tableList,index,tableList[index])
+              // console.log(tableList[index])
+            }
+          })
+          // this.$message({
+          //   message: '上传成功',
+          //   type: 'success',
+          //   duration: 1000,
+          //   onClose: () => {
+          //     // const len=tableList.length;
+          //
+          //     file.response.data.progressFlag='stop';
+          //     tableList.forEach((item,index)=>{
+          //       if(item.fileName==file.response.data.fileName&&item.progressFlag!='stop'){
+          //         tableList[index]=file.response.data;
+          //         // console.log(index,'==>',tableList[index])
+          //         this.$set(tableList,index,tableList[index])
+          //         // console.log(tableList[index])
+          //       }
+          //     })
+          //     // tableList[len-1]=file.response.data;
+          //
+          //   }
+          // })
+        }else if(file.response && file.response.code !== 200){
+          // tableList[len-1].progressFlag = 'fail';
+          file.response.data.progressFlag='fail';
+          this.$set(tableList,tableList)
+          this.$message.error(file.response.msg);
+        }
+
+        this.$forceUpdate();
+      },
       // 显示关联合同
       chooseContract() {
         if (this.detailForm.project.contractInfoList.length == 0) {
@@ -1795,8 +1918,8 @@
                     checkGroup:[],
                   },
                   contract:element
-                })                
-              })  
+                })
+              })
             } else {
               res.data.data.forEach((element) => {
                 element.checkGroup = element.checkField.split(",")
@@ -1869,7 +1992,7 @@
       },
       del(index, item, list) {
         list.splice(index, 1)
-      }, 
+      },
       //新增关联合同
       addContract(){
         this.contractStatas = true;
@@ -2083,10 +2206,10 @@
           this.$message({
             type: 'info',
             message: '已取消删除'
-          }); 
-        });       
+          });
+        });
         // console.log(this.detailForm.project.commonFilesList)
-      
+
       },
       // 打开附件上传的组件
       openFileUp(url, list) {
