@@ -210,8 +210,8 @@ export default {
           value: '运营维管',
           label: '运营维管'
         },{
-          value: '其他',
-          label: '其他'
+          value: '其它',
+          label: '其它'
         }
       ],
       flowStatus: [
@@ -267,7 +267,7 @@ export default {
           return "./financeDetail"
         case "运营维管":
           return "./maintenanceDetail"
-        case "其他":
+        case "其它":
           return "./otherDetail"
         default:
           break;
