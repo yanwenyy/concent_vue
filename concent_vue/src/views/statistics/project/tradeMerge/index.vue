@@ -814,7 +814,7 @@ export default {
           return "./financeAdd"
         case "运营维管":
           return "./maintenanceAdd"
-        case "其他":
+        case "其它":
           return "./otherAdd"
         default:
           break;
