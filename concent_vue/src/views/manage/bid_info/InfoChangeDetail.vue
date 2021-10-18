@@ -2533,6 +2533,7 @@ export default {
       this.detailform.bidInfoSectionList.forEach((item)=>{
         tableList.push(item.bidInfoSection.sectionName)
       });
+      detail = detail?JSON.parse(JSON.stringify(detail)):detail
       bdList=this.detailform.topInforBO.topInfoSectionList.filter(item => tableList.indexOf(item.sectionName)==-1);
       if (type!='edit' && bdList.length < 1) {
         this.$message({

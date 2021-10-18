@@ -82,7 +82,7 @@
                   </el-switch>
                   </el-form-item>
                   <br>
-                  <el-form-item
+                  <!-- <el-form-item
                     label="合同所属板块:"
                   >
                     <el-input
@@ -92,7 +92,7 @@
 
                       v-model="detailFormBefore.contractInfo.enginTypeFirstName"
                     />
-                  </el-form-item>
+                  </el-form-item> -->
                   <el-form-item
                     label="生产工号:"
 
