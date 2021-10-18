@@ -12,8 +12,8 @@
       class="gcform"
       ref="detailform"
     >
-    <el-tabs type="border-card">
-      <el-tab-pane label="工程承包合同">
+    <el-tabs type="border-card" v-model="activeName">
+      <el-tab-pane name="cccbht" label="工程承包合同">
         <div class="detailBoxBG">
             <el-form-item
               label="项目名称(中文)"
@@ -1707,12 +1707,12 @@
                   fixed="right"
                   label="操作"
                   show-overflow-tooltip
-                  v-if="p.actpoint!=='look'&&p.actpoint!=='task'"
+
                   width="100"
                 >
                   <template slot-scope="scope">
                     <el-link :underline="false" @click="attachmentDownload(scope.row)" type="warning" :style="(p.actpoint != 'look'&&p.actpoint !== 'task')?'color: #409EFF;margin-right: 3px;':'color: #409EFF;'">下载</el-link>
-                    <el-link :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
+                    <el-link v-if="p.actpoint!=='look'&&p.actpoint!=='task'" :underline="false" @click="handleRemove1(scope.row,scope.$index)" type="warning">删除</el-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -2133,7 +2133,7 @@
 
         </div>
       </el-tab-pane>
-      <el-tab-pane v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
+      <el-tab-pane name="htfsxx" v-if="detailform.contractInfo.isInSystemUnion==='0'||detailform.contractInfo.isInSystemSub==='0'||detailform.contractInfo.isOutSystemUnion==='0'||detailform.contractInfo.isOutSystemSub==='0'||detailform.contractInfo.isInGroupSub==='0'" label="合同附属信息">
         <div class="detailBoxBG htfs">
           <div  v-if="detailform.contractInfo.isInSystemUnion==='0'">
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -3117,7 +3117,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="工程量清单" v-if="isImportChangeVal&&!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
+      <el-tab-pane name="gclqd" label="工程量清单" v-if="isImportChangeVal&&!p.pushId&&(detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'||detailform.contractInfo.enginTypeFirstId=='24ebba9f2f3447579d0086209aff6ecd'||detailform.contractInfo.enginTypeFirstId=='f6f5188458ab4c5ba1e0bc12a9a4188b'||detailform.contractInfo.enginTypeFirstId=='0f16c387f17b402db45c4de58e1cf8b4'||detailform.contractInfo.enginTypeFirstId=='193b4d4003d04899a1d09c8d5f7877fe')">
         <div class="detailBoxBG gclqd">
           <el-tabs v-model="gclName" @tab-click="getRailwayList" v-if="detailform.contractInfo.enginTypeFirstId=='17ff5c08d36b41ea8f2dc2e9d3029cac'" type="border-card">
             <el-tab-pane name="0" label="第一章">
@@ -7344,7 +7344,7 @@
           </el-tabs>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="实物工程量">
+      <el-tab-pane name="swgcl" label="实物工程量">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -7430,7 +7430,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="旧实物工程量">
+      <el-tab-pane name="jswgcl" label="旧实物工程量">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -7483,7 +7483,7 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="劳材机统计">
+      <el-tab-pane name="lcjtj" label="劳材机统计">
         <div class="detailBoxBG htfs">
           <div>
             <p  class="detail-title" style="overflow: hidden;margin-right: 30px">
@@ -7565,7 +7565,7 @@
                 show-overflow-tooltip
               >
                 <template slot-scope="scope">
-                  <el-input v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
+                  <el-input :disabled="p.actpoint === 'look'||p.actpoint=='task'" v-model="scope.row.vsum" @input="scope.row.vsum=scope.row.vsum.replace(/[^\d]/g,'')"/>
                 </template>
               </el-table-column>
             </el-table>
@@ -7618,6 +7618,7 @@ export default {
       }
     }
     return {
+      activeName:'cccbht',
       oldEngineeringList:[],
       isImportChangeVal:false,
       companyMulStatus:false,//设计单位等多选列表状态
@@ -9461,6 +9462,11 @@ export default {
       // if(datas.contractInfo.constructionOrgId != '' ||datas.contractInfo.constructionOrgId != null){
       //   this.constructionOrgList = datas.contractInfo.constructionOrgId.split(",");
       // }
+          if(this.detailform.contractInfo.isImport=='0'){
+            this.isImportChangeVal=true;
+          }else{
+            this.isImportChangeVal=false;
+          }
       if (this.detailform.contractInfo.contractOrgName) {
         this.$http.post("/api/contract/contract/ContractInfo/detail/orgCodeToRegion",{orgCode:this.detailform.contractInfo.contractOrgId},).then((res) => {
           this.ssList = res.data.data
@@ -9476,7 +9482,7 @@ export default {
     isImportChange(val) {
       if(val == "1") {
         this.isImportChangeVal = false
-      }else {
+      }else if(val=="0"){
         this.isImportChangeVal = true
       }
     }
