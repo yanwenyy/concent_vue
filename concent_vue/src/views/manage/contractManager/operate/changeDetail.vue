@@ -3477,7 +3477,7 @@
                       show-overflow-tooltip
                     >
                       <template slot-scope="scope">
-                        系统外分包
+                        集团内分包
                       </template>
                     </el-table-column>
                     <el-table-column
