@@ -204,7 +204,7 @@
       // 初始化
       init(moduleId) {
         this.visible = true;
-        this.searchform.moduleId=moduleId;
+        this.searchform.moduleId=moduleId||this.searchform.moduleId;
         this.$http
           .post(
            "/api/contract/contract/ContractInfo/list/loadPageDataChangeRecord_Sale",
