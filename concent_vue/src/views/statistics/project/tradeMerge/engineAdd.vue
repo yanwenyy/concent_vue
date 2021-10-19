@@ -2459,6 +2459,8 @@
                     this.$router.push({
                       path: '/statistics/project/tradeMerge/index'
                     })
+                  } else {
+                    this.detailForm.project = res.data.data
                   }
                 } else {
                   this.$message({
