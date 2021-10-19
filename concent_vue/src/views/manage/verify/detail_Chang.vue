@@ -30,7 +30,8 @@
    @click="back">返回</el-button> -->
 
 <!-- ||detailform.verify.flowStatus=='edit' -->
-    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'&&(p.actpoint == 'add'||p.flowStatus=='edit'||p.flowStatus=='reject')" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
+<!-- &&(p.actpoint == 'add'||p.flowStatus=='edit'||p.flowStatus=='reject') -->
+    <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" @click="saveInfo('detailformAfter','sub')" class="detailbutton detail-back-tab sub-btn">提交</el-button>
     <el-button v-show="p.actpoint != 'look'&&p.actpoint != 'task'" class="detail-back-tab detailbutton save-btn" type="primary" @click="saveInfo('detailformAfter','save')">保存</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab bh" @click="operation('back')"  type="warning">驳回</el-button>
     <el-button v-show="p.actpoint == 'task'&&p.task.edit==false" class="detailbutton detail-back-tab tg" @click="operation('complete')"  type="success">通过</el-button>
@@ -1355,13 +1356,14 @@
            v-model="detailformAfter.verify.isCoalitionBid"
            active-value="是"
            inactive-value="否"
-           @change="detailformAfter.verify.isCoalitionBid=='否'?(detailformAfter.verifyOrgLists='',detailformAfter.verify.orgName='',detailformAfter.verify.outOrg=''):''"
+           @change="detailformAfter.verify.isCoalitionBid=='否'?
+           (detailformAfter.verifyOrgLists='',detailformAfter.verify.orgId='',detailformAfter.verify.orgName='',detailformAfter.verify.outOrg='',detailformAfter.verify.outOrgId=''):''"
          >
             </el-switch>
       </el-form-item>
         <el-form-item label="内部联合体单位:">
           <el-input
-          :class="detailformAfter.verify.orgName!=detailformBefore.verify.orgName?'changeRed':''"
+          :class="detailformAfter.verify.orgId!=detailformBefore.verify.orgId?'changeRed':''"
           :disabled="p.actpoint === 'look'|| detailformAfter.verify.isCoalitionBid=='否' || detailformAfter.verify.isCoalitionBid==null||p.actpoint=='task'"
           v-model="detailformAfter.verify.orgName">
             <!--<el-button-->
@@ -2243,7 +2245,9 @@ export default {
                   type: "success",
                 });
                 if (type=='save') {
-                  // this.detailform.verify.uuid = res.data.data.verify.uuid
+                  this.p.changRecorUUid = res.data.data.afterVerifyBO.changeRecordUuid;
+                  this.p.actpoint = 'editItem'
+                  this.getDetail();
                 }else{
                   this.$router.back();
                 }
