@@ -6766,6 +6766,7 @@
   }
   .hidden-row{
     display: none;
+
   }
 </style>
 
