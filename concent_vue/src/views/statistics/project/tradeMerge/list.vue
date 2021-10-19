@@ -290,11 +290,11 @@ export default {
     rowShow(row) { // 查看
       let p = { actpoint: 'look', dataInfor: {}}
       this.$http
-      .post('/api/statistics/StatisticsProject/list/MergedSubProject', {propjectMergeId: row.projectMergeId})
+      .post('/api/statistics/StatisticsProject/list/MergedSubProject', {propjectMergeId: row.projectMergeId,uuid:row.uuid})
       .then(res => {
         p.dataInfor = res.data.data.main.concat(res.data.data.draft)
-        p.dataInfor = p.dataInfor.concat(row)
-        console.info(p.dataInfor)
+        p.dataInfor = p.dataInfor.concat(res.data.data.merge)
+        console.info(p.dataInfor)  
         this.$router.push({
           path: this.mergePath(row.projectModuleName),
           query: { p: this.$utils.encrypt(JSON.stringify(p)) }
