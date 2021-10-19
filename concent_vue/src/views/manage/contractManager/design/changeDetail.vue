@@ -758,28 +758,7 @@
                       />
                     </el-form-item>
                   </div>
-                  <div>
-                    <el-form-item
-                      class="neirong"
-                      label="变更原因:"
-                      style="width: 33%"
-                      prop="contractInfo.changeReason"
-                      :rules="{
-                        required: true,
-                        message: '此项不能为空',
-                        trigger: 'blur',
-                      }"
-                    >
-                    >
-                      <el-input
-                        type="textarea"
-                        clearable
-                        placeholder="请输入"
 
-                        v-model="detailform.contractInfo.changeReason"
-                      />
-                    </el-form-item>
-                  </div>
                   <!-- 建设单位 -->
                   <p>
                     <span >建设单位: </span>
@@ -2954,6 +2933,27 @@
                       clearable
                       placeholder="请输入"
                       v-model="detailform.contractInfo.remarks"
+                    />
+                  </el-form-item>
+                </div>
+                <div>
+                  <el-form-item
+                    class="neirong"
+                    label="变更原因:"
+                    style="width: 33%"
+                    prop="contractInfo.changeReason"
+                    :rules="{
+                        required: true,
+                        message: '此项不能为空',
+                        trigger: 'blur',
+                      }"
+                  >
+                    <el-input
+                      type="textarea"
+                      clearable
+                      placeholder="请输入"
+
+                      v-model="detailform.contractInfo.changeReason"
                     />
                   </el-form-item>
                 </div>

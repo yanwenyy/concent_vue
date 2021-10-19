@@ -560,7 +560,8 @@ export default {
                 this.$refs.tree.store._getAllNodes()[i].expanded = false;
               }
 
-              this.loadNode(this.node, this.resolve);
+              this.loadNode(this.node, this.resolve,true);
+              this.key = Symbol(new Date().toString());
             });
         })
         .catch(() => {
