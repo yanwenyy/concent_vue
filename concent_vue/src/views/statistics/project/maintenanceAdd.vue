@@ -1517,7 +1517,7 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  if (res.data.data == "1") {
+                  if (res.data.data.contractInfo.isProjectRepeated == '1') {
                     this.$message({
                       message:  `${type=='save'?'保存':'提交'}信息重复`,
                       type: 'error'
@@ -1558,20 +1558,13 @@
           JSON.stringify(this.detailForm.project),{ useJson: true })
           .then((res) => {
             if (res.data.code === 200) {
-              if (res.data.data == null) {
-                this.$message({
-                  message:  `${type=='save'?'保存':'提交'}信息重复`,
-                  type: 'error'
-                })
-              } else {
-                this.$message({
-                  message: '提交成功',
-                  type: 'success'
-                })
-                this.$router.push({
-                  path: '/statistics/project/maintenanceList'
-                })
-              }
+              this.$message({
+                message: '提交成功',
+                type: 'success'
+              })
+              this.$router.push({
+                path: '/statistics/project/maintenanceList'
+              })
             } else {
               this.$message({
                 message: '提交失败',
