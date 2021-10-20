@@ -5570,6 +5570,24 @@
       getOurAmount(index,list,type){
         var tj_money=0,our_money=0;
         if(this.detailform.contractInfo.contractAmount>0){
+          // 计算自留份额 自留份额等于我方份额-（所有分包的各方份额+未分配） (新)
+          let money = 0
+          this.detailform.contractInfoAttachBO.innerContractInfoAttachList.forEach((item)=>{
+            money+=Number(item.contractAmount);
+          });
+          this.detailform.contractInfoAttachBO.outContractInfoAttachList.forEach((item)=>{
+            money+=Number(item.contractAmount);
+          });
+          this.detailform.contractInfoAttachBO.innerGroupContractInfoAttachList.forEach((item)=>{
+            money+=Number(item.contractAmount);
+          });
+          var zile=(this.detailform.contractInfo.ourAmount||0)-money
+          if (zile<=0) {
+            this.$message.error('所有分包的各方份额+未分配之和应小于初始我方份额');
+              list[index].contractAmount=0
+          }
+          console.info(zile,this.detailform.contractInfo.ourAmount,money)
+          this.detailform.contractInfo.selfCash=zile;
           if(type=='wlht'||type=='nlht'){
             //铁建金额计算
             this.detailform.contractInfoAttachBO.outUnionContractInfoAttachList.forEach((item)=>{
@@ -5650,8 +5668,7 @@
               }
             }else{
               //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包
-              var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.changeOurAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
-              this.detailform.contractInfo.selfCash=zile;
+              // var zile=(this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.changeOurAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money;
               //计算本企业建安已分配和本企业建安未分配
               this.detailform.contractInfo.installDesignAllocated=our_money;
               this.detailform.contractInfo.installDesignUnallocat=our_money;
