@@ -3831,13 +3831,15 @@
               }
             }else{
               //计算自留份额 初始我方份额 （非投融资，投融资使用建安和勘察设计费）- 未分配 - 系统内分包份额-集团内分包-系统外分包
-              var zile=Number((this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money);
+              // var zile=Number((this.detailform.contractInfo.projectNatureFirstId=='7031076e7a5f4225b1a89f31ee017802'?this.detailform.contractInfo.installDesignFee||0:this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money);
+              var zile=Number((this.detailform.contractInfo.ourAmount||0)-(this.detailform.contractInfo.unAllocatedFee||0)-our_money)
+              // console.info(this.detailform.contractInfo.projectNatureFirstId,this.detailform.contractInfo.ourAmount,this.detailform.contractInfo.unAllocatedFee,our_money)
               if(zile<0){
-                if(this.detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'){
-                  this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于建安和勘察设计费');
-                }else{
+                // if(this.detailform.contractInfo.projectNatureFirstId==='7031076e7a5f4225b1a89f31ee017802'){
+                //   this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于建安和勘察设计费');
+                // }else{
                   this.$message.error('自留份额+未分配+系统内分包份额之和+系统外分包份额之和+集团内分包份额之和不能大于初始我方份额');
-                }
+                // }
                 if(list){
                   list[index].contractAmount='';
                   this.$forceUpdate();
