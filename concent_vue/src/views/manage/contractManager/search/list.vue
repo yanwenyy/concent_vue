@@ -7,7 +7,18 @@
         </template>
         <el-menu-item-group> -->
           <el-form class="queryForm" :inline="true" :model="searchform" @keyup.enter.native="getData()">
-            <el-form-item label="填报日期开始:">
+            <el-form-item>
+              <el-select
+                filterable
+                placeholder="请选择"
+                v-model="searchform.timeQueryType"
+              >
+                <el-option label="合同签订日期" value="1"></el-option>
+                <el-option label="录入时间" value="2"></el-option>
+                <el-option label="审核通过时间" value="3"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="">
               <el-date-picker
                 clearable
                 v-model="searchform.beginTime"
@@ -15,7 +26,7 @@
                 value-format="timestamp">
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="填报日期结束:">
+            <el-form-item label="到:">
               <el-date-picker
                 clearable
                 v-model="searchform.stopTime"
@@ -526,7 +537,10 @@
           changeStatus:'0',
           projectNatureSecondId:'',
           enginTypeSecondId:'',
-          flowStatus:'pass'
+          flowStatus:'pass',
+          timeQueryType:"3",
+          stopTime:null,
+          beginTime:null
         },
         moneyform:{
           contractInfoAdjustLogList:[],
@@ -574,10 +588,6 @@
       this.$store.dispatch('getCategory', {name: 'projectDomainType', id: '238a917eb2b111e9a1746778b5c1167e'});
       this.$store.dispatch('getCategory', {name: 'emergingMarket', id: '33de2e063b094bdf980c77ac7284eff3'});
       this.$store.dispatch('getCategory', {name: 'projectNature', id: '99239d3a143947498a5ec896eaba4a72'});
-      // 查询数据
-      this.$http.post("/api/contract/contract/ContractInfo/list/getContractInformation",).then((res)=>{
-        this.titleInfo = res.data.data
-      });
     },
     computed: {
       projectDomainType() {
@@ -815,10 +825,11 @@
       },
       // 查询
       getData() {
-        // if(this.searchform.createTime){
-        //   this.searchform.beginTime=this.searchform.createTime[0];
-        //   this.searchform.stopTime=this.searchform.createTime[1];
-        // }
+        // 查询数据
+        this.$http.post("/api/contract/contract/ContractInfo/list/getContractInformation",).then((res)=>{
+          this.titleInfo = res.data.data
+        });
+        // 查询列表
         this.$http
           .post(
             "/api/contract/contract/ContractInfo/list/loadPageDataForContractInfoAdjust",
@@ -831,6 +842,12 @@
 
     },
     created() {
+      this.searchform.stopTime = Date.parse(new Date());
+      let dates = new Date();
+      let year = dates.getFullYear(); //获取完整的年份(4位)
+      let strtime = new Date(String(year)); // 转换为标准时间
+      let time1 = Date.parse(strtime); // 转换为时间戳
+      this.searchform.beginTime = time1;
       this.getData();
     },
   };
