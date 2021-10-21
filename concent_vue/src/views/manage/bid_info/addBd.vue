@@ -819,6 +819,9 @@ import { isMoney } from '@/utils/validate'
               message: '保存成功！',
               type: 'success'
             });
+          } else {
+            this.$message.error("请添加必填项");
+            return false;
           }
         });
       },
