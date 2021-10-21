@@ -811,12 +811,23 @@
         this.getData();
       },
       searchformReset() {
-        // this.$refs["searchform"].resetFields();
         this.searchform={
           current: 1,
           size: 20,
           changeStatus:'0',
+          projectNatureSecondId:'',
+          enginTypeSecondId:'',
+          flowStatus:'pass',
+          timeQueryType:"3",
+          stopTime:null,
+          beginTime:null
         }
+        this.searchform.stopTime = Date.parse(new Date());
+        let dates = new Date();
+        let year = dates.getFullYear(); //获取完整的年份(4位)
+        let strtime = new Date(String(year)); // 转换为标准时间
+        let time1 = Date.parse(strtime); // 转换为时间戳
+        this.searchform.beginTime = time1;
         this.getData();
       },
       // 列表选项数据
