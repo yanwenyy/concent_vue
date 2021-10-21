@@ -237,7 +237,7 @@
     </el-form>
     <div style="color:red;font-size:13px;">
       总计{{titleInfo.mapTotal.total?titleInfo.mapTotal.total:0}}个合同（其中不含分包{{titleInfo.mapNotSub['COUNTNOTSUB']?titleInfo.mapNotSub['COUNTNOTSUB']:0}}个，系统内分包{{titleInfo.mapSystemSub['COUNTSYSTEMSUB']?titleInfo.mapSystemSub['COUNTSYSTEMSUB']:0}}个，集团内分包{{titleInfo.mapGroupSub['COUNTGROUPSUB']?titleInfo.mapGroupSub['COUNTGROUPSUB']:0}}个）；
-      我方份额总计{{titleInfo.mapTotal.totalAmount?titleInfo.mapTotal.totalAmount:0}}亿元（其中不含分包{{titleInfo.mapNotSub['SUMNOTSUB']?titleInfo.mapNotSub['SUMNOTSUB']:0}}亿元，系统内分包{{titleInfo.mapSystemSub['SUMSYSTEMSUB']?titleInfo.mapSystemSub['SUMSYSTEMSUB']:0}}亿元，集团内分包{{titleInfo.mapGroupSub['SUMGROUPSUB']?titleInfo.mapGroupSub['SUMGROUPSUB']:0}}亿元
+      我方份额总计{{titleInfo.mapTotal.totalAmount?titleInfo.mapTotal.totalAmount:0}}亿元（其中不含分包{{titleInfo.mapNotSub['SUMNOTSUB']?titleInfo.mapNotSub['SUMNOTSUB']:0}}亿元，系统内分包{{titleInfo.mapSystemSub['SUMSYSTEMSUB']?titleInfo.mapSystemSub['SUMSYSTEMSUB']:0}}亿元，集团内分包{{titleInfo.mapGroupSub['SUMGROUPSUB']?titleInfo.mapGroupSub['SUMGROUPSUB']:0}}亿元）
     </div>
     <div style="margin-top: 10px">
       <el-table
