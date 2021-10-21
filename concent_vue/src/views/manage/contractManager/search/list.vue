@@ -209,13 +209,13 @@
               </el-select>
             </el-form-item>
             <el-form-item label="主推单位:" >
-              <el-input v-model="searchform.path" placeholder="主推单位" clearable @clear="searchform.contractMianOrg=''">
+              <el-input v-model="searchform.contractMianName" placeholder="主推单位" clearable @clear="clearMain()">
                 <el-button slot="append" icon="el-icon-search"  @click="addDw('主推单位',searchform.contractMianOrg)"></el-button>
               </el-input>
             </el-form-item>
               <el-form-item label="填报单位:">
               <!--<el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable></el-input>-->
-              <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable @clear="searchform.createOrgName=''">
+              <el-input v-model="searchform.createOrgName" placeholder="填报单位" clearable @clear="clearCreat()">
                 <el-button slot="append" icon="el-icon-search"  @click="addDw('填报单位',searchform.createOrgName,false)"></el-button>
               </el-input>
             </el-form-item>
@@ -616,7 +616,15 @@
       }
     },
     methods: {
-
+      clearMain(){
+        this.$forceUpdate();
+        this.searchform.contractMianOrg=''
+        this.searchform.contractMianName=''
+      },
+      clearCreat(){
+        this.$forceUpdate();
+        this.searchform.createOrgName=''
+      },
       clear(id,name){
         this.$forceUpdate();
         this.searchform[id]='';
@@ -657,15 +665,15 @@
         if(data.type=="填报单位"){
           this.searchform.createOrgName=data.name;
         }else if(data.type=="主推单位"){
-          var id=[],name=[];
+          var code=[],name=[];
           if(data){
             data.forEach((item)=>{
-              id.push(item.id);
+              code.push(item.code);
               name.push(item.detailName);
             })
           }
-          this.searchform.contractMianOrg=id.join(",");
-          this.searchform.path=name.join(",");
+          this.searchform.contractMianOrg=code.join(",");
+          this.searchform.contractMianName=name.join(",");
         }
 
         this.DwVisible=false;
