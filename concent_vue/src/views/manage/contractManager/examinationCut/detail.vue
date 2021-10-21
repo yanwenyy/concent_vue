@@ -396,7 +396,7 @@
               )
               .then((res) => {
                 if (res.data.code === 200) {
-                  if (res.data.data.contractInfo.isProjectRepeated == '1') {
+                  if (res.data.data == null) {
                     this.$message({
                       message:  `${type=='save'?'保存':'提交'}信息重复`,
                       type: 'error'
@@ -407,7 +407,7 @@
                       type: "success",
                     });
                     if (type=='save') {
-                      this.detailform.contractInfo.uuid = res.data.data.contractInfo.uuid
+                      
                     } else {
                       this.$router.back()
                     }
