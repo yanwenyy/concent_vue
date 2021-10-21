@@ -1556,9 +1556,13 @@
                       message:  `${type=='save'?'保存':'提交'}成功`,
                       type: 'success'
                     })
-                    this.$router.push({
-                      path: '/statistics/project/financeList'
-                    })
+                    if (type=='save') {
+                      this.detailForm.project = res.data.data
+                    } else {
+                      this.$router.push({
+                        path: '/statistics/project/financeList'
+                      })
+                    }
                   }
                 } else {
                   this.$message({
