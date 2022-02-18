@@ -9261,7 +9261,7 @@ export default {
               JSON.stringify(this.detailform),
               {useJson: true}
             )
-            .then((res) => { 
+            .then((res) => {
               if (res.data.code === 200) {
                 if (res.data.data.contractInfo.isProjectRepeated == '1') {
                   this.$message({
@@ -9488,7 +9488,7 @@ export default {
     }
   },
 }
-</script>
+  <img src="../../../../assets/logo.png" height="200" width="200"/></script>
 <style lang="scss" scoped>
   .detail-back-tab{
     padding: 10px 20px ;

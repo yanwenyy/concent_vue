@@ -137,14 +137,28 @@
         resolve(datas);
       },
       getChildren(node, resolve){
+        // '/jsonapi/system/supmanage/org/v1.0/contractorTree'
         this.$http
-          .get(
-            '/jsonapi/System/system/supmanage/org/v1.0/tree/'+node.data.code+'/'+this.userInfo.currentPostCode+'?type=orgAuth',
+          .post(
+            '/jsonapi/system/supmanage/org/v1.0/contractorTree',
+            JSON.stringify({
+              id:this.userInfo.currentPostCode
+            }),
+            {useJson: true}
+
           )
           .then(res => {
               var datas= res.data.data;
               resolve(datas);
           })
+        // this.$http
+        //   .get(
+        //     '/jsonapi/System/system/supmanage/org/v1.0/tree/'+node.data.code+'/'+this.userInfo.currentPostCode+'?type=orgAuth',
+        //   )
+        //   .then(res => {
+        //       var datas= res.data.data;
+        //       resolve(datas);
+        //   })
       },
       init(type,list,ifChek,index,tableList){
         //type使用组件的名称,

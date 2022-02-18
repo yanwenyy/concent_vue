@@ -5,6 +5,7 @@
 const path = require('path')
 
 // http://localhost:8081/manage/proposal/importList?token=
+// http://localhost:8081#/reportForm/list?resid=I40289ebd0177d21ad21acd720177d34e27ef015e&&token=
 module.exports = {
   dev: {
     // Paths
@@ -12,11 +13,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        // target: 'http://192.168.31.136:8090',
-        // target: 'http://192.168.2.238:9090',
-        target: 'http://192.168.31.43:9090',
-        // target: 'http://192.168.80.197:9090',
-        // target:'http://192.168.70.235:8091',
+        // target: 'http://192.168.21.3:8090',//天宇
+        // target: 'http://192.168.31.205:8090',//党崇山
+        // target: 'http://192.168.2.151:8090',//赵会林
+        // target: 'http://192.168.21.13:8090',//杨帆
+        target: 'http://192.168.21.12:8090',//久松
+        // target:'http://121.36.7.195:80',
+        // target:'http://121.36.79.169',
         chazngeOrigin: true,
         pathRewrite: {
           '^/api': '/api'

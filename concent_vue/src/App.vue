@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div style="position: relative">
     <router-view v-if="!noView"></router-view>
     <div class="no-view" v-if="noView">加载中...</div>
   </div>
@@ -14,7 +14,7 @@ export default {
     return{
       origin:'',
       noView:true,
-      token:'eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzNTk4NTYiLCJwb3N0TmFtZSI6IuW8gOWPkee7j-eQhiIsInBvc3RQYXRoIjoi5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiaWQiOiIzNTk4NTYiLCJ1c2VyTmFtZSI6IuWImOm5jyIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2OTcyLCJuYW1lIjoi5byA5Y-R57uP55CGIiwiY29kZSI6IjAwMDAxMDAwMDEwMDAxMDc3MDAxOTkwMDEiLCJvcmRlciI6MSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi5oC76YOo5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-45byA5Y-R6YOo5byA5Y-R57uP55CGIiwienV6aGliaWFubWEiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiamlhbmNoZW5nIjoi5byA5Y-R57uP55CGIiwienV6aGlsdWppbmciOiLljJfkuqzkuK3ova_lm73pmYXkv6Hmga_mioDmnK_mnInpmZDlhazlj7gifV19LCJleHAiOjE2MjU2NTc3ODB9.RBHYFfy-Mfl5m_MzuWPGF13ObRzeu5xEMzN6nKZp8q4hznRLzvDDpuBjhoRSe2caQ7RMdWd7BNV7ET9pHmfcCA'
+      token:'eyJhbGciOiJIUzUxMiJ9.eyJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiZGV0YWlscyI6eyJzdWIiOiJocnwzNTk4NDQiLCJwb3N0TmFtZSI6IuW8gOWPkee7j-eQhiIsInBvc3RQYXRoIjoi5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-4IiwicG9zdENvZGUiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiaWQiOiIzNTk4NDQiLCJ1c2VyTmFtZSI6IuiuuOS_neWQiSIsInBvc3RzIjpbeyJ0eXBlIjozLCJpZCI6Mjg2OTcyLCJuYW1lIjoi5byA5Y-R57uP55CGIiwiY29kZSI6IjAwMDAxMDAwMDEwMDAxMDc3MDAxOTkwMDEiLCJvcmRlciI6MSwibWFpblBvc2l0aW9uIjp0cnVlLCJwcm92aWRlcklkIjoiaHIiLCJwYXRoIjoi5oC76YOo5YyX5Lqs5Lit6L2v5Zu96ZmF5L-h5oGv5oqA5pyv5pyJ6ZmQ5YWs5Y-45byA5Y-R6YOo5byA5Y-R57uP55CGIiwienV6aGliaWFubWEiOiIwMDAwMTAwMDAxMDAwMTA3NzAwMTk5MDAxIiwiamlhbmNoZW5nIjoi5byA5Y-R57uP55CGIiwienV6aGlsdWppbmciOiLljJfkuqzkuK3ova_lm73pmYXkv6Hmga_mioDmnK_mnInpmZDlhazlj7gifV19LCJleHAiOjE2MzQ2NDk1NzR9.XpgTZ_1D9a70xx3TwFOoBz4WCbTdAeqDPQJz62OyQOPmdkWGjCKY3oYPFYpxo9qmk-S8H5UksgjAXadN6Hu5ig'
     }
   },
   beforeCreate(){
@@ -86,7 +86,7 @@ export default {
         return decodeURI(arr[0].substring(arr[0].search("=") + 1));
       }
       return "";
-    }
+    },
   }
 }
 </script>
